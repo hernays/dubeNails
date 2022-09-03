@@ -1,0 +1,41 @@
+<div class="modal">
+  <div class="content_titulo">
+    <h3>Registro de horas</h3>
+    <span (click)="hideModal()">x</span>
+  </div>
+  <form [formGroup]="formGroup">
+    <label name="nombre">Nombre</label> 
+    <br>
+    <input type="text" 
+    placeholder="nombre..."
+    formControlName="nombre"
+    >
+    <br>
+    <label name="hora">Hora</label> 
+    <br>
+    <input type="text" 
+    placeholder="hora..."
+    formControlName="hora"
+    >
+    <br>
+    <label name="servicio">Servicios</label> 
+    <br>
+    <select formControlName="servicio" >
+      <option *ngFor="let item of lista" [value]="item" [selected]="item == 'Poligel'">{{item}}</option>
+    </select>
+    <br>
+    <input  type="submit" class="submit" value="Registrar Hora" (click)="enviarDatos()"/>
+  </form>
+
+  <div class="success" *ngIf="success">
+      <p>Registrado con exito!!!</p>
+  </div>
+
+  <div class=" success error" *ngIf="error">
+    <p>{{error}}</p>
+</div>
+
+<div class=" success error" *ngIf="horaDisponible === 'Hora no se encuentra Disponible.'">
+  <p>{{horaDisponible}}</p>
+</div>
+</div>

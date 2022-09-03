@@ -1,1 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+$colorFondo : #64227c;
+
+*,body{
+    padding: 0px;
+    margin: 0px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+label{
+    font-weight: bold;
+}
+
+br{
+    margin-bottom: 10px;
+}
+
+input[type="text"]{
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+select{
+    padding:5px;
+}
+
+input[type="submit"] , button{
+    cursor: pointer;
+    padding: 5px;
+    background: $colorFondo;
+    color: #fff;
+    border-radius: 5px;
+
+}

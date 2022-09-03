@@ -1,0 +1,36 @@
+<nav [class.menuActive]="menu" class="menu">
+
+    <ng-container *ngIf="menu ; else menuActive">
+        <span (click)="cerrarModal()">x</span>
+        <h3>{{tituloMenu}}</h3>
+        <div>
+            <hr class="lineaMenu">
+        </div>
+        
+        <ul *ngIf="lista">
+            <li>
+                <a>Inicio</a>
+            </li>
+            <li>
+                <a>Login</a>
+            </li>
+            <li>
+                <a (click)="showRegister()">Registro</a>
+            </li>
+        </ul>
+
+        <app-registro *ngIf="showRegistro"></app-registro>
+    </ng-container>
+
+    <ng-template #menuActive>
+        <div class="menuFalse" (click)="showMenu()">
+            <p></p>
+            <p></p>
+            <p></p>
+        </div>
+    </ng-template>
+
+</nav>
+
+
+
