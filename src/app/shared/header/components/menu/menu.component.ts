@@ -10,6 +10,7 @@ export class MenuComponent implements OnInit {
    public menu : boolean = false;
    public showRegistro : boolean = false;
    public lista        : boolean = false;
+   public showlogin    : boolean = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -32,6 +33,12 @@ export class MenuComponent implements OnInit {
     this.tituloMenu = 'Registro';
   }
 
+  login(){
+    this.showlogin = true;
+    this.lista = false;
+    this.tituloMenu = 'Iniciar Sesion';
+  }
+
   cerrarModal(){
 
     switch(this.tituloMenu){
@@ -40,7 +47,11 @@ export class MenuComponent implements OnInit {
       case 'Registro' : 
       this.showRegistro = false;
       this.tituloMenu = 'Menu';
-      this.lista = true;
+      this.lista = true; break;
+      case 'Iniciar Sesion':
+      this.showlogin = false;
+      this.tituloMenu = 'Menu';
+      this.lista = true; break;
     }
   }
 

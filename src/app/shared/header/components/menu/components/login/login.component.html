@@ -1,0 +1,18 @@
+<div class="registro">
+    <form [formGroup]="formLogin">
+        <label name="nombre">Nombre:</label>
+        <input 
+        type="text" placeholder="Usuario...."
+        id="usuario"
+        name="usuario"
+        formControlName="usuario"
+        />
+
+        <label name="clave">Telefono:</label>
+        <input type="password" placeholder="contraseña...."
+        formControlName="clave" />
+
+        <input type="submit" value="Iniciar" (click)="login()">
+    </form>
+
+</div>

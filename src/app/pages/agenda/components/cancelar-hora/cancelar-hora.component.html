@@ -1,4 +1,4 @@
-<button [disabled]="dia < day " [class.disabledButton]="dia < day " class="cancelarAgenda" (click)="cancelar()">
+<button *ngIf="botonCancelar" [disabled]="dia < day " [class.disabledButton]="dia < day " class="cancelarAgenda" (click)="cancelar()">
       Cancelar
 </button>
 

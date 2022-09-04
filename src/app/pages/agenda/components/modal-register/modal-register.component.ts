@@ -14,7 +14,7 @@ export class ModalRegisterComponent implements OnInit {
   @Input('dia') dia :any;
 
   public formGroup : FormGroup<any>;
-  public lista     : string[] = ['Acrilicas' , 'Esmaltado Permanente' , 'Poligel'];
+  public lista     : string[] = ['Acrilicas' , 'Esmaltado' , 'Polygel'];
   public success   : string = '';
   public error     : string = '';
   public horaDisponible : any ;
@@ -44,7 +44,7 @@ export class ModalRegisterComponent implements OnInit {
   async enviarDatos(){
     const { nombre , hora , servicio }= this.formGroup.value;
     const dia = Number(this.dia);
-    const horaServicio = ( servicio === 'Permanente' ) ? 2 : 3 ;
+    const horaServicio = ( servicio === 'Esmaltado' ) ? 2 : 3 ;
     this.traerData(Number(hora) , nombre , servicio , dia , horaServicio )
   }
 
