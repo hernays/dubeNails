@@ -32,7 +32,6 @@ export class UsuariosService {
   }
 
   autorizarToken(token:string){
-    console.log(token)
     return this.http.get(`${this.url}auth/authorization` , {
        headers : {
         authorization : token
@@ -40,11 +39,9 @@ export class UsuariosService {
       })
       .pipe(
         map((data:any) => {
-          console.log(data)
           return data;
         }),
         catchError( (error:any) => {
-          console.log("esto: ",error)
           return throwError(() => {
             return error;
           })

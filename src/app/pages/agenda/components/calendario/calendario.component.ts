@@ -29,7 +29,13 @@ export class CalendarioComponent implements OnInit {
   ngOnInit(): void {
     moment.locale('es');
     this.fechas();
-    this.showHoras()
+    this.showHoras();
+
+    this.eventsService.cerrarModalLogin.subscribe((valor:boolean) => {
+              if(!valor){
+                this.showHoras();
+              }
+    })
   }
 
   modalRegister(dia:any){
@@ -111,6 +117,7 @@ export class CalendarioComponent implements OnInit {
         this.agendaService.getDatos().subscribe((data:any) => {
           this.dataAgenda = data.agenda;
         })
+
     this.eventsService.successDatos.subscribe( valor => {
       if(valor){
         this.agendaService.getDatos().subscribe((data:any) => {
@@ -119,6 +126,8 @@ export class CalendarioComponent implements OnInit {
       }
     })
   }
+
+
 
   Sethoras(){
     const horas =  [10,11,12,13,14,15,16,17,18,19,20]; 

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-menu',
@@ -11,16 +12,23 @@ export class MenuComponent implements OnInit {
    public showRegistro : boolean = false;
    public lista        : boolean = false;
    public showlogin    : boolean = false;
-  constructor() { }
+  constructor(
+    private eventsService : EventsService
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit(){
+      this.eventsService.cerrarModalLogin.subscribe( (valor: any) => {
+                      this.menu = valor;     
+
+      })
+
   }
+
 
 
   showMenu(){
     this.menu = true;
     this.lista = true;
-    console.log( )
   }
 
   hideMenu(){
