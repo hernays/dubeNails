@@ -21,7 +21,7 @@
     <label name="servicio">Servicios</label> 
     <br>
     <select formControlName="servicio" >
-      <option *ngFor="let item of lista" [value]="item" [selected]="item == 'Poligel'">{{item}}</option>
+      <option *ngFor="let item of lista" [value]="item">{{item}}</option>
     </select>
     <br>
     <input  type="submit" class="submit" value="Registrar Hora" (click)="enviarDatos()"/>

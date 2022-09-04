@@ -6,14 +6,13 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UsuariosService {
-  
-  public url : string = `http://localhost:1000/api/usuario`;
+  public url : string = `${environment.urlLocal}api/usuarios`;
   constructor(
     private http : HttpClient
   ) {}
 
 
   getUsuarios(){
-    return this.http.get<any>(`${this.url}s`);
+    return this.http.get<any>(`${this.url}`);
   }
 }

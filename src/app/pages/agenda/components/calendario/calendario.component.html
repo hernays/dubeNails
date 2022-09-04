@@ -5,18 +5,18 @@
         </div>
 
 <div class="calendario">
-    <ng-container *ngFor="let dia of dias">
-        <div (click)="modalRegister(dia.dia)" class="dias" [class.disabled]="dia.dia < day ">
+    <div class="contenidoAgenda" *ngFor="let dia of dias">
+        <div class="dias" [class.disabled]="dia.dia < day ">
                 <div class="diaSemana">{{dia.diaSemana}} - {{dia.dia}}</div>
                 <ng-container *ngFor="let cliente of dataAgenda">
                     <div  *ngIf="cliente.dia == dia.dia" class="clientes">
                         <p class="textoAgenda"> {{cliente.nombre}} - {{cliente.servicio}} <br> {{cliente.hora}}hrs - {{cliente.tramo}}hrs</p>
-                         <app-cancelar-hora></app-cancelar-hora>
-                     </div>
+                         <app-cancelar-hora [dia]="cliente.dia" [nombre]="cliente.nombre"></app-cancelar-hora>
+                    </div>
                 </ng-container>
         </div>
-    </ng-container>
-
+        <button [class.none]="dia.dia < day " (click)="modalRegister(dia.dia)">AGENDAR</button>
+    </div>
     <app-modal-register *ngIf="modalRegisters" [dia]="selectDia" (registerModal)="hideModalRegister($event)"></app-modal-register>
      
 </div>

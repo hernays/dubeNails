@@ -30,7 +30,6 @@ export class CalendarioComponent implements OnInit {
     moment.locale('es');
     this.fechas();
     this.showHoras()
-    this.cargarLocalStorage();
   }
 
   modalRegister(dia:any){
@@ -106,17 +105,18 @@ export class CalendarioComponent implements OnInit {
       }
   }
 
-   cargarLocalStorage(){
-     this.agendaService.getDatos().subscribe((data:any) => {
-      this.dataAgenda = data.agenda
-     })
-  } 
 
-  async showHoras(){
+
+  showHoras(){
+        this.agendaService.getDatos().subscribe((data:any) => {
+          this.dataAgenda = data.agenda;
+        })
     this.eventsService.successDatos.subscribe( valor => {
-      this.agendaService.getDatos().subscribe((data:any) => {
-        this.dataAgenda = data.agenda;
-      })
+      if(valor){
+        this.agendaService.getDatos().subscribe((data:any) => {
+          this.dataAgenda = data.agenda;
+        })
+      }
     })
   }
 

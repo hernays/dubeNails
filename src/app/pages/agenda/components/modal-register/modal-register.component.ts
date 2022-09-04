@@ -14,7 +14,7 @@ export class ModalRegisterComponent implements OnInit {
   @Input('dia') dia :any;
 
   public formGroup : FormGroup<any>;
-  public lista     : string[] = ['Acrilicas' , 'Permanente' , 'Poligel'];
+  public lista     : string[] = ['Acrilicas' , 'Esmaltado Permanente' , 'Poligel'];
   public success   : string = '';
   public error     : string = '';
   public horaDisponible : any ;
@@ -44,18 +44,16 @@ export class ModalRegisterComponent implements OnInit {
   async enviarDatos(){
     const { nombre , hora , servicio }= this.formGroup.value;
     const dia = Number(this.dia);
-    const horaServicio = (servicio === 'Permanente') ? 2 : 3;
+    const horaServicio = ( servicio === 'Permanente' ) ? 2 : 3 ;
     this.traerData(Number(hora) , nombre , servicio , dia , horaServicio )
   }
 
   async traerData(horaNueva:number , nombre:string , servicio:string , dia:number , horaServicio:number){
     this.agendaService.getDatos().subscribe({next: (data:any) => {
-      console.log(data)
                const tramos = data.agenda.map((element:any) => {
                 return {hora : element.hora , tramo :element.tramo , dia : Number(element.dia)}
                })
               for(let items of tramos){
-                              console.log("dia: ", dia, 'items.dia: ', items.dia)
                  if(dia === items.dia && horaNueva > items.hora && horaNueva < items.tramo){
                     this.horaDisponible = 'Hora no se encuentra Disponible.'; break;
                  }
@@ -70,24 +68,17 @@ export class ModalRegisterComponent implements OnInit {
                 console.log("aqui 2: ",horaNueva , items.hora , 'condicion tramo:',items.hora+(items.tramo - items.hora) ,"tramo: ", items.tramo)
                 this.horaDisponible = 'Hora no se encuentra Disponible.'; break;
                }
-     
-                /* console.log("nueva: ",horaNueva, "vieja: ",items.hora-1, 'horaStatic: ', items.hora+2) */
-              /*  if(horaNueva < items.hora && horaNueva !== items.hora-1){
-                console.log('aqui')
-                this.horaDisponible = 'Hora no se encuentra Disponible.'; break;
-             } */
                  this.horaDisponible = horaNueva;
               }
-                       console.log(this.horaDisponible)
                  if(typeof this.horaDisponible !== typeof '' ){
                   this.agendaService.recibirDatos({nombre , horaNueva , servicio , dia , horaServicio}).subscribe({
                     next : (msg:string) => {
-                      this.eventsService.successDatos.emit(true);
                       this.formGroup.controls['nombre'].setValue('');
                       this.formGroup.controls['hora'].setValue('');
                       this.formGroup.controls['servicio'].setValue('');
                       this.success = msg;
                       this.error = '';
+                      this.eventsService.successDatos.emit(true);
                     },
                   error: (msg:string) => {
                     this.error = msg;

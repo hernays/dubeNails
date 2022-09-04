@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlBase: `http://localhost:1000/`
+  urlLocal: `https://137.184.132.28:1000/`,
+  //urlLocal : 'http://localhost:1000/'
 };
 
 /*

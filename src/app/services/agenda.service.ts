@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map  , Observable, pipe, throwError } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { catchError, map  , Observable, pipe, throwError } from 'rxjs';
 export class AgendaService {
   public agenda = {};
   public dataClientes : any[] = [];
+  public url : string = `${environment.urlLocal}api/agenda`;
 
   constructor(
     private http : HttpClient
@@ -21,21 +23,32 @@ export class AgendaService {
         servicio : datos.servicio,
         horaServicio    : datos.horaServicio
        }
-       console.log('por aqui peticion' , body)
-       return this.http.post<any>('http://localhost:1000/agenda/save' , body)
+
+       return this.http.post<any>(`${this.url}/save` , body)
        .pipe(
         map((resp) => {
            return resp.msg;
        }),
        catchError((error:any) => {
-        console.log("errors: ",error)
              return throwError(() => error.error.msg);
        })
        )
   }
 
   getDatos():any{
- 
-   return this.http.get<any>('http://localhost:1000/agenda')
+   return this.http.get<any>(`${this.url}`)
+  }
+
+  borrarHora(body:any){
+   return  this.http.post<any>(`${this.url}/borrarHora` , body)
+   .pipe( 
+    map( resp => {
+      return resp;
+    }),
+    catchError( (error:any) => {
+      return throwError(() => {return error});
+    })
+   )
   }
 }
+

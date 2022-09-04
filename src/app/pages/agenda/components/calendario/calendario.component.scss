@@ -3,20 +3,17 @@
     display: flex;
     flex-flow: row wrap;
     margin-top: 20px;
-    gap: 1%;
+    gap: 5%;
     justify-content: center;
-    margin-left: -8%;
 
 
     .dias{
         display: flex;
         flex-flow: column;
         border: 1px solid back;
-        width: 38%;
+        width: 100%;
         height: 120px;
         box-shadow: 0px 0px 5px black;
-        margin-bottom: 15px;
-        padding: 2px;
         overflow: auto;
     
         .diaSemana{
@@ -54,6 +51,29 @@
 
 .disabled{
     background-color: #ccc;
+    margin-bottom: 10px;
+}
+
+.none{
+    display: none;
+}
+
+.contenidoAgenda{
+    display: flex;
+    flex-flow: comun;
+    flex-flow: column;
+    width: 42%;
+    
+    button{
+    width: 100%;
+    font-size: 10px;
+    padding: 2px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    border-radius: 0px;
+    box-shadow: 0px 2px 2px black;
+    }
+
 }
 
 

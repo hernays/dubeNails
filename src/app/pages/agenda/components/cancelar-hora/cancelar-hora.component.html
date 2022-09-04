@@ -1,3 +1,12 @@
-<button class="cancelarAgenda">
+<button [disabled]="dia < day " [class.disabledButton]="dia < day " class="cancelarAgenda" (click)="cancelar()">
       Cancelar
 </button>
+
+<div class="modalCancelar" *ngIf="modalCancelar">
+      <h3>¿Deseas cancelar?</h3>
+      <div>
+            <button (click)="cancelarOperacion(true)">SI</button>
+            <button (click)="cancelarOperacion(false)">NO</button>
+      </div>
+     
+</div>
