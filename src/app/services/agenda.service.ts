@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map  , Observable, pipe, throwError } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +9,7 @@ import { environment } from 'src/environments/environment';
 export class AgendaService {
   public agenda = {};
   public dataClientes : any[] = [];
-  public url : string = `${environment.urlLocal}api/agenda`;
+  public url : any = `${environment.urlLocal}api/agenda`;
 
   constructor(
     private http : HttpClient
