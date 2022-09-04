@@ -19,12 +19,18 @@ export class MenuComponent implements OnInit {
   ngOnInit(){
       this.eventsService.cerrarModalLogin.subscribe( (valor: any) => {
                       this.menu = valor;     
-
+                      this.showlogin = valor;
       })
 
   }
 
-
+  salir(){
+    localStorage.removeItem('token');
+    this.menu         = false;
+    this.showRegistro = false;
+    this.lista        = false;
+    this.showlogin    = false;
+  }
 
   showMenu(){
     this.menu = true;
