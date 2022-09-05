@@ -115,13 +115,13 @@ export class CalendarioComponent implements OnInit {
 
   showHoras(){
         this.agendaService.getDatos().subscribe((data:any) => {
-          this.dataAgenda = data.agenda;
+          this.dataAgenda = data;
         })
 
     this.eventsService.successDatos.subscribe( valor => {
       if(valor){
         this.agendaService.getDatos().subscribe((data:any) => {
-          this.dataAgenda = data.agenda;
+          this.dataAgenda = data;
         })
       }
     })

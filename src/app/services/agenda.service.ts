@@ -37,6 +37,14 @@ export class AgendaService {
 
   getDatos():any{
    return this.http.get<any>(`${this.url}`)
+   .pipe(
+    map((data :any) => {
+      let array:any[] = [];
+      data.agenda.forEach((element:any) =>   array.push(element));
+      array.sort((a:any , b:any) => a.hora - b.hora)
+      return array;
+    })
+   )
   }
 
   borrarHora(body:any){
