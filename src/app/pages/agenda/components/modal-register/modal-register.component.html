@@ -13,10 +13,9 @@
     <br>
     <label name="hora">Hora</label> 
     <br>
-    <input type="text" 
-    placeholder="hora..."
-    formControlName="hora"
-    >
+    <select    formControlName="hora">
+      <option *ngFor="let hora of listaHora" [value]="hora">{{hora}}:00</option>
+    </select>
     <br>
     <label name="servicio">Servicios</label> 
     <br>

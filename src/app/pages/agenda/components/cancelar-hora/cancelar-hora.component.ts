@@ -31,7 +31,7 @@ public botonCancelar : boolean = false;
         }
       },
     error : (error) => {
-      console.log(error)
+
     }})
   }
 

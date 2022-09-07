@@ -18,6 +18,7 @@ export class ModalRegisterComponent implements OnInit {
   public success   : string = '';
   public error     : string = '';
   public horaDisponible : any ;
+  public listaHora : number[] = [9,10,11,12,13,14,15,16,17,18];
 
 
   constructor(
@@ -50,7 +51,7 @@ export class ModalRegisterComponent implements OnInit {
 
   async traerData(horaNueva:number , nombre:string , servicio:string , dia:number , horaServicio:number){
     this.agendaService.getDatos().subscribe({next: (data:any) => {
-               const tramos = data.agenda.map((element:any) => {
+               const tramos = data.map((element:any) => {
                 return {hora : element.hora , tramo :element.tramo , dia : Number(element.dia)}
                })
               for(let items of tramos){
