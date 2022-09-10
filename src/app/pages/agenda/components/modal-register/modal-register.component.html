@@ -23,6 +23,13 @@
       <option *ngFor="let item of lista" [value]="item">{{item}}</option>
     </select>
     <br>
+    <label name="telefono">Telefono</label>
+    <br>
+    <input type="text" 
+    placeholder="telefono..."
+    formControlName="telefono"
+    >
+    <br>
     <input  type="submit" class="submit" value="Registrar Hora" (click)="enviarDatos()"/>
   </form>
 

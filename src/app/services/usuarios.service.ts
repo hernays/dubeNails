@@ -32,6 +32,7 @@ export class UsuariosService {
   }
 
   autorizarToken(token:string){
+    console.log('servicios')
     return this.http.get(`${this.url}auth/authorization` , {
        headers : {
         authorization : token
@@ -39,6 +40,7 @@ export class UsuariosService {
       })
       .pipe(
         map((data:any) => {
+          console.log('data_------', data)
           return data;
         }),
         catchError( (error:any) => {

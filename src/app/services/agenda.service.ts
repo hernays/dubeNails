@@ -21,7 +21,8 @@ export class AgendaService {
         dia    : datos.dia,
         hora   : datos.horaNueva,
         servicio : datos.servicio,
-        horaServicio    : datos.horaServicio
+        horaServicio    : datos.horaServicio,
+        telefono        : datos.telefono
        }
 
        return this.http.post<any>(`${this.url}/save` , body)

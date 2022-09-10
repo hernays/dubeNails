@@ -11,6 +11,8 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class CancelarHoraComponent implements OnInit{
 @Input('dia') dia : string = '';
 @Input('nombre') nombre : string = '';
+@Input('telefono') telefono : any;
+public telefonoPrivado = false;
 public modalCancelar : boolean = false;
 public day : any = '';
 public botonCancelar : boolean = false;
@@ -22,19 +24,23 @@ public botonCancelar : boolean = false;
     this.day = new Date().getDate();
   }
 
-
   ngOnInit() {
-      const token = localStorage.getItem('token') as string;
-      this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
-        if(data){
-         this.botonCancelar = true;
-        }
-      },
-    error : (error) => {
-
-    }})
+      this.verificarUsuario();
   }
 
+   verificarUsuario(){
+    const token = localStorage.getItem('token') as string;
+    this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
+      if(data){
+       this.botonCancelar = true;
+        this.telefonoPrivado = true;
+      }
+    },
+  error : (error) => {
+
+  }})
+   }
+   
   cancelar(){
     this.modalCancelar = true;
     const body = {dia : this.dia , nombre : this.nombre}

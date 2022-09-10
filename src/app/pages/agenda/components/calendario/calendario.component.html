@@ -11,11 +11,15 @@
                 <ng-container *ngFor="let cliente of dataAgenda">
                     <div  *ngIf="cliente.dia == dia.dia" class="clientes">
                         <p class="textoAgenda"> {{cliente.nombre}} - {{cliente.servicio}} <br> {{cliente.hora}}hrs - {{cliente.tramo}}hrs</p>
-                         <app-cancelar-hora [dia]="cliente.dia" [nombre]="cliente.nombre"></app-cancelar-hora>
+                         <app-cancelar-hora [dia]="cliente.dia" [telefono]="cliente.telefono" [nombre]="cliente.nombre"></app-cancelar-hora>
                     </div>
                 </ng-container>
+                <p *ngIf="cargandoData"> Cargando...</p>
         </div>
-        <button [class.none]="dia.dia < day " (click)="modalRegister(dia.dia)">AGENDAR</button>
+        <button 
+        [class.none]="dia.dia < day " 
+        (click)="modalRegister(dia.dia)"
+        >AGENDAR</button>
     </div>
     <app-modal-register *ngIf="modalRegisters" [dia]="selectDia" (registerModal)="hideModalRegister($event)"></app-modal-register>
      

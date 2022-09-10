@@ -20,7 +20,9 @@ export class CalendarioComponent implements OnInit {
   public dataAgenda : any[] = [];
   public selectDia : any;
   public horas : number[] = [10,11,12,13,14,15,16,17,18,19,20];
-
+  public cargandoData: boolean = false;
+  @Output('telefono')  telefono : EventEmitter<any> = new EventEmitter();
+  
   constructor(
     private agendaService : AgendaService,
     private eventsService : EventsService
@@ -114,14 +116,17 @@ export class CalendarioComponent implements OnInit {
 
 
   showHoras(){
+    this.cargandoData = true;
         this.agendaService.getDatos().subscribe((data:any) => {
           this.dataAgenda = data;
+          this.cargandoData = false;
         })
 
     this.eventsService.successDatos.subscribe( valor => {
       if(valor){
         this.agendaService.getDatos().subscribe((data:any) => {
           this.dataAgenda = data;
+          this.cargandoData = false;
         })
       }
     })

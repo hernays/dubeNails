@@ -15,7 +15,7 @@ export class ModalRegisterComponent implements OnInit {
 
   public formGroup : FormGroup<any>;
   public lista     : string[] = ['Acrilicas' , 'Esmaltado' , 'Polygel'];
-  public success   : string = '';
+  public success   : boolean = false;
   public error     : string = '';
   public horaDisponible : any ;
   public listaHora : number[] = [9,10,11,12,13,14,15,16,17,18];
@@ -29,13 +29,13 @@ export class ModalRegisterComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       nombre  : ['', [Validators.required , Validators.minLength(2)]],
       servicio: ['', [Validators.required]],
-      hora    : ['', [Validators.required , Validators.minLength(2)]]
+      hora    : ['', [Validators.required , Validators.minLength(2)]],
+      telefono: ['']
     })
   }
 
   ngOnInit(): void {
     this.cambiosForm();
-   
   }
 
   hideModal(){
@@ -43,47 +43,53 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   async enviarDatos(){
-    const { nombre , hora , servicio }= this.formGroup.value;
+    const { nombre , hora , servicio , telefono }= this.formGroup.value;
     const dia = Number(this.dia);
     const horaServicio = ( servicio === 'Esmaltado' ) ? 2 : 3 ;
-    this.traerData(Number(hora) , nombre , servicio , dia , horaServicio )
+    this.traerData(Number(hora) , nombre , servicio , dia , horaServicio ,telefono)
   }
 
-  async traerData(horaNueva:number , nombre:string , servicio:string , dia:number , horaServicio:number){
+  async traerData(horaNueva:number , nombre:string , servicio:string , dia:number , horaServicio:number , telefono: any){
     this.agendaService.getDatos().subscribe({next: (data:any) => {
                const tramos = data.map((element:any) => {
                 return {hora : element.hora , tramo :element.tramo , dia : Number(element.dia)}
                })
               for(let items of tramos){
                  if(dia === items.dia && horaNueva > items.hora && horaNueva < items.tramo){
-                    this.horaDisponible = 'Hora no se encuentra Disponible.'; break;
+                    this.horaDisponible = 'Hora no se encuentra Disponible.'; 
+                    this.success = false; break;
                  }
                  if(dia === items.dia &&horaNueva < 10 || horaNueva > 20){
-                  this.horaDisponible = 'Hora no se encuentra Disponible.'; break;
+                  this.horaDisponible = 'Hora no se encuentra Disponible.'; 
+                  this.success = false; break;
                 }
                if(dia === items.dia && horaNueva === items.hora || horaNueva+items.tramo  === items.hora){
                 console.log("aqui: ",horaNueva , items.hora , horaNueva+2 , horaNueva+3 )
-                this.horaDisponible = 'Hora no se encuentra Disponible.'; break;
+                this.horaDisponible = 'Hora no se encuentra Disponible.'; 
+                this.success = false; break;
                }                                                  
                if(dia === items.dia && horaNueva+horaServicio > items.hora  && horaNueva+horaServicio <= items.tramo){
                 console.log("aqui 2: ",horaNueva , items.hora , 'condicion tramo:',items.hora+(items.tramo - items.hora) ,"tramo: ", items.tramo)
-                this.horaDisponible = 'Hora no se encuentra Disponible.'; break;
+                this.horaDisponible = 'Hora no se encuentra Disponible.'; 
+                this.success = false;break;
                }
                  this.horaDisponible = horaNueva;
               }
                  if(typeof this.horaDisponible !== typeof '' ){
-                  this.agendaService.recibirDatos({nombre , horaNueva , servicio , dia , horaServicio}).subscribe({
+                  this.agendaService.recibirDatos({nombre , horaNueva , servicio , dia , horaServicio , telefono}).subscribe({
                     next : (msg:string) => {
                       this.formGroup.controls['nombre'].setValue('');
                       this.formGroup.controls['hora'].setValue('');
                       this.formGroup.controls['servicio'].setValue('');
-                      this.success = msg;
+                      this.success = true;
                       this.error = '';
                       this.eventsService.successDatos.emit(true);
+                      console.log('aqui ok')
                     },
                   error: (msg:string) => {
+                    console.log('aqui')
                     this.error = msg;
-                    this.success = '';
+                    this.success = false;
                   }
                   
                   }) 
@@ -98,18 +104,18 @@ export class ModalRegisterComponent implements OnInit {
   cambiosForm(){
     this.formGroup.controls['nombre'].valueChanges.subscribe( valor => {
          if(valor.length >= 1)
-            this.success = '';
+            this.success = false;
          
     })
     this.formGroup.controls['hora'].valueChanges.subscribe( valor => {
       if(valor.length >= 1)
-           this.success = '';
+           this.success = false;
       
  })
 
  this.formGroup.controls['servicio'].valueChanges.subscribe( valor => {
   if(valor.length >= 1)
-       this.success = '';
+       this.success = false;
 })
   }
 

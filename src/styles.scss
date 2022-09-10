@@ -15,19 +15,19 @@ br{
     margin-bottom: 10px;
 }
 
-input[type="text"]{
-    padding: 5px;
+input[type="text"] , input[type="password"]{
+    padding: 10px;
     border-radius: 5px;
     font-weight: bold;
 }
 
 select{
-    padding:5px;
+    padding:10px;
 }
 
 input[type="submit"] , button{
     cursor: pointer;
-    padding: 5px;
+    padding: 10px;
     background: $colorFondo;
     color: #fff;
     border-radius: 5px;
