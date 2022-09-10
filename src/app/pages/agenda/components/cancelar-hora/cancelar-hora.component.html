@@ -1,4 +1,4 @@
-<p *ngIf="telefono" class="telefono" >
+<p *ngIf="telefonoPrivado" [class.telefono]="telefono" >
       {{telefono}}
 </p>
 <button *ngIf="botonCancelar" [disabled]="dia < day " [class.disabledButton]="dia < day " class="cancelarAgenda" (click)="cancelar()">

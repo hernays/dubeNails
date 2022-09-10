@@ -33,7 +33,7 @@ public botonCancelar : boolean = false;
     this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
       if(data){
        this.botonCancelar = true;
-        this.telefonoPrivado = true;
+       this.telefonoPrivado = true;
       }
     },
   error : (error) => {
