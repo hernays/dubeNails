@@ -10,7 +10,9 @@
                 <div class="diaSemana">{{dia.diaSemana}} - {{dia.dia}}</div>
                 <ng-container *ngFor="let cliente of dataAgenda">
                     <div  *ngIf="cliente.dia == dia.dia" class="clientes">
-                        <p class="textoAgenda"> {{cliente.nombre}} - {{cliente.servicio}} <br> {{cliente.hora}}hrs - {{cliente.tramo}}hrs</p>
+                        <p class="textoAgenda">- {{cliente.nombre}} 
+                            <br>- {{cliente.servicio}} 
+                            <br>- {{cliente.hora}}hrs {{cliente.tramo}}hrs</p>
                          <app-cancelar-hora [dia]="cliente.dia" [telefono]="cliente.telefono" [nombre]="cliente.nombre"></app-cancelar-hora>
                     </div>
                 </ng-container>

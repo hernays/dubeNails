@@ -81,6 +81,7 @@ export class ModalRegisterComponent implements OnInit {
                       this.formGroup.controls['nombre'].setValue('');
                       this.formGroup.controls['hora'].setValue('');
                       this.formGroup.controls['servicio'].setValue('');
+                      this.formGroup.controls['telefono'].setValue('');
                       this.success = true;
                       this.error = '';
                       this.eventsService.successDatos.emit(true);
