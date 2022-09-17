@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
@@ -29,16 +29,12 @@ public botonCancelar : boolean = false;
   }
 
    verificarUsuario(){
-    const token = localStorage.getItem('token') as string;
-    this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
-      if(data){
-       this.botonCancelar = true;
-       this.telefonoPrivado = true;
-      }
-    },
-  error : (error) => {
-
-  }})
+     this.eventsService.loginAdmin.subscribe(valor => {
+      if(valor){
+        this.botonCancelar = true;
+        this.telefonoPrivado = true;
+       }
+     })
    }
    
   cancelar(){
@@ -54,7 +50,6 @@ public botonCancelar : boolean = false;
           this.eventsService.successDatos.emit(true);
        },
     error : () => {
-      
     }})
       }
 

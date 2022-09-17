@@ -4,45 +4,60 @@
     <span (click)="hideModal()">x</span>
   </div>
   <form [formGroup]="formGroup">
-    <label name="nombre">Nombre</label> 
+    <label name="nombre">Nombre</label>
     <br>
-    <input type="text" 
-    placeholder="nombre..."
-    formControlName="nombre"
-    >
+    <input type="text" placeholder="nombre..." formControlName="nombre">
     <br>
-    <label name="hora">Hora</label> 
+    <label name="hora">Hora</label>
     <br>
-    <select    formControlName="hora">
-      <option *ngFor="let hora of listaHora" [value]="hora">{{hora}}:00</option>
-    </select>
+    <input formControlName="hora" type="text" placeholder="10:00...." (click)="mostrarHoras()">
     <br>
-    <label name="servicio">Servicios</label> 
+
+    <div class="modalGeneric modalHora" *ngIf="modalHoras">
+      <div class="modalHoras">
+        <div>     
+          <h3>Selección de Horas</h3>
+         <span (click)="hideModalHoras()">x</span>
+       </div>
+       <ul class="listaHoras">
+         <li *ngFor="let hora of listaHora" (click)="SeleccionHora($event.target)">{{hora}}:00</li>
+       </ul>
+      </div>
+    </div>
+
+    <label name="servicio">Servicios</label>
     <br>
-    <select formControlName="servicio" >
-      <option *ngFor="let item of lista" [value]="item">{{item}}</option>
-    </select>
+    <input formControlName="servicio" type="text" placeholder="Esmaltado" (click)="mostrarServicios()">
     <br>
+
+    <div class="modalGeneric modalHora" *ngIf="modalServicios">
+      <div class="modalHoras">
+        <div>     
+          <h3>Selección de Horas</h3>
+         <span (click)="hideModalServicios()">x</span>
+       </div>
+       <ul class="listaHoras ulServicios">
+         <li *ngFor="let servicio of lista" (click)="SeleccionServicio($event.target)">{{servicio}}</li>
+       </ul>
+      </div>
+    </div>
+
     <label name="telefono">Telefono</label>
     <br>
-    <input type="text" 
-    placeholder="telefono..."
-    formControlName="telefono"
-    >
+    <input type="text" placeholder="telefono..." formControlName="telefono">
     <br>
-    <input  type="submit" class="submit" value="Registrar Hora" (click)="enviarDatos()"/>
+    <button class="submit" (click)="enviarDatos()">Registrar Hora</button>
   </form>
 
   <div class="success" *ngIf="success">
-      <p>Registrado con exito!!! <br> <small>contactanos al +56 964573708</small></p>
-     
+    <p>Registrado con exito!!! <small>Contactanos al +56 964573708</small></p>
   </div>
 
   <div class=" success error" *ngIf="error">
     <p>{{error}}</p>
-</div>
+  </div>
 
-<div class=" success error" *ngIf="horaDisponible === 'Hora no se encuentra Disponible.'">
-  <p>{{horaDisponible}}</p>
-</div>
+  <div class=" success error" *ngIf="horaDisponible === 'Hora no se encuentra Disponible.'">
+    <p>{{horaDisponible}}</p>
+  </div>
 </div>

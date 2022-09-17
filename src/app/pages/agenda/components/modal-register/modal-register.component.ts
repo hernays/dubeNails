@@ -14,11 +14,15 @@ export class ModalRegisterComponent implements OnInit {
   @Input('dia') dia :any;
 
   public formGroup : FormGroup<any>;
-  public lista     : string[] = ['Acrilicas' , 'Esmaltado' , 'Polygel'];
+  public lista     : string[] = ['Acrilicas', 'Esmaltado Permanente' , 'Polygel' ,
+                                 'Manicura (limpieza)','kapping (revestimiento)','Relleno acrilico/polygel'];
   public success   : boolean = false;
   public error     : string = '';
   public horaDisponible : any ;
   public listaHora : number[] = [9,10,11,12,13,14,15,16,17,18];
+  public modalHoras: boolean  = false;
+  public horaSelecciona : number = 0;
+  public modalServicios : boolean = false;
 
 
   constructor(
@@ -42,10 +46,24 @@ export class ModalRegisterComponent implements OnInit {
     this.registerModal.emit(false);
   }
 
+  formatearServicio(servicio:string){
+      let numberServicio = 0;
+    switch(servicio){
+     case 'Acrilicas': numberServicio = 3; break;
+     case 'Esmaltado Permanente': numberServicio = 2; break;
+     case 'Polygel': numberServicio = 3; break;
+     case 'Manicura (limpieza)': numberServicio = 1; break;
+     case 'kapping (revestimiento)': numberServicio = 2; break;
+     case 'Relleno acrilico/polygel': numberServicio = 2; break;
+    }
+      return numberServicio;
+  }
+
   async enviarDatos(){
-    const { nombre , hora , servicio , telefono }= this.formGroup.value;
+    const { nombre ,  servicio , telefono }= this.formGroup.value;
     const dia = Number(this.dia);
-    const horaServicio = ( servicio === 'Esmaltado' ) ? 2 : 3 ;
+    const hora = this.horaSelecciona;
+    const horaServicio = this.formatearServicio(servicio);
     this.traerData(Number(hora) , nombre , servicio , dia , horaServicio ,telefono)
   }
 
@@ -59,17 +77,15 @@ export class ModalRegisterComponent implements OnInit {
                     this.horaDisponible = 'Hora no se encuentra Disponible.'; 
                     this.success = false; break;
                  }
-                 if(dia === items.dia &&horaNueva < 10 || horaNueva > 20){
+                 if(dia === items.dia && horaNueva < 9 || horaNueva > 20){
                   this.horaDisponible = 'Hora no se encuentra Disponible.'; 
                   this.success = false; break;
                 }
                if(dia === items.dia && horaNueva === items.hora || horaNueva+items.tramo  === items.hora){
-                console.log("aqui: ",horaNueva , items.hora , horaNueva+2 , horaNueva+3 )
                 this.horaDisponible = 'Hora no se encuentra Disponible.'; 
                 this.success = false; break;
                }                                                  
                if(dia === items.dia && horaNueva+horaServicio > items.hora  && horaNueva+horaServicio <= items.tramo){
-                console.log("aqui 2: ",horaNueva , items.hora , 'condicion tramo:',items.hora+(items.tramo - items.hora) ,"tramo: ", items.tramo)
                 this.horaDisponible = 'Hora no se encuentra Disponible.'; 
                 this.success = false;break;
                }
@@ -120,6 +136,31 @@ export class ModalRegisterComponent implements OnInit {
 })
   }
 
- 
+  mostrarHoras(){
+     this.modalHoras = true;
+  }
 
+  hideModalHoras(){
+    this.modalHoras = false;
+  }
+ 
+  SeleccionHora(event : any){
+    const evento = event.innerText.split(':');
+    this.formGroup.controls['hora'].setValue(evento[0]+':00');
+    this.horaSelecciona = Number(evento[0]); 
+    this.modalHoras = false;
+  }
+
+  mostrarServicios(){
+   this.modalServicios = true;
+  }
+
+  hideModalServicios(){
+    this.modalServicios = false;
+  }
+
+  SeleccionServicio(event : any){
+    this.formGroup.controls['servicio'].setValue(event.innerText);
+    this.modalServicios = false;
+  }
 }

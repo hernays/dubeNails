@@ -8,14 +8,14 @@
     <div class="contenidoAgenda" *ngFor="let dia of dias">
         <div class="dias" [class.disabled]="dia.dia < day ">
                 <div class="diaSemana">{{dia.diaSemana}} - {{dia.dia}}</div>
-                <ng-container *ngFor="let cliente of dataAgenda">
-                    <div  *ngIf="cliente.dia == dia.dia" class="clientes">
+                <div *ngFor="let cliente of dataAgenda">
+                    <div *ngIf="cliente.dia == dia.dia" class="clientes" (click)="showDetalle(cliente.dia)" >
                         <p class="textoAgenda">- {{cliente.nombre}} 
                             <br>- {{cliente.servicio}} 
                             <br>- {{cliente.hora}}hrs {{cliente.tramo}}hrs</p>
                          <app-cancelar-hora [dia]="cliente.dia" [telefono]="cliente.telefono" [nombre]="cliente.nombre"></app-cancelar-hora>
+                        </div>
                     </div>
-                </ng-container>
                 <p *ngIf="cargandoData"> Cargando...</p>
         </div>
         <button 
@@ -24,5 +24,9 @@
         >AGENDAR</button>
     </div>
     <app-modal-register *ngIf="modalRegisters" [dia]="selectDia" (registerModal)="hideModalRegister($event)"></app-modal-register>
-     
 </div>
+
+<app-detalles *ngIf="detalleComponent"
+[clienteDetalle]="clienteDetalle"
+(detalleComponent)="detalleComponents($event)"
+></app-detalles> 

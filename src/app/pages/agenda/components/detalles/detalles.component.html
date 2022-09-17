@@ -1,0 +1,16 @@
+<div class="modalGeneric modalP" *ngIf="modalServicios">
+    <div class="contenido">
+        <div>
+            <div class="headerAgenda">
+                <h3>Detalle de horas</h3>
+                <span (click)="hideModalServicios()">x</span>
+              </div>
+              <div class="bodyAgenda" *ngFor="let clientes of clienteDetalle; let i = index"
+                   [class.backgroundBody]="i%2 === 0">
+                <p><strong>Nombre:</strong> {{clientes.nombre}}</p>
+                <p><strong>Servicio:</strong> {{clientes.servicio}}</p>
+                <p><strong>hora:</strong>  {{clientes.hora}}:00 - {{clientes.tramo}}:00 </p>
+              </div>
+        </div>
+    </div>
+</div>

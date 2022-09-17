@@ -1,0 +1,51 @@
+@import '../../../../../styles.scss';
+
+.modalP{
+    background-color: #676666;
+}
+.contenido{
+    width: 80%;
+    max-height: 80%;
+    background-color: white;
+    margin-top: 15%;
+    border-radius: 5px;
+    overflow-y: auto;
+    
+    .headerAgenda{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 28px;
+        h3{
+            width: 72%;
+            text-align: end;
+            margin-top: 10%;
+            margin-right: 14%;
+        }
+        span{
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            border-radius: 50px;
+            background-color: #b0a4a4;
+            color: white;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    }
+
+    .bodyAgenda{
+        display: flex;
+        flex-flow: column;
+        gap: 5px;
+        box-shadow: 0px 0px 3px black;
+        margin-top: 16px;
+        margin-bottom: 10px;
+        padding : 5px;
+
+    }
+
+    .backgroundBody{
+        background-color: $colorInputs;
+    }
+}

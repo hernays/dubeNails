@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { BehaviorSubject } from 'rxjs';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
+import { UsuariosService } from 'src/app/services/usuarios.service'; 
 
 @Component({
   selector: 'app-calendario',
@@ -21,18 +22,23 @@ export class CalendarioComponent implements OnInit {
   public selectDia : any;
   public horas : number[] = [10,11,12,13,14,15,16,17,18,19,20];
   public cargandoData: boolean = false;
+  public detalleComponent : boolean = false;
   @Output('telefono')  telefono : EventEmitter<any> = new EventEmitter();
+  @Output('loginAdmin') loginAdmin : EventEmitter<any> = new EventEmitter();
+  public clienteDetalle : any ;
   
   constructor(
     private agendaService : AgendaService,
-    private eventsService : EventsService
-  ) {}
+    private eventsService : EventsService,
+    private usuariosService : UsuariosService
+  ) {
+  }
 
   ngOnInit(): void {
     moment.locale('es');
     this.fechas();
     this.showHoras();
-
+    this.verificarUsuario();
     this.eventsService.cerrarModalLogin.subscribe((valor:boolean) => {
               if(!valor){
                 this.showHoras();
@@ -120,6 +126,7 @@ export class CalendarioComponent implements OnInit {
         this.agendaService.getDatos().subscribe((data:any) => {
           this.dataAgenda = data;
           this.cargandoData = false;
+          this.verificarUsuario()
         })
 
     this.eventsService.successDatos.subscribe( valor => {
@@ -127,15 +134,36 @@ export class CalendarioComponent implements OnInit {
         this.agendaService.getDatos().subscribe((data:any) => {
           this.dataAgenda = data;
           this.cargandoData = false;
+          this.verificarUsuario()
         })
       }
     })
   }
 
 
+  verificarUsuario(){
+    const token = localStorage.getItem('token') as string;
+    this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
+      console.log('entrando')
+        this.eventsService.loginAdmin.emit(true)
+    },
+  error : (error) => {
+    console.log('entrando error')
+    this.eventsService.loginAdmin.emit(false)
+  }})
+   }
 
-  Sethoras(){
-    const horas =  [10,11,12,13,14,15,16,17,18,19,20]; 
-  }
+
+   showDetalle(dia:any){
+     const clientes =  this.dataAgenda.filter( (element :any) => element.dia == dia);
+     console.log('aqui' , dia)
+     this.detalleComponent = true;
+     console.log(this.detalleComponent)
+     this.clienteDetalle = clientes;
+   }
+
+   detalleComponents(event:any){
+     this.detalleComponent = event;
+   }
 
 }

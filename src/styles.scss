@@ -1,10 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 $colorFondo : #64227c;
+$colorInputs: #f3e5ff;
 
 *,body{
     padding: 0px;
     margin: 0px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: sans-serif;
 }
 
 label{
@@ -19,6 +20,7 @@ input[type="text"] , input[type="password"]{
     padding: 10px;
     border-radius: 5px;
     font-weight: bold;
+    background-color: $colorInputs;
 }
 
 select{
@@ -32,4 +34,16 @@ input[type="submit"] , button{
     color: #fff;
     border-radius: 5px;
 
+}
+
+
+.modalGeneric{
+    position: absolute;
+    display: flex;
+    width: 100%;
+    top: 0px;
+    height: 100%;
+    background: black;
+    z-index: 1;
+    justify-content: center;
 }
