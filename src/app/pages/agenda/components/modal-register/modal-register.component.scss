@@ -2,7 +2,7 @@
 
 .modal{
     position: absolute;
-    top: 5%;
+    top: 8%;
     width: 75%;
     border-radius: 20px;
     background-color: rgb(255, 253, 253);
@@ -104,6 +104,7 @@ input[type="radio"]{
     top: 21%;
     left: 10%;
     box-shadow: 0px 0px 5px black;
+    margin-top: 45px;
 
     div{
         display: flex;

@@ -23,6 +23,7 @@ export class ModalRegisterComponent implements OnInit {
   public modalHoras: boolean  = false;
   public horaSelecciona : number = 0;
   public modalServicios : boolean = false;
+  public spinner : boolean = false;
 
 
   constructor(
@@ -60,6 +61,7 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   async enviarDatos(){
+    this.spinner = true;
     const { nombre ,  servicio , telefono }= this.formGroup.value;
     const dia = Number(this.dia);
     const hora = this.horaSelecciona;
@@ -94,6 +96,7 @@ export class ModalRegisterComponent implements OnInit {
                  if(typeof this.horaDisponible !== typeof '' ){
                   this.agendaService.recibirDatos({nombre , horaNueva , servicio , dia , horaServicio , telefono}).subscribe({
                     next : (msg:string) => {
+                      this.spinner = false;
                       this.formGroup.controls['nombre'].setValue('');
                       this.formGroup.controls['hora'].setValue('');
                       this.formGroup.controls['servicio'].setValue('');
