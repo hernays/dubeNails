@@ -16,11 +16,15 @@ br{
     margin-bottom: 10px;
 }
 
-input[type="text"] , input[type="password"]{
+input[type="text"] , input[type="password"] , input[type="button"]{
     padding: 10px;
     border-radius: 5px;
     font-weight: bold;
     background-color: $colorInputs;
+}
+
+input[type="button"]{
+    box-shadow: 1px 1px 1px black inset;
 }
 
 select{
@@ -43,7 +47,7 @@ input[type="submit"] , button{
     width: 100%;
     top: 0px;
     height: 100%;
-    background: black;
+    background: #000000d9;
     z-index: 1;
     justify-content: center;
 }

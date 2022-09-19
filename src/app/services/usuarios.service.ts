@@ -32,7 +32,6 @@ export class UsuariosService {
   }
 
   autorizarToken(token:string){
-    console.log('servicios')
     return this.http.get(`${this.url}auth/authorization` , {
        headers : {
         authorization : token
@@ -40,7 +39,6 @@ export class UsuariosService {
       })
       .pipe(
         map((data:any) => {
-          console.log('data_------', data)
           return data;
         }),
         catchError( (error:any) => {
@@ -51,6 +49,20 @@ export class UsuariosService {
       )
   }
 
+  getUsuario(id:string){
+    return this.http.get<any>(`${this.url}usuario/${id}`)
+    .pipe(map((data:any) => {
+         return {
+          id: data.id,
+          nombre : data.nombre,
+          apellido : data.apelldio,
+          rol : data.rol
+         }
+    })
+    ,catchError( (error:any) => {
+      return throwError((error:any) =>{return error} )
+    }))
+  }
 
 
 }

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
@@ -12,8 +14,12 @@ export class MenuComponent implements OnInit {
    public showRegistro : boolean = false;
    public lista        : boolean = false;
    public showlogin    : boolean = false;
+   public usuarioActivo:boolean = false;
+   public usuarioData : any;
   constructor(
-    private eventsService : EventsService
+    private eventsService : EventsService,
+    private usuariosService : UsuariosService,
+    private router : Router
   ) { }
 
   ngOnInit(){
@@ -21,7 +27,8 @@ export class MenuComponent implements OnInit {
                       this.menu = valor;     
                       this.showlogin = valor;
       })
-
+      
+      this.getusuario();
   }
 
   salir(){
@@ -68,5 +75,15 @@ export class MenuComponent implements OnInit {
       this.lista = true; break;
     }
   }
+
+  getusuario(){
+    this.router
+    const id = localStorage.getItem('token') as string;
+    
+  this.usuariosService.getUsuario(id).subscribe((data:any) => {
+    this.usuarioData = data;
+  })
+  }
+
 
 }

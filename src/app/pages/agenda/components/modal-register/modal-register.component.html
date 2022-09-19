@@ -1,4 +1,4 @@
-<div class="modal">
+<div class="modal" fadeIn>
   <div class="content_titulo">
     <h3>Registro de horas</h3>
     <span (click)="hideModal()">x</span>
@@ -10,7 +10,7 @@
     <br>
     <label name="hora">Hora</label>
     <br>
-    <input formControlName="hora" type="text" placeholder="10:00...." (click)="mostrarHoras()">
+    <input formControlName="hora" type="button" (click)="mostrarHoras()">
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalHoras">
@@ -27,11 +27,11 @@
 
     <label name="servicio">Servicios</label>
     <br>
-    <input formControlName="servicio" type="text" placeholder="Esmaltado" (click)="mostrarServicios()">
+    <input formControlName="servicio" type="button" (click)="mostrarServicios()">
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalServicios">
-      <div class="modalHoras">
+      <div class="modalHoras modalServicio">
         <div>     
           <h3>Selección de Horas</h3>
          <span (click)="hideModalServicios()">x</span>

@@ -1,4 +1,4 @@
-<nav [class.menuActive]="menu" class="menu">
+<nav [class.menuActive]="menu" class="menu" *ngIf="usuarioActivo;else usuario">
 
     <ng-container *ngIf="menu ; else menuActive">
         <span (click)="cerrarModal()">x</span>
@@ -37,4 +37,40 @@
 </nav>
 
 
+<ng-template #usuario>
+    <nav [class.menuActive]="menu" class="menu" #usuario>
 
+        <ng-container *ngIf="menu ; else menuActive">
+            <span (click)="cerrarModal()">x</span>
+            <h3>{{tituloMenu}}</h3>
+            <div>
+                <hr class="lineaMenu">
+            </div>
+            
+            <ul *ngIf="lista">
+                <li>
+                    <a>Inicio</a>
+                </li>
+                <li>
+                    <a (click)="login()" >Login</a>
+                </li>
+                <li>
+                    <a (click)="showRegister()">Registro</a>
+                </li>
+                <li>
+                    <a (click)="salir()">Cerrar Sessión</a>
+                </li>
+            </ul>
+    
+            <app-registro *ngIf="showRegistro"></app-registro>
+            <app-login *ngIf="showlogin"> </app-login>
+        </ng-container>
+    
+        <ng-template #menuActive>
+            <div class="menuFalse usuario" (click)="showMenu()">
+            </div>
+            <p class="nombreUser">{{usuarioData.nombre}}</p>
+        </ng-template>
+    
+    </nav>
+</ng-template>

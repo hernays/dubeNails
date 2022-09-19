@@ -13,7 +13,6 @@
                         <p class="textoAgenda">- {{cliente.nombre}} 
                             <br>- {{cliente.servicio}} 
                             <br>- {{cliente.hora}}hrs {{cliente.tramo}}hrs</p>
-                         <app-cancelar-hora [dia]="cliente.dia" [telefono]="cliente.telefono" [nombre]="cliente.nombre"></app-cancelar-hora>
                         </div>
                     </div>
                 <p *ngIf="cargandoData"> Cargando...</p>

@@ -4,13 +4,20 @@
             <div class="headerAgenda">
                 <h3>Detalle de horas</h3>
                 <span (click)="hideModalServicios()">x</span>
-              </div>
-              <div class="bodyAgenda" *ngFor="let clientes of clienteDetalle; let i = index"
-                   [class.backgroundBody]="i%2 === 0">
+            </div>
+            <div class="bodyAgenda" *ngFor="let clientes of clienteDetalle; let i = index"
+                [class.backgroundBody]="i%2 === 0">
                 <p><strong>Nombre:</strong> {{clientes.nombre}}</p>
                 <p><strong>Servicio:</strong> {{clientes.servicio}}</p>
-                <p><strong>hora:</strong>  {{clientes.hora}}:00 - {{clientes.tramo}}:00 </p>
-              </div>
+                <p><strong>hora:</strong> {{clientes.hora}}:00 - {{clientes.tramo}}:00 </p>
+                <app-cancelar-hora 
+                    [dia]="clientes.dia" 
+                    [telefono]="clientes.telefono" 
+                    [nombre]="clientes.nombre"
+                    [botonCancelars]="retornaBoton" 
+                    (returnData)="returnData($event)">
+                </app-cancelar-hora>
+            </div>
         </div>
     </div>
 </div>

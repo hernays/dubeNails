@@ -4,6 +4,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
 import { UsuariosService } from 'src/app/services/usuarios.service'; 
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-calendario',
@@ -30,7 +31,8 @@ export class CalendarioComponent implements OnInit {
   constructor(
     private agendaService : AgendaService,
     private eventsService : EventsService,
-    private usuariosService : UsuariosService
+    private usuariosService : UsuariosService,
+    private sharedService : SharedService
   ) {
   }
 
@@ -38,7 +40,6 @@ export class CalendarioComponent implements OnInit {
     moment.locale('es');
     this.fechas();
     this.showHoras();
-    this.verificarUsuario();
     this.eventsService.cerrarModalLogin.subscribe((valor:boolean) => {
               if(!valor){
                 this.showHoras();
@@ -124,41 +125,25 @@ export class CalendarioComponent implements OnInit {
   showHoras(){
     this.cargandoData = true;
         this.agendaService.getDatos().subscribe((data:any) => {
+          this.sharedService.setDataAgenda(data);
           this.dataAgenda = data;
           this.cargandoData = false;
-          this.verificarUsuario()
         })
 
     this.eventsService.successDatos.subscribe( valor => {
       if(valor){
         this.agendaService.getDatos().subscribe((data:any) => {
           this.dataAgenda = data;
+          this.sharedService.setDataAgenda(data);
           this.cargandoData = false;
-          this.verificarUsuario()
         })
       }
     })
   }
 
-
-  verificarUsuario(){
-    const token = localStorage.getItem('token') as string;
-    this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
-      console.log('entrando')
-        this.eventsService.loginAdmin.emit(true)
-    },
-  error : (error) => {
-    console.log('entrando error')
-    this.eventsService.loginAdmin.emit(false)
-  }})
-   }
-
-
    showDetalle(dia:any){
      const clientes =  this.dataAgenda.filter( (element :any) => element.dia == dia);
-     console.log('aqui' , dia)
      this.detalleComponent = true;
-     console.log(this.detalleComponent)
      this.clienteDetalle = clientes;
    }
 

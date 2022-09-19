@@ -33,8 +33,8 @@ export class ModalRegisterComponent implements OnInit {
   ){ 
     this.formGroup = this.formBuilder.group({
       nombre  : ['', [Validators.required , Validators.minLength(2)]],
-      servicio: ['', [Validators.required]],
-      hora    : ['', [Validators.required , Validators.minLength(2)]],
+      servicio: ['Seleccione un servicio...', [Validators.required]],
+      hora    : ['Seleccione una hora...', [Validators.required , Validators.minLength(2)]],
       telefono: ['']
     })
   }
