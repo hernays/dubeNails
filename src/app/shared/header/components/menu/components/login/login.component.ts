@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup , FormBuilder ,  Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { EventsService } from 'src/app/services/events.service';
@@ -9,7 +9,7 @@ import { EventsService } from 'src/app/services/events.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
+ @Output('userActive')  userActive : EventEmitter<any> = new EventEmitter();
   public formLogin : FormGroup ;
   constructor(
     private formBuilder : FormBuilder,
@@ -33,7 +33,9 @@ export class LoginComponent implements OnInit {
       }
     this.usuariosService.autorizacionUser(body).subscribe({next: (token:string) => {
                  localStorage.setItem('token' , token );
+                 console.log('entrando login')
                  this.eventsService.cerrarModalLogin.emit(false);
+                 this.userActive.emit(true)
     },
     error: () => {
 

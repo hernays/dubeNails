@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Router } from '@angular/router';
@@ -14,8 +14,10 @@ export class MenuComponent implements OnInit {
    public showRegistro : boolean = false;
    public lista        : boolean = false;
    public showlogin    : boolean = false;
-   public usuarioActivo:boolean = false;
+   public usuarioActivo: boolean = false;
    public usuarioData : any;
+   public test : any = false;
+
   constructor(
     private eventsService : EventsService,
     private usuariosService : UsuariosService,
@@ -29,6 +31,8 @@ export class MenuComponent implements OnInit {
       })
       
       this.getusuario();
+
+      console.log(this.test)
   }
 
   salir(){
@@ -37,6 +41,7 @@ export class MenuComponent implements OnInit {
     this.showRegistro = false;
     this.lista        = false;
     this.showlogin    = false;
+    this.usuarioActivo = false;
   }
 
   showMenu(){
@@ -80,9 +85,21 @@ export class MenuComponent implements OnInit {
     this.router
     const id = localStorage.getItem('token') as string;
     
-  this.usuariosService.getUsuario(id).subscribe((data:any) => {
-    this.usuarioData = data;
-  })
+  this.usuariosService.getUsuario(id).subscribe({next: (data) => {
+  this.usuarioData = data;
+  this.usuarioActivo = true;
+  },
+ error: (error) => {
+ this.usuarioActivo = false;
+ }})
+  }
+
+
+  loginUser(event:any){
+    this.getusuario();
+    setTimeout(() => {
+      this.usuarioActivo = event;
+    },400)
   }
 
 

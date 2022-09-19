@@ -1,15 +1,23 @@
 <div class="registro">
-    <form >
+    <form [formGroup]="formRegister">
         <label name="nombre">Nombre:</label>
-        <input type="text" placeholder="Nombre...." />
+        <input formControlName="nombre" type="text" placeholder="Nombre...." />
 
-        <label name="rut">Rut:</label>
-        <input type="text" placeholder="Rut...." />
+        <label name="correo">Correo:</label>
+        <input formControlName="correo" type="text" placeholder="correo...." />
+
+        <label name="Clave">Clave:</label>
+        <input formControlName="clave" type="password" placeholder="clave...." />
 
         <label name="telefono">Telefono:</label>
-        <input type="text" placeholder="Telefono...." />
+        <input formControlName="telefono" type="text" placeholder="Telefono...." />
 
-        <input type="submit" value="Registrar">
+        <label name="direccion">Dirección:</label>
+        <input formControlName="direccion" type="text" placeholder="direccion...." />
+
+        <input type="submit" value="Registrar" (click)="enviar()">
+        
+        <p class="errorMessage">{{messageError}}</p>
     </form>
 
 </div>

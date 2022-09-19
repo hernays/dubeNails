@@ -1,4 +1,4 @@
-<nav [class.menuActive]="menu" class="menu" *ngIf="usuarioActivo;else usuario">
+<nav [class.menuActive]="menu" class="menu" *ngIf="!usuarioActivo;else usuario">
 
     <ng-container *ngIf="menu ; else menuActive">
         <span (click)="cerrarModal()">x</span>
@@ -23,7 +23,7 @@
         </ul>
 
         <app-registro *ngIf="showRegistro"></app-registro>
-        <app-login *ngIf="showlogin"> </app-login>
+        <app-login (userActive)="loginUser($event)" *ngIf="showlogin" > </app-login>
     </ng-container>
 
     <ng-template #menuActive>
@@ -63,7 +63,7 @@
             </ul>
     
             <app-registro *ngIf="showRegistro"></app-registro>
-            <app-login *ngIf="showlogin"> </app-login>
+            <app-login *ngIf="showlogin" (userActive)="loginUser($event)" > </app-login>
         </ng-container>
     
         <ng-template #menuActive>

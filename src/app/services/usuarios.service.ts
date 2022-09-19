@@ -50,7 +50,10 @@ export class UsuariosService {
   }
 
   getUsuario(id:string){
-    return this.http.get<any>(`${this.url}usuario/${id}`)
+    return this.http.get<any>(`${this.url}usuario`,{
+      headers:{
+        authorization: id}
+    })
     .pipe(map((data:any) => {
          return {
           id: data.id,
@@ -60,9 +63,23 @@ export class UsuariosService {
          }
     })
     ,catchError( (error:any) => {
-      return throwError((error:any) =>{return error} )
+      console.log(error)
+      return throwError(() =>{ return error} )
     }))
   }
+
+
+  saveUsuarios(body:any){
+    return this.http.post<any>(`${this.url}usuarios`, body)
+    .pipe(map((data) => {
+        return data;
+    })
+    ,catchError((error) => {
+      return throwError(() => error.error.msg)
+    })
+    )
+  }
+
 
 
 }
