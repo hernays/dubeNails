@@ -7,7 +7,7 @@
         <input formControlName="correo" type="text" placeholder="correo...." />
 
         <label name="Clave">Clave:</label>
-        <input formControlName="clave" type="password" placeholder="clave...." />
+        <input formControlName="password" type="password" placeholder="Contraseña...."  />
 
         <label name="telefono">Telefono:</label>
         <input formControlName="telefono" type="text" placeholder="Telefono...." />
@@ -17,7 +17,8 @@
 
         <input type="submit" value="Registrar" (click)="enviar()">
         
-        <p class="errorMessage">{{messageError}}</p>
+        <p *ngIf="messageError" class="errorMessage">{{messageError}}</p>
+        <p *ngIf="messageExito">{{messageError}}</p>
     </form>
 
 </div>

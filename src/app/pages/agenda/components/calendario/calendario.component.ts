@@ -61,10 +61,11 @@ export class CalendarioComponent implements OnInit {
   fechas(){
     this.mes = moment().format('MMMM');
     let mes = moment().format('MM');
-        mes = mes.slice(1);
     this.day = new Date().getDate();
+    console.log(this.day + 10)
     let diaSemana = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
     let dias = 0;
+ 
      switch(Number(mes)){
       case 1 : 
       dias = 31;
@@ -95,6 +96,7 @@ export class CalendarioComponent implements OnInit {
       dias = 30;
       break;
       case 10 :
+      console.log('aqui')
       diaSemana = ['Sabado','Domingo','Lunes','Martes','Miercoles','Jueves','Viernes'];
       dias = 31;
       break;
@@ -114,10 +116,12 @@ export class CalendarioComponent implements OnInit {
       if( i === 1 || i === 8 || i === 15 || i === 22 || i === 29)
         dia === 0;
       else dia ++;
-
+                   
       this.dias.push({dia : i , diaSemana: diaSemana[dia]});
       if(dia === 6) dia = 0;
       }
+
+      console.log(this.dias)
   }
 
 

@@ -6,7 +6,7 @@
 
 <div class="calendario">
     <div class="contenidoAgenda" *ngFor="let dia of dias">
-        <div class="dias" [class.disabled]="dia.dia < day ">
+        <div class="dias" [class.disabled]="dia.dia < day">
                 <div class="diaSemana">{{dia.diaSemana}} - {{dia.dia}}</div>
                 <div *ngFor="let cliente of dataAgenda">
                     <div *ngIf="cliente.dia == dia.dia" class="clientes" (click)="showDetalle(cliente.dia)" >
@@ -18,7 +18,7 @@
                 <p *ngIf="cargandoData"> Cargando...</p>
         </div>
         <button 
-        [class.none]="dia.dia < day " 
+        [class.none]="dia.dia < day" 
         (click)="modalRegister(dia.dia)"
         >AGENDAR</button>
     </div>

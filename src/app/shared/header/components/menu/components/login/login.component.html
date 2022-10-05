@@ -11,8 +11,8 @@
         <label name="clave">Contraseña:</label>
         <input type="password" placeholder="contraseña...."
         formControlName="clave" />
-
         <input type="submit" value="Iniciar" (click)="login()">
+        <p *ngIf="msgError" class="msgError">{{msgError}}</p>
     </form>
 
 </div>

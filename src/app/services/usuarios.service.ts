@@ -25,7 +25,7 @@ export class UsuariosService {
       }),
       catchError((error:any) => {
         return throwError( () => {
-          return error;
+          return error.error;
         })
       })
     )

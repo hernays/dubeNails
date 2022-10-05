@@ -10,6 +10,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class RegistroComponent implements OnInit {
   public formRegister : FormGroup;
   public messageError : any;
+  public messageExito : string = '';
 
   constructor(
     private formBuilder : FormBuilder,
@@ -18,7 +19,7 @@ export class RegistroComponent implements OnInit {
     this.formRegister = this.formBuilder.group({
       nombre : ['', [Validators.required ]],
       correo  : ['',  [Validators.required ]],
-      clave  : ['',  [Validators.required ]],
+      password  : ['',  [Validators.required ]],
       telefono  : ['',  [Validators.required ]],
       direccion  : ['',  [Validators.required ]]
      } )
@@ -30,22 +31,35 @@ export class RegistroComponent implements OnInit {
   enviar(){
     const { nombre,
       correo,
-      clave,
+      password,
       telefono,
       direccion } = this.formRegister.value;
 
       const body = {
-        nombre,
-        correo,
-        clave,
+        nombre : nombre.toLowerCase(),
+        correo : correo.toLowerCase(),
+        password,
         telefono,
-        direccion }
+        rol :'user',
+        direccion : direccion.toLowerCase()}
         this.usuariosService.saveUsuarios(body).subscribe(({next : (data) => {
-          console.log(data)
+          console.log("resp",data)
+          this.messageExito = data.msg;
+           this.reset()
         },error: (error) => {
           console.log(error)
           this.messageError = error;
+          this.reset()
         }}))
+      }
+
+
+      reset(){
+        this.formRegister.controls['nombre'].setValue('')
+        this.formRegister.controls['correo'].setValue('')
+        this.formRegister.controls['clave'].setValue('')
+        this.formRegister.controls['telefono'].setValue('')
+        this.formRegister.controls['direccion'].setValue('')
       }
   
 }

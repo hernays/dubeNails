@@ -11,6 +11,7 @@ import { EventsService } from 'src/app/services/events.service';
 export class LoginComponent implements OnInit {
  @Output('userActive')  userActive : EventEmitter<any> = new EventEmitter();
   public formLogin : FormGroup ;
+  public msgError : string = '';
   constructor(
     private formBuilder : FormBuilder,
     private usuariosService : UsuariosService,
@@ -29,7 +30,7 @@ export class LoginComponent implements OnInit {
   login(){
     const { usuario , clave } = this.formLogin.value;
       const body  = {
-        correo : usuario , password :clave
+        nombre : usuario.toLowerCase() , password :clave
       }
     this.usuariosService.autorizacionUser(body).subscribe({next: (token:string) => {
                  localStorage.setItem('token' , token );
@@ -37,8 +38,9 @@ export class LoginComponent implements OnInit {
                  this.eventsService.cerrarModalLogin.emit(false);
                  this.userActive.emit(true)
     },
-    error: () => {
-
+    error: (error) => {
+      console.log(error.msg)
+       this.msgError = error.msg;
     }})
   }
 
