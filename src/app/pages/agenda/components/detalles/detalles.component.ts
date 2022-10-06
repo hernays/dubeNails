@@ -13,7 +13,7 @@ export class DetallesComponent implements OnInit {
   @Input('clienteDetalle') clienteDetalle : any = '';
   @Output('retornaBoton') retornaBoton : EventEmitter<any> = new EventEmitter();
   @Output('detalleComponent') detalleComponent : EventEmitter<any> = new EventEmitter();
-
+  public rol : string = '';
   constructor(
     private usuariosService : UsuariosService,
   ) { }
@@ -34,6 +34,8 @@ export class DetallesComponent implements OnInit {
   verificarUsuario(){
     const token = localStorage.getItem('token') as string;
     this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
+      console.log(data)
+      this.rol = data.rol;
       this.retornaBoton.emit(true);
     },
   error : (error) => {

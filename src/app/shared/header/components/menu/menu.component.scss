@@ -63,14 +63,13 @@
     height: auto;
     position: absolute;
     transition: 300ms;
-    padding-bottom: 10%;
+    padding-bottom: 6%;
     z-index: 1;
     top: 0px;
     left: 0px;
     display: flex;
     flex-flow: column;
     background: black;
-    opacity: 0.9;
     justify-content: flex-start;
 }
 
@@ -95,7 +94,8 @@
 }
 
 app-registro,
-app-login {
+app-login,
+app-actualizar-user{
     display: flex;
     flex-flow: column;
     width: 100%;
@@ -114,14 +114,17 @@ app-login {
     width: 5vh;
     height: 5vh;
     border-radius: 50%;
-    background-image: url('../../../../../assets/img/userIcon.svg');
     background-size: 100%;
+}
+
+.userImgNone{
+    background-image: url('../../../../../assets/img/userIcon.svg');
 }
 
 .nombreUser {
     font-size: 11px;
     font-weight: bold;
     width: 100%;
-    text-align: -moz-center;
+    text-align: center;
     margin-right: 35%;
 }

@@ -11,6 +11,7 @@
                 <p><strong>Servicio:</strong> {{clientes.servicio}}</p>
                 <p><strong>hora:</strong> {{clientes.hora}}:00 - {{clientes.tramo}}:00 </p>
                 <app-cancelar-hora 
+                    *ngIf="rol !== 'user' && rol"
                     [dia]="clientes.dia" 
                     [telefono]="clientes.telefono" 
                     [nombre]="clientes.nombre"

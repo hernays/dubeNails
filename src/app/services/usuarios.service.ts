@@ -59,7 +59,8 @@ export class UsuariosService {
           id: data.id,
           nombre : data.nombre,
           apellido : data.apelldio,
-          rol : data.rol
+          rol : data.rol,
+          image:data.image
          }
     })
     ,catchError( (error:any) => {
@@ -80,6 +81,8 @@ export class UsuariosService {
     )
   }
 
-
+  cargaImg(formData:any , id:string){
+    return this.http.put<any>(`${this.url}usuarioImg/${id}`, formData);
+  }
 
 }

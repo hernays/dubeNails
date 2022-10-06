@@ -10,6 +10,7 @@ import { MenuComponent } from './header/components/menu/menu.component';
 import { TituloComponent } from './header/components/titulo/titulo.component';
 import { RegistroComponent } from './header/components/menu/components/registro/registro.component';
 import { LoginComponent } from './header/components/menu/components/login/login.component';
+import { ActualizarUserComponent } from './header/components/menu/components/actualizar-user/actualizar-user.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { LoginComponent } from './header/components/menu/components/login/login.
     MenuComponent,
     TituloComponent,
     RegistroComponent,
-    LoginComponent
+    LoginComponent,
+    ActualizarUserComponent
   ],
   imports: [
     CommonModule,

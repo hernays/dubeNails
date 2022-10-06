@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { EventsService } from 'src/app/services/events.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Router } from '@angular/router';
@@ -17,6 +17,8 @@ export class MenuComponent implements OnInit {
    public usuarioActivo: boolean = false;
    public usuarioData : any;
    public test : any = false;
+   public showActualizarUser : boolean = false;
+   @Output('id')  id : any;
 
   constructor(
     private eventsService : EventsService,
@@ -29,10 +31,7 @@ export class MenuComponent implements OnInit {
                       this.menu = valor;     
                       this.showlogin = valor;
       })
-      
       this.getusuario();
-
-      console.log(this.test)
   }
 
   salir(){
@@ -78,6 +77,10 @@ export class MenuComponent implements OnInit {
       this.showlogin = false;
       this.tituloMenu = 'Menu';
       this.lista = true; break;
+      case 'Actualizar Perfil':
+      this.showActualizarUser = false;
+      this.tituloMenu = 'Menu';
+      this.lista = true; break;
     }
   }
 
@@ -88,6 +91,8 @@ export class MenuComponent implements OnInit {
   this.usuariosService.getUsuario(id).subscribe({next: (data) => {
   this.usuarioData = data;
   this.usuarioActivo = true;
+  this.id = data.id;
+  console.log("aqui",this.usuarioData.image)
   },
  error: (error) => {
  this.usuarioActivo = false;
@@ -102,5 +107,11 @@ export class MenuComponent implements OnInit {
     },400)
   }
 
+  actualizarUser(){
+  this.lista = false;
+  this.tituloMenu = 'Actualizar Perfil';
+  this.showActualizarUser = true;
+
+  }
 
 }

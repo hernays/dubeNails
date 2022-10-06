@@ -17,9 +17,6 @@
             <li>
                 <a (click)="showRegister()">Registro</a>
             </li>
-            <li>
-                <a (click)="salir()">Cerrar Sessión</a>
-            </li>
         </ul>
 
         <app-registro *ngIf="showRegistro"></app-registro>
@@ -52,22 +49,19 @@
                     <a>Inicio</a>
                 </li>
                 <li>
-                    <a (click)="login()" >Login</a>
-                </li>
-                <li>
-                    <a (click)="showRegister()">Registro</a>
+                    <a (click)="actualizarUser()">Actualizar Perfil</a>
                 </li>
                 <li>
                     <a (click)="salir()">Cerrar Sessión</a>
                 </li>
             </ul>
     
-            <app-registro *ngIf="showRegistro"></app-registro>
-            <app-login *ngIf="showlogin" (userActive)="loginUser($event)" > </app-login>
+            <app-actualizar-user [idUser]="id"*ngIf="showActualizarUser"></app-actualizar-user>
         </ng-container>
     
         <ng-template #menuActive>
-            <div class="menuFalse usuario" (click)="showMenu()">
+            <div class="menuFalse" [class.userImgNone]="!usuarioData.image" (click)="showMenu()">
+                <img class="usuario"[src]="usuarioData.image">
             </div>
             <p class="nombreUser">{{usuarioData.nombre}}</p>
         </ng-template>
