@@ -1,22 +1,4 @@
 .content-home{
     width: 100%;
     min-height: 84vh;
-
-    .cards{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        h2{
-            margin-bottom: 0px;
-        }
-        img{
-            display: block;
-            width: 100%;
-            height: 200px;
-        }
-        p{
-            padding: 10px;
-        }
-    }
 }

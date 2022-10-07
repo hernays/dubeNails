@@ -77,7 +77,7 @@ export class MenuComponent implements OnInit {
       this.showlogin = false;
       this.tituloMenu = 'Menu';
       this.lista = true; break;
-      case 'Actualizar Perfil':
+      case 'Subir Foto':
       this.showActualizarUser = false;
       this.tituloMenu = 'Menu';
       this.lista = true; break;
@@ -92,8 +92,12 @@ export class MenuComponent implements OnInit {
   this.usuarioData = data;
   this.usuarioActivo = true;
   this.id = data.id;
-  const image = data.image.split('.');
-  this.usuarioData.image = image[0] +'.'+ image[1]+'.'+ image[2]+'.jpg';
+  if(data.image){ 
+    const image = data.image.split('.');
+    this.usuarioData.image = image[0] +'.'+ image[1]+'.'+ image[2]+'.jpg';
+  }
+  
+  
   },
  error: (error) => {
  this.usuarioActivo = false;
@@ -110,9 +114,13 @@ export class MenuComponent implements OnInit {
 
   actualizarUser(){
   this.lista = false;
-  this.tituloMenu = 'Actualizar Perfil';
+  this.tituloMenu = 'Subir Foto';
   this.showActualizarUser = true;
 
+  }
+
+  inicio(){
+    this.menu = false;
   }
 
 }

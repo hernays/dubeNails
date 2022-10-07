@@ -1,0 +1,7 @@
+<div class="cardNoticias" *ngFor="let data of datas">
+    <img class="noticiaImg" [src]="data.img" >
+    <div class="content">
+        <span> Publicado: {{data.fecha}}</span>
+        <p>{{data.comentario}}</p>
+    </div>
+</div>

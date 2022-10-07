@@ -30,6 +30,7 @@ export class ActualizarUserComponent implements OnInit {
     this.usuariosService.cargaImg(formData , this.idUser).subscribe({next: (data) => {
       console.log(data)
       this.carga = false;
+      
     }, error: (err) => {
       console.log(err)
       this.carga = false;

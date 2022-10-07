@@ -7,6 +7,7 @@
     align-items: center;
     cursor: pointer;
 
+
     h3 {
         margin-bottom: 10px;
     }
@@ -75,20 +76,23 @@
 }
 
 .menuFalse {
+    width: 50px;
+    height: 50px;
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
     transition: 300ms;
     gap: 14px;
-    margin-right: 30%;
+
 
     p {
         display: block;
         width: 100%;
         height: 1px;
-        background-color: white;
-        margin-top: -5px;
+        background-color: black;
+        margin-top: -3px;
+        margin-right: 15px;
     }
 
 
@@ -123,9 +127,12 @@ app-actualizar-user{
 }
 
 .imgGrande{
-  width: 8vh;
-  height: 8vh;
-  border-radius: 30%;
+      position: relative;
+      width: 60px;
+      height: 60px;
+      left: -17px;
+      top: -10px;
+      border-radius: 10%;
 }
 .nombreUser {
     font-size: 11px;
