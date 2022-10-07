@@ -9,6 +9,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class ActualizarUserComponent implements OnInit {
     public img : any;
     @Input('idUser') idUser: any;
+    public carga : boolean = false;
   constructor(
     private usuariosService : UsuariosService
   ){}
@@ -23,12 +24,15 @@ export class ActualizarUserComponent implements OnInit {
   }
 
   submit(){
+    this.carga = true;
     let formData = new FormData();
     formData.append('archivo',this.img)
     this.usuariosService.cargaImg(formData , this.idUser).subscribe({next: (data) => {
       console.log(data)
+      this.carga = false;
     }, error: (err) => {
       console.log(err)
+      this.carga = false;
     }})
   }
 

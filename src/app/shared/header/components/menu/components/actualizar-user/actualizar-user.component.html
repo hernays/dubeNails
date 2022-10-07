@@ -1,5 +1,6 @@
 
 
 
-    <input id="imgUser" type="file" (change)="cargarImg($event)" />
-    <button (click)="submit()">Subir</button>
+    <input class="carga" id="imgUser" type="file" (change)="cargarImg($event)" />
+    <button class="btn" (click)="submit()">Subir</button>
+     <p *ngIf="carga">cargando.....</p>
