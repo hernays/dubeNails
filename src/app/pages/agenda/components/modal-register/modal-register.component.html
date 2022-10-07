@@ -6,11 +6,18 @@
   <form [formGroup]="formGroup">
     <label name="nombre">Nombre</label>
     <br>
-    <input type="text" placeholder="nombre..." formControlName="nombre">
+    <input type="text" 
+    autocomplete="off"
+    placeholder="nombre..." 
+    formControlName="nombre">
     <br>
     <label name="hora">Hora</label>
     <br>
-    <input formControlName="hora" type="button" (click)="mostrarHoras()">
+    <input formControlName="hora"
+     type="button" 
+     (click)="mostrarHoras()"
+     autocomplete="off"
+     >
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalHoras">
@@ -44,7 +51,11 @@
 
     <label name="telefono">Telefono</label>
     <br>
-    <input type="text" placeholder="telefono..." formControlName="telefono">
+    <input type="text" 
+    placeholder="telefono..." 
+    formControlName="telefono"
+    autocomplete="off"
+    >
     <br>
     <button class="submit" (click)="enviarDatos()">Registrar Hora</button>
   </form>

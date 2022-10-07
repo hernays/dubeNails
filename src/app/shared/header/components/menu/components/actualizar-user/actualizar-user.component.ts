@@ -10,6 +10,7 @@ export class ActualizarUserComponent implements OnInit {
     public img : any;
     @Input('idUser') idUser: any;
     public carga : boolean = false;
+    public message : string = '';
   constructor(
     private usuariosService : UsuariosService
   ){}
@@ -30,10 +31,11 @@ export class ActualizarUserComponent implements OnInit {
     this.usuariosService.cargaImg(formData , this.idUser).subscribe({next: (data) => {
       console.log(data)
       this.carga = false;
-      
+      this.message = 'Imagen Cargada con Exito...';
     }, error: (err) => {
       console.log(err)
       this.carga = false;
+      this.message = 'No se pudo cargar la imagen...';
     }})
   }
 

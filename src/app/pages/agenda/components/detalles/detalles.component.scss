@@ -47,5 +47,12 @@
 
     .backgroundBody{
         background-color: $colorInputs;
+
+
+        .telefono{
+            background-color: green;
+            color: white;
+            padding: 5px;
+        }
     }
 }

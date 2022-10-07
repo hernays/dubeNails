@@ -2,6 +2,8 @@
     <form [formGroup]="formLogin">
         <label name="nombre">Nombre:</label>
         <input 
+        preventCutCopyPaste
+        autocomplete="off"
         type="text" placeholder="Usuario...."
         id="usuario"
         name="usuario"
@@ -10,6 +12,8 @@
 
         <label name="clave">Contraseña:</label>
         <input type="password" placeholder="contraseña...."
+        preventCutCopyPaste
+        autocomplete="off"
         formControlName="clave" />
         <input type="submit" value="Iniciar" (click)="login()">
         <p *ngIf="msgError" class="msgError">{{msgError}}</p>

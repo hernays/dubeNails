@@ -65,22 +65,27 @@ export class MenuComponent implements OnInit {
   }
 
   cerrarModal(){
-
     switch(this.tituloMenu){
       case 'Menu':  
       this.menu = false; break;
       case 'Registro' : 
       this.showRegistro = false;
       this.tituloMenu = 'Menu';
-      this.lista = true; break;
+      this.lista = false; 
+      this.menu = false;
+      break;
       case 'Iniciar Sesion':
       this.showlogin = false;
       this.tituloMenu = 'Menu';
-      this.lista = true; break;
+      this.lista = false; 
+      this.menu = false;
+      break;
       case 'Subir Foto':
       this.showActualizarUser = false;
       this.tituloMenu = 'Menu';
-      this.lista = true; break;
+      this.lista = false; 
+      this.menu = false;
+      break;
     }
   }
 
