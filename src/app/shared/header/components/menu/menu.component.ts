@@ -92,7 +92,8 @@ export class MenuComponent implements OnInit {
   this.usuarioData = data;
   this.usuarioActivo = true;
   this.id = data.id;
-  console.log("aqui",this.usuarioData.image)
+  const image = data.image.split('.');
+  this.usuarioData.image = image[0] +'.'+ image[1]+'.'+ image[2]+'.jpg';
   },
  error: (error) => {
  this.usuarioActivo = false;
