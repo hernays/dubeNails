@@ -61,9 +61,10 @@
     
         <ng-template #menuActive>
             <div class="menuFalse" [class.userImgNone]="!usuarioData.image" (click)="showMenu()">
-                <img class="usuario"[src]="usuarioData.image">
+                <img class="usuario" [class.imgGrande]="usuarioData.image"
+                [src]="usuarioData.image">
             </div>
-            <p class="nombreUser">{{usuarioData.nombre}}</p>
+            <p *ngIf="!usuarioData.image" class="nombreUser">{{usuarioData.nombre}}</p>
         </ng-template>
     
     </nav>

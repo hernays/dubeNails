@@ -58,6 +58,7 @@
     }
 }
 
+
 .menuActive {
     width: 100%;
     height: auto;
@@ -121,6 +122,11 @@ app-actualizar-user{
     background-image: url('../../../../../assets/img/userIcon.svg');
 }
 
+.imgGrande{
+  width: 8vh;
+  height: 8vh;
+  border-radius: 30%;
+}
 .nombreUser {
     font-size: 11px;
     font-weight: bold;
