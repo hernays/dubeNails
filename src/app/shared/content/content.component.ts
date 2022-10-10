@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-content',
@@ -8,9 +9,15 @@ import { Component, Input, OnInit } from '@angular/core';
 export class ContentComponent implements OnInit {
 
   @Input('iphoneFooter') iphoneFooter :boolean = false;
-  constructor() { }
+  constructor(
+    private eventsService : EventsService
+  ) { }
 
   ngOnInit(): void {
+    this.ocultarMenu();
   }
 
+  ocultarMenu(){
+  this.eventsService.ocultarMenu.emit(false);
+  }
 }

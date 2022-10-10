@@ -7,10 +7,9 @@ import { AppComponent } from './app.component';
 
 import { environment } from '../environments/environment';
 
-import { SharedModule } from './shared/shared.module';
 import { PagesModule } from './pages/pages.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
-
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +28,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,6 +11,9 @@ import { TituloComponent } from './header/components/titulo/titulo.component';
 import { RegistroComponent } from './header/components/menu/components/registro/registro.component';
 import { LoginComponent } from './header/components/menu/components/login/login.component';
 import { ActualizarUserComponent } from './header/components/menu/components/actualizar-user/actualizar-user.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { SpinnerModule } from './spinner/spinner.module';
+import { SpinnerInterceptor } from '../interceptores/interceptor';
 
 
 @NgModule({
@@ -23,12 +26,13 @@ import { ActualizarUserComponent } from './header/components/menu/components/act
     TituloComponent,
     RegistroComponent,
     LoginComponent,
-    ActualizarUserComponent
+    ActualizarUserComponent,
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SpinnerModule
   ],
   exports:[
     FooterComponent,

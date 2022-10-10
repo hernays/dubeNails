@@ -9,9 +9,6 @@
         
         <ul *ngIf="lista">
             <li>
-                <a>Inicio</a>
-            </li>
-            <li>
                 <a (click)="login()" >Login</a>
             </li>
             <li>
@@ -45,9 +42,6 @@
             </div>
             
             <ul *ngIf="lista">
-                <li>
-                    <a routerLink="/home" (click)="inicio()">Inicio</a>
-                </li>
                 <li>
                     <a (click)="actualizarUser()">Subir Foto</a>
                 </li>

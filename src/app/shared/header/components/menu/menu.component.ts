@@ -32,7 +32,8 @@ export class MenuComponent implements OnInit {
                       this.showlogin = valor;
       })
       this.getusuario();
-  }
+      this.ocultarMenu();
+    }
 
   salir(){
     localStorage.removeItem('token');
@@ -124,8 +125,9 @@ export class MenuComponent implements OnInit {
 
   }
 
-  inicio(){
-    this.menu = false;
+  ocultarMenu(){
+    this.eventsService.ocultarMenu.subscribe(valor => {
+      this.menu = valor;
+    })
   }
-
 }

@@ -39,7 +39,6 @@ export class LoginComponent implements OnInit {
                  this.userActive.emit(true)
     },
     error: (error) => {
-      console.log(error.msg)
        this.msgError = error.msg;
     }})
   }

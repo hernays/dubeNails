@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { EventsService } from 'src/app/services/events.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { AgendaService } from 'src/app/services/agenda.service';
 @Component({
   selector: 'app-detalles',
   templateUrl: './detalles.component.html',
@@ -10,19 +11,24 @@ import { SharedService } from 'src/app/services/shared.service';
 export class DetallesComponent implements OnInit {
 
   public modalServicios = false;
-  @Input('clienteDetalle') clienteDetalle : any = '';
+  public clienteDetalle : any[] = [];
   @Output('retornaBoton') retornaBoton : EventEmitter<any> = new EventEmitter();
   @Output('detalleComponent') detalleComponent : EventEmitter<any> = new EventEmitter();
+  @Input('dia') dia : any = 0;
+  @Output('modalRegisters') modalRegisters : any;
+  public sinAgenda : string = '';
   public rol : string = '';
   constructor(
     private usuariosService : UsuariosService,
+    private agendaService : AgendaService,
+    private sharedService : SharedService,
+    private eventsService : EventsService
   ) { }
 
   ngOnInit(){
-    if(this.clienteDetalle.length !== 0){
      this.modalServicios = true;
-     this.verificarUsuario()
-    }
+     this.verificarUsuario();
+     this.showHoras();
   }
 
   hideModalServicios(){
@@ -34,7 +40,6 @@ export class DetallesComponent implements OnInit {
   verificarUsuario(){
     const token = localStorage.getItem('token') as string;
     this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
-      console.log(data)
       this.rol = data.rol;
       this.retornaBoton.emit(true);
     },
@@ -45,8 +50,38 @@ export class DetallesComponent implements OnInit {
 
    returnData(event:any){
     this.retornaBoton.emit(true);
-    this.clienteDetalle = event;
    }
 
+  modalActive(){
+    this.modalRegisters = true;
+  }
+
+  hideModalRegister(event:any){
+    this.modalRegisters = event;
+  }
+
+  showHoras(){
+        this.agendaService.getDatosDay(this.dia).subscribe({next:(data:any) => {
+          this.sharedService.setDataAgenda(data);
+          this.clienteDetalle = data;
+        },error: (error:string) => {
+          this.clienteDetalle = [];
+          this.sinAgenda = error;
+        }})
+
+   this.eventsService.successDatos.subscribe( valor => {
+    console.log("",this.dia)
+      if(valor){
+        this.agendaService.getDatosDay(this.dia).subscribe({next: (data:any) => {
+          this.clienteDetalle = data;
+          this.sharedService.setDataAgenda(data);
+        },error: (error:string) => {
+               this.clienteDetalle = [];
+               this.sinAgenda = error;
+        }
+      })
+      }
+    })  
+  }
 
 }

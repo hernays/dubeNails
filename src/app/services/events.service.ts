@@ -7,6 +7,7 @@ export class EventsService {
   @Output('successDatos') successDatos : EventEmitter<any> = new EventEmitter();
   @Output('cerrarModalLogin') cerrarModalLogin : EventEmitter<any> = new EventEmitter();
   @Output('loginAdmin') loginAdmin : EventEmitter<any> = new EventEmitter();
+  @Output('ocultarMenu') ocultarMenu : EventEmitter<boolean> = new EventEmitter();
 
   constructor( ) { 
  

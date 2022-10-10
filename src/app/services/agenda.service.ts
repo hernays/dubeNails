@@ -22,8 +22,10 @@ export class AgendaService {
         hora   : datos.horaNueva,
         servicio : datos.servicio,
         horaServicio    : datos.horaServicio,
-        telefono        : datos.telefono
+        telefono        : datos.telefono,
+        mes             : datos.mes
        }
+       console.log("body",body)
 
        return this.http.post<any>(`${this.url}/save` , body)
        .pipe(
@@ -31,6 +33,7 @@ export class AgendaService {
            return resp.msg;
        }),
        catchError((error:any) => {
+        
              return throwError(() => error.error.msg);
        })
        )
@@ -44,6 +47,22 @@ export class AgendaService {
       data.agenda.forEach((element:any) =>   array.push(element));
       array.sort((a:any , b:any) => a.hora - b.hora)
       return array;
+    }),catchError((error:any) => {
+      return throwError(() => error.error.msg );
+    })
+   )
+  }
+
+  getDatosDay(dataDay:any):any{
+   return this.http.get<any>(`${this.url}/${dataDay.day}/${dataDay.month}`)
+   .pipe(
+    map((data :any) => {
+      let array:any[] = [];
+      data.agenda.forEach((element:any) =>   array.push(element));
+      array.sort((a:any , b:any) => a.hora - b.hora)
+      return array;
+    }),catchError((error:any) => {
+      return throwError(() => error.error.msg );
     })
    )
   }

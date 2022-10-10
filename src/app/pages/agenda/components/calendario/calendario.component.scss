@@ -15,11 +15,12 @@
         height: 100px;
         box-shadow: 0px 0px 5px black;
         overflow: auto;
+        justify-content: center;
+        text-align: center;
     
         .diaSemana{
         display: flex;
         justify-content: center;
-        box-shadow: 0px 1px 1px purple;
         margin-bottom: 5px;
         font-size: 100%;
         font-weight: bold;
@@ -48,13 +49,22 @@
     flex-flow: row wrap;
     margin-top: 20px;
     justify-content: center;
+
+    .buttonNextPrev{
+    padding: 0px;
+    font-size: 20px;
+    background: transparent !important;
+    border: none !important;
+    margin-left: 10px;
+    margin-right: 10px;
+    color: black;
+    }
     
 }
 
-.disabled{
+.ocupado{
     background-color: #ccc;
     margin-bottom: 10px;
-    display: none !important;
 }
 
 .none{
@@ -63,9 +73,10 @@
 
 .contenidoAgenda{
     display: flex;
-    flex-flow: comun;
     flex-flow: column;
-    width: 42%;
+    width: 25%;
+    height: 60px;
+    padding: 5px;
     
     button{
     width: 100%;

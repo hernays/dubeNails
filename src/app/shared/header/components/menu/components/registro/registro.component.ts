@@ -43,11 +43,9 @@ export class RegistroComponent implements OnInit {
         rol :'user',
         direccion : direccion.toLowerCase()}
         this.usuariosService.saveUsuarios(body).subscribe(({next : (data) => {
-          console.log("resp",data)
           this.messageExito = data.msg;
            this.reset()
         },error: (error) => {
-          console.log(error)
           this.messageError = error;
           this.reset()
         }}))

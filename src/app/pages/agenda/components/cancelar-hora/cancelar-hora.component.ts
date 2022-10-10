@@ -9,7 +9,7 @@ import { SharedService } from 'src/app/services/shared.service';
   styleUrls: ['./cancelar-hora.component.scss']
 })
 export class CancelarHoraComponent implements OnInit{
-@Input('dia') dia : string = '';
+@Input('dia') dia : any ;
 @Input('nombre') nombre : string = '';
 @Input('telefono') telefono : any;
 @Input('botonCancelars') botonCancelars : any ;
@@ -20,8 +20,7 @@ public day : any = '';
 public botonCancelar : boolean = false;
   constructor(
     private agendaService : AgendaService,
-    private eventsService : EventsService,
-    private sharedService : SharedService
+    private eventsService : EventsService
   ) {
     this.day = new Date().getDate();
   }
@@ -33,24 +32,17 @@ public botonCancelar : boolean = false;
    
   cancelar(){
     this.modalCancelar = true;
-    const body = {dia : this.dia , nombre : this.nombre}
   }
 
 
   cancelarOperacion(valor:boolean){
-      const body = {dia : this.dia , nombre : this.nombre}
+      const body = {dia : this.dia.day , nombre : this.nombre}
       if(valor){
         this.agendaService.borrarHora(body).subscribe({next: (resp) => {
           this.eventsService.successDatos.emit(true);
-          if(resp){
-            this.agendaService.getDatos().subscribe((data:any) => {
-              this.sharedService.setDataAgenda(data);
-              const dataDay = data.filter((data:any) => data.dia == this.dia);
-              this.returnData.emit(dataDay);
-             }) 
-          }
        },
     error : () => {
+
     }})
       }
       this.modalCancelar = false;

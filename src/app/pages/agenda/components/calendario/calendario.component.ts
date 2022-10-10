@@ -5,6 +5,8 @@ import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
 import { UsuariosService } from 'src/app/services/usuarios.service'; 
 import { SharedService } from 'src/app/services/shared.service';
+import { FormGroup , FormBuilder , Validators } from '@angular/forms';
+import { TestBed } from '@angular/core/testing';
 
 @Component({
   selector: 'app-calendario',
@@ -17,6 +19,8 @@ export class CalendarioComponent implements OnInit {
   public dias: any[] = [];
   public day : any;
   public mes : any;
+  public mesNumber : any;
+  public mesAgenda : any;
   public year: any;
   public modalRegisters : boolean = false;
   public dataAgenda : any[] = [];
@@ -24,27 +28,29 @@ export class CalendarioComponent implements OnInit {
   public horas : number[] = [10,11,12,13,14,15,16,17,18,19,20];
   public cargandoData: boolean = false;
   public detalleComponent : boolean = false;
+  public clienteDay : any;
   @Output('telefono')  telefono : EventEmitter<any> = new EventEmitter();
   @Output('loginAdmin') loginAdmin : EventEmitter<any> = new EventEmitter();
-  public clienteDetalle : any ;
+  @Output('dia') dia : any;
+  public showModalDetalle : boolean = false;
+  public form : FormGroup;
   
   constructor(
     private agendaService : AgendaService,
     private eventsService : EventsService,
     private usuariosService : UsuariosService,
-    private sharedService : SharedService
+    private sharedService : SharedService,
+    private formBuilder : FormBuilder
   ) {
+
+    this.form = this.formBuilder.group({
+    clienteDia : ['']
+    })
   }
 
   ngOnInit(): void {
     moment.locale('es');
     this.fechas();
-    this.showHoras();
-    this.eventsService.cerrarModalLogin.subscribe((valor:boolean) => {
-              if(!valor){
-                this.showHoras();
-              }
-    })
   }
 
   modalRegister(dia:any){
@@ -59,100 +65,48 @@ export class CalendarioComponent implements OnInit {
   }
   
   fechas(){
+    const year = moment().year();
+    const month = moment().month();
     this.mes = moment().format('MMMM');
-    let mes = moment().format('MM');
+    this.mesNumber = moment().month();
+    this.mesAgenda = this.mesNumber;
     this.day = new Date().getDate();
-    console.log(this.day + 10)
-    let diaSemana = ['Lunes','Martes','Miercoles','Jueves','Viernes','Sabado','Domingo'];
-    let dias = 0;
- 
-     switch(Number(mes)){
-      case 1 : 
-      dias = 31;
-      break;
-      case 2 : 
-      dias = 28;
-      break;
-      case 3 : 
-      dias = 31;
-      break;
-      case 4 : 
-      dias = 30;
-      break;
-      case 5 : 
-      dias = 31;
-      break;
-      case 6 : 
-      dias = 30;
-      break;
-      case 7 : 
-      dias = 31;
-      break;
-      case 8 :
-      dias = 31;
-      break;
-      case 9 :
-      diaSemana = ['Jueves','Viernes','Sabado','Domingo','Lunes','Martes','Miercoles'];
-      dias = 30;
-      break;
-      case 10 :
-      console.log('aqui')
-      diaSemana = ['Sabado','Domingo','Lunes','Martes','Miercoles','Jueves','Viernes'];
-      dias = 31;
-      break;
-      case 11 :
-        diaSemana = ['Martes','Miercoles','Jueves','Viernes','Sabado','Domingo','Lunes'];
-      dias = 30;
-      break;
-      case 12 :
-        diaSemana = ['Jueves','Viernes','Sabado','Domingo','Lunes','Martes','Miercoles'];
-      dias = 31;
-      break;
-    }
+    const dias = moment([year,month]).daysInMonth();
 
-    let dia = 0;  
     for(let i = 1; i<=dias; i++) {
-      
-      if( i === 1 || i === 8 || i === 15 || i === 22 || i === 29)
-        dia === 0;
-      else dia ++;
-                   
-      this.dias.push({dia : i , diaSemana: diaSemana[dia]});
-      if(dia === 6) dia = 0;
+      this.dias.push({
+        dia : i,
+        diaName : moment([year,month,i]).format('dddd')
+      });
       }
-
-      console.log(this.dias)
   }
 
-
-
-  showHoras(){
-    this.cargandoData = true;
-        this.agendaService.getDatos().subscribe((data:any) => {
-          this.sharedService.setDataAgenda(data);
-          this.dataAgenda = data;
-          this.cargandoData = false;
-        })
-
-    this.eventsService.successDatos.subscribe( valor => {
-      if(valor){
-        this.agendaService.getDatos().subscribe((data:any) => {
-          this.dataAgenda = data;
-          this.sharedService.setDataAgenda(data);
-          this.cargandoData = false;
-        })
+  dateNext(valor:number){
+    this.dias = [];
+    let month = this.mesNumber;
+    const year = moment().year();
+    month += valor;
+    let monthNext = moment([year,month]).format('MMMM');
+    this.mes = monthNext;
+    const monthDay = moment([year,month]).daysInMonth();
+    
+    for(let i = 1; i<=monthDay; i++) {
+      this.dias.push({
+        dia : i,
+        diaName : moment([year,month,i]).format('dddd')
+      });
       }
-    })
-  }
-
-   showDetalle(dia:any){
-     const clientes =  this.dataAgenda.filter( (element :any) => element.dia == dia);
-     this.detalleComponent = true;
-     this.clienteDetalle = clientes;
-   }
+      this.mesAgenda = month;
+  } 
 
    detalleComponents(event:any){
      this.detalleComponent = event;
+     this.showModalDetalle = false;
+   }
+
+   modalAgenda(day:any , month:string){
+     this.dia = {day , month}; 
+     this.showModalDetalle = true;
    }
 
 }
