@@ -3,6 +3,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { EventsService } from 'src/app/services/events.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { AgendaService } from 'src/app/services/agenda.service';
+import * as moment from 'moment';
 @Component({
   selector: 'app-detalles',
   templateUrl: './detalles.component.html',
@@ -18,6 +19,7 @@ export class DetallesComponent implements OnInit {
   @Output('modalRegisters') modalRegisters : any;
   public sinAgenda : string = '';
   public rol : string = '';
+  public day : any;
   constructor(
     private usuariosService : UsuariosService,
     private agendaService : AgendaService,
@@ -28,7 +30,10 @@ export class DetallesComponent implements OnInit {
   ngOnInit(){
      this.modalServicios = true;
      this.verificarUsuario();
-     this.showHoras();
+     this.showHoras(); 
+     this.day = new Date().getDate();
+
+
   }
 
   hideModalServicios(){
@@ -70,7 +75,6 @@ export class DetallesComponent implements OnInit {
         }})
 
    this.eventsService.successDatos.subscribe( valor => {
-    console.log("",this.dia)
       if(valor){
         this.agendaService.getDatosDay(this.dia).subscribe({next: (data:any) => {
           this.clienteDetalle = data;
