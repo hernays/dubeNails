@@ -96,6 +96,8 @@ export class CalendarioComponent implements OnInit {
       });
       }
       this.mesAgenda = month;
+
+      console.log("mes",this.mes,"mesAgenda",this.mesAgenda,"mesNumber",this.mesNumber)
   } 
 
    detalleComponents(event:any){

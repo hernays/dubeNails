@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output ,  } from '@angular/core';
 import { EventsService } from './services/events.service';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
-import { filter } from 'rxjs';
 import { SwPush } from '@angular/service-worker';
 
 @Component({
@@ -26,21 +25,25 @@ export class AppComponent implements OnInit {
   
   update(){
      if(this.swUpdate.isEnabled){
-      console.log('Not Enabled');
+      alert('is enabled');
       return
       }
 
       this.swUpdate.available.subscribe( event => {
-        console.log('current' , event.current , ' available' , event.available);
+        alert(`current  ${JSON.stringify(event.current)}  ,   available
+        ${JSON.stringify(event.available)}` );
+         /* JSON.stringify(event.current)  */
+        /* JSON.stringify(event.available) */
         if(confirm('actualizacion pendiente')){
-          console.log('dentro del if available')
-                this.swUpdate.activateUpdate().then(() => location.reload())
+          alert('dentro del if available')
+                this.swUpdate.activateUpdate().then(() => {alert('reload');location.reload()})
         }
       })
 
       this.swUpdate.activated.subscribe(event => {
-        console.log('activated')
-        console.log('current previous,' , event.previous , 'available' , event.current) 
+        alert('activated')
+        alert(`current  ${JSON.stringify(event.current)}  ,   available
+        ${JSON.stringify(event.previous)}` );
       })
   }
 

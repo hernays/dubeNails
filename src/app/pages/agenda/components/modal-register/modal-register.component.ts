@@ -14,14 +14,14 @@ export class ModalRegisterComponent implements OnInit {
   @Input('dia') dia :any;
 
   public formGroup : FormGroup<any>;
-  public lista     : string[] = ['Acrilicas', 'Esmaltado Permanente' , 'Polygel' ,
+  public lista     : string[] = ['Acrilicas', 'Esmaltado Permanente' , 'Polygel' ,'Solo Retiro',
                                  'Manicura (limpieza)','kapping (revestimiento)','Relleno acrilico/polygel'];
   public success   : boolean = false;
   public error     : string = '';
   public horaDisponible : any ;
   public listaHora : string[] = [
     '9','9.5','10','10.5','11','11.5','12','12.5','13','13.5'
-    ,'14','14.5','15','15.5','16','16.5','17','17.5','18','18.5','19'];
+    ,'14','14.5','15','15.5','16','16.5','17','17.5','18','18.5','19','19.5'];
   public modalHoras: boolean  = false;
   public horaSelecciona : number = 0;
   public modalServicios : boolean = false;
@@ -53,11 +53,12 @@ export class ModalRegisterComponent implements OnInit {
       let numberServicio = 0;
     switch(servicio){
      case 'Acrilicas': numberServicio = 3; break;
-     case 'Esmaltado Permanente': numberServicio = 2; break;
-     case 'Polygel': numberServicio = 3; break;
-     case 'Manicura (limpieza)': numberServicio = 1; break;
+     case 'Esmaltado Permanente': numberServicio = 1.5; break;
+     case 'Polygel': numberServicio = 2.5; break;
+     case 'Manicura (limpieza)': numberServicio = 1.5; break;
      case 'kapping (revestimiento)': numberServicio = 2; break;
-     case 'Relleno acrilico/polygel': numberServicio = 2; break;
+     case 'Relleno acrilico/polygel': numberServicio = 1.5; break;
+     case 'Solo Retiro': numberServicio = 1; break;
     }
       return numberServicio;
   }

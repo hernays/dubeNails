@@ -7,10 +7,10 @@
         </div>
 
 <div class="calendario">
-    <div class="contenidoAgenda" *ngFor="let dia of dias">
-        <div class="dias" [class.ocupado]="dia.dia < day" (click)="modalAgenda(dia.dia , mesAgenda)">
-                <div class="diaSemana">{{dia.diaName}}</div>
-                <p>{{dia.dia}}</p>
+    <div class="contenidoAgenda" *ngFor="let diaAgenda of dias">
+        <div class="dias" [class.ocupado]="diaAgenda.dia < day && mesNumber === mesAgenda" (click)="modalAgenda(diaAgenda.dia , mesAgenda)">
+                <div class="diaSemana">{{diaAgenda.diaName}}</div>
+                <p>{{diaAgenda.dia}}</p>
         </div>
     </div>
 </div>
