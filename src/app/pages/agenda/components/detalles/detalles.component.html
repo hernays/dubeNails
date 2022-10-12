@@ -11,7 +11,9 @@
                 <div class="bodyAgenda">
                     <p><strong>Nombre:</strong> {{clientes.nombre}}</p>
                     <p><strong>Servicio:</strong> {{clientes.servicio}}</p>
-                    <p><strong>hora:</strong> {{clientes.hora}}:00 - {{clientes.tramo}}:00 </p>
+                  
+                    <p><strong>hora:</strong> {{ clientes.hora | pipes}} 
+                        - {{clientes.tramo | pipes}}</p>
                     <p class="telefono" *ngIf="rol !== 'user' && rol && clientes.telefono">
                     <strong>Telefono: </strong>{{clientes.telefono}} </p>
                     <app-cancelar-hora 

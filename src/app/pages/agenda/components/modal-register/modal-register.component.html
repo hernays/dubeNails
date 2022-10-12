@@ -27,7 +27,7 @@
          <span (click)="hideModalHoras()">x</span>
        </div>
        <ul class="listaHoras">
-         <li *ngFor="let hora of listaHora" (click)="SeleccionHora($event.target)">{{hora}}:00</li>
+         <li *ngFor="let hora of listaHora" (click)="SeleccionHora($event.target)">{{(hora.indexOf('.') > 0) ? hora.slice(0 ,hora.length-2) + ':30' : hora+':00'}}</li>
        </ul>
       </div>
     </div>

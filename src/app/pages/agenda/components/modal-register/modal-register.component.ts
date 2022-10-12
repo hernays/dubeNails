@@ -19,7 +19,9 @@ export class ModalRegisterComponent implements OnInit {
   public success   : boolean = false;
   public error     : string = '';
   public horaDisponible : any ;
-  public listaHora : number[] = [9,10,11,12,13,14,15,16,17,18];
+  public listaHora : string[] = [
+    '9','9.5','10','10.5','11','11.5','12','12.5','13','13.5'
+    ,'14','14.5','15','15.5','16','16.5','17','17.5','18','18.5','19'];
   public modalHoras: boolean  = false;
   public horaSelecciona : number = 0;
   public modalServicios : boolean = false;
@@ -65,7 +67,8 @@ export class ModalRegisterComponent implements OnInit {
     const { nombre ,  servicio , telefono }= this.formGroup.value;
     const dia = Number(this.dia.day);
     const mes = Number(this.dia.month);
-    const hora = this.horaSelecciona;
+    console.log(this.horaSelecciona)
+    const hora = Number(this.horaSelecciona);
     const horaServicio = this.formatearServicio(servicio);
     this.traerData( Number(hora) , nombre , servicio , dia , horaServicio ,telefono , mes)
   }
@@ -133,8 +136,11 @@ export class ModalRegisterComponent implements OnInit {
  
   SeleccionHora(event : any){
     const evento = event.innerText.split(':');
-    this.formGroup.controls['hora'].setValue(evento[0]+':00');
-    this.horaSelecciona = Number(evento[0]); 
+    this.formGroup.controls['hora'].setValue(
+      (evento[1].includes('3')) ? evento[0]+':30' :
+      evento[0]+':00'
+      );
+    this.horaSelecciona = (evento[1].includes('3')) ? Number(evento[0]+'.5') : Number(evento[0]); 
     this.modalHoras = false;
   }
 

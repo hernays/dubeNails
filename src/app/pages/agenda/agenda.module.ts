@@ -6,19 +6,20 @@ import { CalendarioComponent } from './components/calendario/calendario.componen
 import { ModalRegisterComponent } from './components/modal-register/modal-register.component';
 import { CancelarHoraComponent } from './components/cancelar-hora/cancelar-hora.component';
 import { DetallesComponent } from './components/detalles/detalles.component';
-
-
+import { PipesPipe } from 'src/app/pipes.pipe';
+ 
 
 @NgModule({
   declarations: [
     CalendarioComponent,
     ModalRegisterComponent,
     CancelarHoraComponent,
-    DetallesComponent
+    DetallesComponent,
+    PipesPipe
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   exports :[
     CalendarioComponent

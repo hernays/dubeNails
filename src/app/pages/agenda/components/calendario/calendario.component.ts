@@ -25,7 +25,6 @@ export class CalendarioComponent implements OnInit {
   public modalRegisters : boolean = false;
   public dataAgenda : any[] = [];
   public selectDia : any;
-  public horas : number[] = [10,11,12,13,14,15,16,17,18,19,20];
   public cargandoData: boolean = false;
   public detalleComponent : boolean = false;
   public clienteDay : any;

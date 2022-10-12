@@ -20,6 +20,7 @@ export class DetallesComponent implements OnInit {
   public sinAgenda : string = '';
   public rol : string = '';
   public day : any;
+  public n : any = 10;
   constructor(
     private usuariosService : UsuariosService,
     private agendaService : AgendaService,
