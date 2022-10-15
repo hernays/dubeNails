@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup , FormBuilder ,  Validators } from '@angular/forms';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { EventsService } from 'src/app/services/events.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private formBuilder : FormBuilder,
     private usuariosService : UsuariosService,
-    private eventsService : EventsService
+    private eventsService : EventsService,
+    private sharedService : SharedService
   ) { 
     this.formLogin = this.formBuilder.group({
       usuario : ['', [Validators.required , Validators.minLength(4)]],
@@ -32,9 +34,10 @@ export class LoginComponent implements OnInit {
       const body  = {
         nombre : usuario.toLowerCase() , password :clave
       }
-    this.usuariosService.autorizacionUser(body).subscribe({next: (token:string) => {
-                 localStorage.setItem('token' , token );
-                 console.log('entrando login')
+    this.usuariosService.autorizacionUser(body).subscribe({next: (data:any) => {
+                 localStorage.setItem('token' , data.token );
+                 console.log('entrando login' , data.rol)
+                 this.sharedService.setRolUser(data.rol);
                  this.eventsService.cerrarModalLogin.emit(false);
                  this.userActive.emit(true)
     },

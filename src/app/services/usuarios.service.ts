@@ -21,7 +21,7 @@ export class UsuariosService {
    return  this.http.post(`${this.url}auth/login` , body  , )
     .pipe(
       map((data:any) => {
-        return data.token;
+        return data;
       }),
       catchError((error:any) => {
         return throwError( () => {

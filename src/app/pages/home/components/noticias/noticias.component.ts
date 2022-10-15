@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ArticulosService } from 'src/app/services/articulos.service';
 @Component({
   selector: 'app-noticias',
   templateUrl: './noticias.component.html',
@@ -28,12 +28,35 @@ export class NoticiasComponent implements OnInit {
       fecha : '10-10-2022'
     }
    ];
-  constructor() { }
+  constructor(
+    private articulosService : ArticulosService
+  ) { }
 
   ngOnInit(): void {
+    this.traerArticulos()
   }
 
 
+  traerArticulos(){
+    this.articulosService.getArticulos().subscribe({next:(data) =>{
+    console.log(data)
+      this.datas = data.map((element :any) => {
+        const img = element.img.split('.');
+        const data = {
+           nombre : element.nombre,
+           fecha : element.fecha,
+           usuario : element.usuario,
+           descripcion : element.descripcion,
+           img : img[0] +'.'+ img[1]+'.'+ img[2]+'.jpg'
+        }
+        return data;
+      })
+
+      console.log("this",this.datas)
+    },error: (error)=>{
+    console.log(error)
+    }})
+  }
 
 
 }

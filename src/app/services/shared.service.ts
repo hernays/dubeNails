@@ -6,7 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class SharedService {
 
-  public dataAgenda$ : BehaviorSubject<any> = new BehaviorSubject(null)
+  public dataAgenda$ : BehaviorSubject<any> = new BehaviorSubject(null);
+  public rolUser$ : BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor( ) { 
  
@@ -20,5 +21,13 @@ export class SharedService {
   getDataAgenda():BehaviorSubject<any>{
       return this.dataAgenda$;
   }
+
+  setRolUser(rol:string){
+    this.rolUser$.next(rol);
+   }
+ 
+   getRolUser():BehaviorSubject<any>{
+       return this.rolUser$;
+   }
  
 }

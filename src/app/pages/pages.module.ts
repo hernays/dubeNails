@@ -7,7 +7,8 @@ import { AgendaComponent } from './agenda/agenda.component';
 import { UsuarioComponent } from './usuario/usuario.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HomeModule } from './home/home.module';
-
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 
@@ -15,13 +16,15 @@ import { HomeModule } from './home/home.module';
   declarations: [
     GalleryComponent,
     AgendaComponent,
-    UsuarioComponent,
+    UsuarioComponent
   ],
   imports: [
     CommonModule,
     AgendaModule,
     ReactiveFormsModule,
-    HomeModule
+    HomeModule,
+    ScrollingModule,
+    BrowserModule
   ],
   exports:[
     GalleryComponent,

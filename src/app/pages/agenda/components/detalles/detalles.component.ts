@@ -47,6 +47,7 @@ export class DetallesComponent implements OnInit {
     const token = localStorage.getItem('token') as string;
     this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
       this.rol = data.rol;
+      this.sharedService.setRolUser(data.rol);
       this.retornaBoton.emit(true);
     },
   error : (error) => {

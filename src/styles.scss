@@ -28,6 +28,10 @@ input[type="button"]{
     box-shadow: 1px 1px 1px black inset;
 }
 
+input[type="file"]{
+    padding:10px;
+}
+
 select{
     padding:10px;
 }

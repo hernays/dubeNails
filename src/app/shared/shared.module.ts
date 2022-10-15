@@ -14,6 +14,7 @@ import { ActualizarUserComponent } from './header/components/menu/components/act
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpinnerModule } from './spinner/spinner.module';
 import { SpinnerInterceptor } from '../interceptores/interceptor';
+import { RegistrarArticulosComponent } from './header/components/menu/components/registrar-articulos/registrar-articulos.component';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { SpinnerInterceptor } from '../interceptores/interceptor';
     RegistroComponent,
     LoginComponent,
     ActualizarUserComponent,
+    RegistrarArticulosComponent,
   ],
   imports: [
     CommonModule,
