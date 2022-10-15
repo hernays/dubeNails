@@ -1,7 +1,14 @@
 <div class="cardNoticias" *ngFor="let data of datas">
-    <img class="noticiaImg" [src]="data.img" >
+    <img class="noticiaImg" [src]="data.img" sizes="440px" >
     <div class="content">
+        <div class="menuArticle" (click)="activarMenu()">
+            ...
+        </div>
+        <ul *ngIf="activeMenu && rol === 'admin'">
+            <li (click)="borrarArticulo(data.id)">borrar</li>
+        </ul>
         <span> Publicado: {{data.fecha}}</span>
         <p>{{data.descripcion}}</p>
     </div>
+    
 </div>

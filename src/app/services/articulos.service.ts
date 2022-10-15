@@ -39,4 +39,15 @@ export class ArticulosService {
     )
   }
 
+  deleteArticulos(id:string){
+    return this.http.delete<any>(`${this.url}/${id}`)
+    .pipe(map((data) => {
+        return data;
+    })
+    ,catchError((error) => {
+      return throwError(() => error.error.msg)
+    })
+    )
+  }
+
 }

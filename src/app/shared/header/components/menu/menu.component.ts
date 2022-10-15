@@ -165,4 +165,13 @@ export class MenuComponent implements OnInit {
     })
   }
 
+  imgUserCargada(event:string){
+    this.usuarioData.image = event;
+    this.cerrarModal();
+  }
+
+  cargaArticulo(event:any){
+    this.cerrarModal();
+  }
+
 }

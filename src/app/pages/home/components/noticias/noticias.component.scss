@@ -1,21 +1,62 @@
-:host{
-    .cardNoticias{
-        .noticiaImg{
+:host {
+    .cardNoticias {
+        transition: all 300ms;
+        .noticiaImg {
             width: 100%;
-            height: 200px;
-        
+            height: 250px;
+
         }
-        .content{
+
+        .content {
             display: flex;
-            flex-flow: column;  
+            flex-flow: column;
             padding: 10px;
             height: 80px;
 
-            span{
+            span {
                 align-self: flex-end;
                 font-size: 12px;
                 color: gray;
             }
+
+            p {
+                margin-top: 20px;
+            }
+        }
+    }
+
+
+    .menuArticle {
+        font-size: 28px;
+        position: relative;
+        height: 17px;
+        align-self: end;
+        top: -21px;
+        margin-top: 3px;
+
+    }
+
+    ul {
+        position: relative;
+        width: 90%;
+        height: 20px;
+        text-align: center;
+        color: white;
+        top: -28px;
+        z-index: 1;
+        line-height: 20px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: end;
+        margin-bottom: -20px;
+        li {
+               width: 10%;
+               background: black;
+               border-radius: 8px;
+               padding: 1px;
+               font-size: 10px;
+
         }
     }
 

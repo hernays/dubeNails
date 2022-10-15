@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup , FormBuilder ,  Validators } from '@angular/forms';
-import { UsuariosService } from 'src/app/services/usuarios.service';
 import * as moment from 'moment';
 import { ArticulosService } from 'src/app/services/articulos.service';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-registrar-articulos',
@@ -13,10 +13,12 @@ export class RegistrarArticulosComponent implements OnInit {
   public formArticulos : FormGroup;
   public img : any;
   @Input('idUser') idUser :any;
+  @Output('success') success : EventEmitter<any> = new EventEmitter();
 
   constructor(
     private formBuilder : FormBuilder,
-    private articulosService :ArticulosService
+    private articulosService :ArticulosService,
+    private eventsService : EventsService
   ) {
     this.formArticulos = this.formBuilder.group({
       nombre:[''],
@@ -30,6 +32,7 @@ export class RegistrarArticulosComponent implements OnInit {
 
   cargarImg(event:any){
     this.img = event.target.files[0];
+    console.log(this.img)
   }
 
   enviar(){
@@ -45,11 +48,11 @@ export class RegistrarArticulosComponent implements OnInit {
     formData.append('id', this.idUser)
     console.log(this.idUser);
     this.articulosService.saveArticulos(formData).subscribe({next: (data) => {
-      console.log(data)
-     /*  this.carga = false;
-      this.message = 'Imagen Cargada con Exito...'; */
+      this.success.emit(true);
+      this.eventsService.cargaArticulos.emit(data);
+      this.eventsService.alertMessage('success','Articulo Guardado');
     }, error: (err) => {
-       console.log(err)
+      this.eventsService.alertMessage('error','No se pudo registrar el Articulo')
        /*
       this.carga = false;
       this.message = 'No se pudo cargar la imagen...'; */

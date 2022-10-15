@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-actualizar-user',
@@ -9,14 +10,13 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 export class ActualizarUserComponent implements OnInit {
     public img : any;
     @Input('idUser') idUser: any;
-    public carga : boolean = false;
-    public message : string = '';
+    @Output('imgUser') imgUser : EventEmitter<string> = new EventEmitter();
   constructor(
-    private usuariosService : UsuariosService
+    private usuariosService : UsuariosService,
+    private eventsService : EventsService
   ){}
 
   ngOnInit(): void {
-  console.log(this.idUser)
   }
 
 
@@ -25,17 +25,15 @@ export class ActualizarUserComponent implements OnInit {
   }
 
   submit(){
-    this.carga = true;
     let formData = new FormData();
     formData.append('archivo',this.img)
-    this.usuariosService.cargaImg(formData , this.idUser).subscribe({next: (data) => {
-      console.log(data)
-      this.carga = false;
-      this.message = 'Imagen Cargada con Exito...';
+    this.usuariosService.cargaImg(formData , this.idUser).subscribe({next: (url:string) => {
+      this.imgUser.emit(url)
+      this.eventsService.alertMessage('success','Imagen cargada con Exito');
+      this.img = null;
     }, error: (err) => {
       console.log(err)
-      this.carga = false;
-      this.message = 'No se pudo cargar la imagen...';
+      this.eventsService.alertMessage('error','No se pudo cargar la Imagen');
     }})
   }
 
