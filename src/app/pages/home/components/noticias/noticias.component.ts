@@ -11,6 +11,7 @@ export class NoticiasComponent implements OnInit {
    public datas : any[] = [];
    public activeMenu : boolean = false;
    public rol : string = '';
+   public idElement : string = '';
   constructor(
     private articulosService : ArticulosService,
     private eventsService : EventsService,
@@ -18,8 +19,8 @@ export class NoticiasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   this.sharedService.getRolUser().subscribe((rol:string) => {
-    this.rol = rol;
+   this.sharedService.getRolUser().subscribe((data) => {
+    this.rol = data.rol;
    });
     this.traerArticulos();
     this.cargaArticulosAsync()
@@ -52,7 +53,8 @@ export class NoticiasComponent implements OnInit {
    })
   }
 
-  activarMenu(){
+  activarMenu(id:string){
+    this.idElement = id;
     this.activeMenu = !this.activeMenu;
   }
 

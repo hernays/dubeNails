@@ -1,13 +1,16 @@
 <div class="registro">
     <form [formGroup]="formRegister">
-        <label name="nombre">Nombre:</label>
-        <input formControlName="nombre" type="text" placeholder="Nombre...." />
+        <label name="alias">Alias:</label>
+        <input formControlName="nombre" type="text" placeholder="Alias...." />
 
         <label name="correo">Correo:</label>
         <input formControlName="correo" type="text" placeholder="correo...." />
 
         <label name="Clave">Clave:</label>
         <input formControlName="password" type="password" placeholder="Contraseña...."  />
+
+        <label name="Clave2">Repetir Clave:</label>
+        <input formControlName="password2" type="password" placeholder="Contraseña...."  />
 
         <label name="telefono">Telefono:</label>
         <input formControlName="telefono" type="text" placeholder="Telefono...." />
@@ -16,9 +19,6 @@
         <input formControlName="direccion" type="text" placeholder="direccion...." />
 
         <input type="submit" value="Registrar" (click)="enviar()">
-        
-        <p *ngIf="messageError" class="errorMessage">{{messageError}}</p>
-        <p *ngIf="messageExito">{{messageExito}}</p>
+        <p class="errorMessage" *ngIf="messageError">{{messageError}}</p>
     </form>
-
 </div>

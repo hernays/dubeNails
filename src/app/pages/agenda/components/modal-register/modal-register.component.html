@@ -60,18 +60,7 @@
     <button class="submit" (click)="enviarDatos()">Registrar Hora</button>
   </form>
 
-  <div class="success" *ngIf="success">
-    <p>Registrado con exito!!! <small>Contactanos al +56 964573708</small></p>
-  </div>
-
-  <div class=" success error" *ngIf="error">
-    <p>{{error}}</p>
-  </div>
-
-  <div class=" success error" *ngIf="horaDisponible === 'Hora no se encuentra Disponible.'">
+  <div class=" success error" *ngIf="horaDisponible === 'Hora no se encuentra Disponible.' || horaDisponible === 'El servicio es obligatorio'">
     <p>{{horaDisponible}}</p>
   </div>
-
-
- <p *ngIf="spinner">Cargando...</p>
 </div>

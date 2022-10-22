@@ -1,6 +1,4 @@
 import { Component, OnInit} from '@angular/core';
-import { ImagesService } from 'src/app/services/images.service';
-
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
@@ -9,7 +7,6 @@ import { ImagesService } from 'src/app/services/images.service';
 export class GalleryComponent implements OnInit {
    public images : string[] = [];
   constructor(
-    private imagesService :ImagesService
   ) { }
 
   ngOnInit(): void {

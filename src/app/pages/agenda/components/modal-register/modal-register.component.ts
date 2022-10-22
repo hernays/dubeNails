@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder , FormGroup , Validators } from '@angular/forms';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
+import { SharedService } from 'src/app/services/shared.service';
 import * as moment from 'moment';
 
 @Component({
@@ -25,16 +26,16 @@ export class ModalRegisterComponent implements OnInit {
   public modalHoras: boolean  = false;
   public horaSelecciona : number = 0;
   public modalServicios : boolean = false;
-  public spinner : boolean = false;
 
 
   constructor(
     private formBuilder : FormBuilder,
     private agendaService : AgendaService,
-    private eventsService : EventsService
+    private eventsService : EventsService,
+    private sharedService : SharedService
   ){ 
     this.formGroup = this.formBuilder.group({
-      nombre  : ['', [Validators.required , Validators.minLength(2)]],
+      nombre  : ['' , [Validators.required , Validators.minLength(2)]],
       servicio: ['Seleccione un servicio...', [Validators.required]],
       hora    : ['Seleccione una hora...', [Validators.required , Validators.minLength(2)]],
       telefono: ['']
@@ -43,6 +44,7 @@ export class ModalRegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.cambiosForm();
+    this.setDataCliente();
   }
 
   hideModal(){
@@ -64,8 +66,11 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   async enviarDatos(){
-    this.spinner = true;
+    
+    this.formGroup.controls['nombre'].enable();
+    this.formGroup.controls['telefono'].enable();
     const { nombre ,  servicio , telefono }= this.formGroup.value;
+    console.log("nombre",nombre)
     const dia = Number(this.dia.day);
     const mes = Number(this.dia.month);
     console.log(this.horaSelecciona)
@@ -81,7 +86,7 @@ export class ModalRegisterComponent implements OnInit {
                })
               for(let items of tramos){
                  if(dia === items.dia && horaNueva > items.hora && horaNueva < items.tramo && mes === items.mes){  
-                  this.horaDisponible = 'Hora no se encuentra Disponible.'; 
+                  this.horaDisponible = 'Hora no se encuentra Disponible.';
                     this.success = false; break;
                  }
                  if(dia === items.dia && horaNueva < 9 || horaNueva > 20  && mes === items.mes){
@@ -89,7 +94,7 @@ export class ModalRegisterComponent implements OnInit {
                   this.success = false; break;
                 }
                if(dia === items.dia && horaNueva === items.hora && mes === items.mes || horaNueva+items.tramo  === items.hora && mes === items.mes){
-                this.horaDisponible = 'Hora no se encuentra Disponible.'; 
+                this.horaDisponible = 'Hora no se encuentra Disponible.';  
                 this.success = false; break;
                }                                                  
                if(dia === items.dia && horaNueva+horaServicio > items.hora  && horaNueva+horaServicio <= items.tramo && mes === items.mes){
@@ -158,23 +163,45 @@ export class ModalRegisterComponent implements OnInit {
     this.modalServicios = false;
   }
 
-  agendarHora(nombre:string , horaNueva:any , servicio:any , dia:number , horaServicio:any , telefono:any , mes:number){
+  agendarHora(nombre:string , horaNueva:any , servicio:string , dia:number , horaServicio:any , telefono:any , mes:number){
+    if(!this.lista.includes(servicio)){
+        this.horaDisponible = 'El servicio es obligatorio';
+        this.success = false;
+        return
+          }
+
     this.agendaService.recibirDatos({nombre , horaNueva , servicio , dia , horaServicio , telefono , mes}).subscribe({
       next : (msg:string) => {
-        this.spinner = false;
         this.formGroup.controls['nombre'].setValue('');
         this.formGroup.controls['hora'].setValue('');
         this.formGroup.controls['servicio'].setValue('');
         this.formGroup.controls['telefono'].setValue('');
         this.success = true;
         this.error = '';
+        this.eventsService.alertMessage('success','Registrado con Exito')
         this.eventsService.successDatos.emit(true);
+        this.setDataCliente();
       },
     error: (msg:string) => {
       this.error = msg;
       this.success = false;
+      this.eventsService.alertMessage('error',msg)
     }
     
     }) 
+  }
+
+
+  setDataCliente(){
+    this.sharedService.getRolUser().subscribe(data=>{
+      if(data?.nombre){
+        this.formGroup.controls['nombre'].disable();
+         this.formGroup.controls['nombre'].setValue(data.nombre);
+         if(data?.telefono){
+           this.formGroup.controls['telefono'].disable();
+          this.formGroup.controls['telefono'].setValue(data.telefono);
+         }
+      }
+    })
   }
 }

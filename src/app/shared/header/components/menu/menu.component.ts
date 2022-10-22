@@ -48,7 +48,7 @@ export class MenuComponent implements OnInit {
         const token = localStorage.getItem('token') as string;
         this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
           this.rolUser = data.rol;
-          this.sharedService.setRolUser(data.rol);
+          this.sharedService.setRolUser(data);
         },
       error : (error) => {
         console.log(error)
@@ -58,6 +58,7 @@ export class MenuComponent implements OnInit {
     }
 
   salir(){
+    this.sharedService.setRolUser('');
     localStorage.removeItem('token');
     this.menu         = false;
     this.showRegistro = false;
