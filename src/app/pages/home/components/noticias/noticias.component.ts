@@ -20,7 +20,7 @@ export class NoticiasComponent implements OnInit {
 
   ngOnInit(): void {
    this.sharedService.getRolUser().subscribe((data) => {
-    this.rol = data.rol;
+    this.rol = data?.rol;
    });
     this.traerArticulos();
     this.cargaArticulosAsync()

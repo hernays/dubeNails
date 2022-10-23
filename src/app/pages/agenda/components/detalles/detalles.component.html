@@ -28,8 +28,11 @@
             </div>
             <p class="sinRegistro" *ngIf="clienteDetalle.length === 0">{{sinAgenda}}</p>
         </div>
-        <button *ngIf="this.day <= dia.day" (click)="modalActive()">AGENDAR</button>
+        <button *ngIf="day <= dia.day || month < dia.month" (click)="modalActive()">AGENDAR</button>
     </div>
     <app-modal-register *ngIf="modalRegisters" [dia]="dia" (registerModal)="hideModalRegister($event)"></app-modal-register>
         
 </div>
+
+<p>holaaa</p>
+{{modalServicios}}

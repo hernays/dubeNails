@@ -16,10 +16,12 @@ export class DetallesComponent implements OnInit {
   @Output('retornaBoton') retornaBoton : EventEmitter<any> = new EventEmitter();
   @Output('detalleComponent') detalleComponent : EventEmitter<any> = new EventEmitter();
   @Input('dia') dia : any = 0;
+  @Input('mes') mes : any;
   @Output('modalRegisters') modalRegisters : any;
   public sinAgenda : string = '';
   public rol : string = '';
   public day : any;
+  public month : any;
   public n : any = 10;
   constructor(
     private usuariosService : UsuariosService,
@@ -33,8 +35,7 @@ export class DetallesComponent implements OnInit {
      this.verificarUsuario();
      this.showHoras(); 
      this.day = new Date().getDate();
-
-
+     this.month = new Date().getMonth();
   }
 
   hideModalServicios(){
