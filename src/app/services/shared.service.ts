@@ -8,6 +8,8 @@ export class SharedService {
 
   public dataAgenda$ : BehaviorSubject<any> = new BehaviorSubject(null);
   public rolUser$ : BehaviorSubject<any> = new BehaviorSubject(null);
+  public articulos$ : BehaviorSubject<any> = new BehaviorSubject(null);
+  public diaHabilitado$ : BehaviorSubject<boolean> = new BehaviorSubject(true); 
 
   constructor( ) { 
  
@@ -29,5 +31,20 @@ export class SharedService {
    getRolUser():BehaviorSubject<any>{
        return this.rolUser$;
    }
+
+   setArticulos(data:any){
+    this.articulos$.next(data);
+   }
  
+   getArticulos():BehaviorSubject<any>{
+       return this.articulos$;
+   }
+   
+   setDiaHabilitado(data:any){
+    this.diaHabilitado$.next(data);
+   }
+ 
+   getDiaHabilitado():BehaviorSubject<any>{
+       return this.diaHabilitado$;
+   }
 }

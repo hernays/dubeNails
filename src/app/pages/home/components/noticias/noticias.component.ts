@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticulosService } from 'src/app/services/articulos.service';
 import { EventsService } from 'src/app/services/events.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-noticias',
   templateUrl: './noticias.component.html',
@@ -15,10 +16,14 @@ export class NoticiasComponent implements OnInit {
   constructor(
     private articulosService : ArticulosService,
     private eventsService : EventsService,
-    private sharedService :SharedService
+    private sharedService :SharedService,
+    private router :Router
   ) { }
 
   ngOnInit(): void {
+    console.log('algo llego--------------');
+     console.log(this.router.url);
+
    this.sharedService.getRolUser().subscribe((data) => {
     this.rol = data?.rol;
    });
@@ -28,23 +33,32 @@ export class NoticiasComponent implements OnInit {
 
 
   traerArticulos(){
-    this.articulosService.getArticulos().subscribe({next:(data) =>{
-      this.datas = data.map((element :any) => {
-        const img = element.img.split('.');
-        const data = {
-           nombre : element.nombre,
-           fecha : element.fecha,
-           usuario : element.usuario,
-           descripcion : element.descripcion,
-           img : img[0] +'.'+ img[1]+'.'+ img[2]+'.jpg',
-           id:element._id
-        }
-        return data;
-      })
+     this.sharedService.getArticulos().subscribe(data => {
+      if(data === null){
+        this.articulosService.getArticulos().subscribe({next:(data) =>{
+          this.datas = data.map((element :any) => {
+            const img = element.img.split('.');
+            const data = {
+               nombre : element.nombre,
+               fecha : element.fecha,
+               usuario : element.usuario,
+               descripcion : element.descripcion,
+               img : img[0] +'.'+ img[1]+'.'+ img[2]+'.jpg',
+               id:element._id
+            }
+            return data;
+          })
 
-    },error: (error)=>{
-    console.log(error)
-    }})
+          this.sharedService.setArticulos(this.datas);
+        },error: (error)=>{
+        console.log(error)
+        }})
+      }else{
+       this.sharedService.getArticulos().subscribe(data => {
+        this.datas = data;
+        })
+      }
+     })
   }
 
   cargaArticulosAsync(){
@@ -60,7 +74,6 @@ export class NoticiasComponent implements OnInit {
 
   borrarArticulo(id:string){
     this.articulosService.deleteArticulos(id).subscribe({next:(data) => {
-        console.log(data)
         this.datas = this.datas.filter((element:any) => element.id !== data._id)
         this.eventsService.alertMessage('success','Articulo borrado');
     },error:(error)=> {

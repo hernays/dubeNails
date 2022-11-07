@@ -42,11 +42,12 @@ export class MenuComponent implements OnInit {
     }
 
     validarRol(){
-      this.sharedService.getRolUser().subscribe((rol:string) => {
-      this.rolUser = rol;
-      if(rol === null){
+      this.sharedService.getRolUser().subscribe((data:any) => {
+      this.rolUser = data?.rol;
+      if(data === null){
         const token = localStorage.getItem('token') as string;
         this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
+          console.log("aqui valida",data)
           this.rolUser = data.rol;
           this.sharedService.setRolUser(data);
         },

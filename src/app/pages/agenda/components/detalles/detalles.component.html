@@ -2,14 +2,27 @@
     <div class="contenido">
         <div>
             <div class="headerAgenda">
+                <span *ngIf="rol === 'admin' && rol" (click)="disabledDay()"
+                [class.h3Admin]="rol === 'admin' && rol"
+                [class.habilitar]="!habilitar"
+                [class.desabilitar]="habilitar">
+                {{(habilitar) ? 'Desabilitar' : 'Habilitar'}}
+                </span>
                 <h3>Detalle de horas</h3>
                 <span (click)="hideModalServicios()">x</span>
             </div>
+
             <div  *ngFor="let clientes of clienteDetalle; let i = index"
             [class.backgroundBody]="i%2 === 0"    
             >
-                <div class="bodyAgenda">
-                    <p><strong>Nombre:</strong> {{clientes.nombre}}</p>
+                <div *ngIf="habilitar || rol === 'admin'; else message" class="bodyAgenda" >
+                    <p>
+                        <span>
+                            <strong>Nombre:</strong> {{clientes.nombre}}
+                        </span>
+                        <span *ngIf="sumaServicios !== 0 && rol === 'admin'"
+                        class="valorServicio"> ${{clientes.valor}}.000</span>
+                    </p>
                     <p><strong>Servicio:</strong> {{clientes.servicio}}</p>
                   
                     <p><strong>hora:</strong> {{ clientes.hora | pipes}} 
@@ -17,7 +30,7 @@
                     <p class="telefono" *ngIf="rol !== 'user' && rol && clientes.telefono">
                     <strong>Telefono: </strong>{{clientes.telefono}} </p>
                     <app-cancelar-hora 
-                        *ngIf="rol !== 'user' && rol"
+                        *ngIf="rol === 'admin' && rol"
                         [dia]="dia" 
                         [telefono]="clientes.telefono" 
                         [nombre]="clientes.nombre"
@@ -25,14 +38,26 @@
                         (returnData)="returnData($event)">
                     </app-cancelar-hora>
                 </div>
+
+                <ng-template #message>
+                    <h3>No estamos laborado el dia de hoy</h3>
+
+                    <span [innerHtml]="symbol" 
+                    [ngStyle]="{'font-size': '220px',
+                                                            'text-aling': 'center'}"></span>
+
+                </ng-template>
+                
             </div>
+            <strong *ngIf="sumaServicios !== 0 && rol === 'admin'"> Resumen del dia - Total: ${{sumaServicios}}.000</strong>
             <p class="sinRegistro" *ngIf="clienteDetalle.length === 0">{{sinAgenda}}</p>
         </div>
-        <button *ngIf="day <= dia.day || month < dia.month" (click)="modalActive()">AGENDAR</button>
+
+        <button *ngIf="day <= dia.day && month <= dia.month 
+        && dia.diaName !== 'domingo'
+        && habilitar === true"
+        (click)="modalActive()">AGENDAR</button>
     </div>
     <app-modal-register *ngIf="modalRegisters" [dia]="dia" (registerModal)="hideModalRegister($event)"></app-modal-register>
         
 </div>
-
-<p>holaaa</p>
-{{modalServicios}}

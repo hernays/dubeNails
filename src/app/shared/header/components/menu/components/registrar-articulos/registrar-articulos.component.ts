@@ -46,7 +46,6 @@ export class RegistrarArticulosComponent implements OnInit {
     formData.append('fecha',fecha)
     formData.append('descripcion',descripcion)
     formData.append('id', this.idUser)
-    console.log(this.idUser);
     this.articulosService.saveArticulos(formData).subscribe({next: (data) => {
       this.success.emit(true);
       this.eventsService.cargaArticulos.emit(data);

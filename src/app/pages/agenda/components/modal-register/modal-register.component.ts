@@ -26,6 +26,7 @@ export class ModalRegisterComponent implements OnInit {
   public modalHoras: boolean  = false;
   public horaSelecciona : number = 0;
   public modalServicios : boolean = false;
+  public idUser : string = '';
 
 
   constructor(
@@ -104,12 +105,12 @@ export class ModalRegisterComponent implements OnInit {
                  this.horaDisponible = horaNueva;
               }
                  if(typeof this.horaDisponible !== typeof '' ){
-                  this.agendarHora(nombre , horaNueva , servicio , dia , horaServicio , telefono , mes)
+                  this.agendarHora(nombre , horaNueva , servicio , dia , horaServicio , telefono , mes , this.idUser)
                  }
               
     },error: (error:any) => {
          if(error === 'No se encontraron registros.'){
-          this.agendarHora(nombre , horaNueva , servicio , dia , horaServicio , telefono , mes)
+          this.agendarHora(nombre , horaNueva , servicio , dia , horaServicio , telefono , mes , this.idUser)
          }
     }})
   }
@@ -163,14 +164,14 @@ export class ModalRegisterComponent implements OnInit {
     this.modalServicios = false;
   }
 
-  agendarHora(nombre:string , horaNueva:any , servicio:string , dia:number , horaServicio:any , telefono:any , mes:number){
+  agendarHora(nombre:string , horaNueva:any , servicio:string , dia:number , horaServicio:any , telefono:any , mes:number , id:string){
     if(!this.lista.includes(servicio)){
         this.horaDisponible = 'El servicio es obligatorio';
         this.success = false;
         return
           }
 
-    this.agendaService.recibirDatos({nombre , horaNueva , servicio , dia , horaServicio , telefono , mes}).subscribe({
+    this.agendaService.recibirDatos({nombre , horaNueva , servicio , dia , horaServicio , telefono , mes , id} ).subscribe({
       next : (msg:string) => {
         this.formGroup.controls['nombre'].setValue('');
         this.formGroup.controls['hora'].setValue('');
@@ -194,7 +195,9 @@ export class ModalRegisterComponent implements OnInit {
 
   setDataCliente(){
     this.sharedService.getRolUser().subscribe(data=>{
-      if(data?.nombre){
+      console.log(data)
+      this.idUser = data.id;
+      if(data?.nombre && data?.rol !== 'admin'){
         this.formGroup.controls['nombre'].disable();
          this.formGroup.controls['nombre'].setValue(data.nombre);
          if(data?.telefono){

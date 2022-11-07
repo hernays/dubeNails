@@ -28,7 +28,13 @@
             width: 72%;
             text-align: end;
             margin-top: 10%;
-            margin-right: 14%;
+            margin-right: 15%;
+        }
+        .h3Admin{
+            width: 72%;
+            text-align: center;
+            margin-top: 10%;
+            margin-right: 0%;
         }
         span{
             width: 20px;
@@ -39,6 +45,19 @@
             color: white;
             cursor: pointer;
             margin-top: 10px;
+            margin-right: 10px;
+        }
+        span:first-child{
+            width: auto;
+            padding: 4px;
+            background-color: white;
+            margin-right: 0px;
+        }
+        .habilitar{
+            color: $colorExito;
+        }
+        .desabilitar{
+            color: $colorError;
         }
     }
 
@@ -50,6 +69,17 @@
         margin-top: 16px;
         margin-bottom: 10px;
         padding : 5px;
+
+
+        p:first-child{
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-between;
+
+            .valorServicio{
+                display: flex;
+            }
+        }
 
     }
 

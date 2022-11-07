@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, throwError } from 'rxjs';
+import { SharedService } from './shared.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { catchError, map, throwError } from 'rxjs';
 export class UsuariosService {
   public url : any = `${environment.urlLocal}api/`;
   constructor(
-    private http : HttpClient
+    private http : HttpClient,
+    private sharedService : SharedService
   ) {}
 
 
@@ -84,5 +86,27 @@ export class UsuariosService {
   cargaImg(formData:any , id:string){
     return this.http.put<any>(`${this.url}usuarioImg/${id}`, formData);
   }
+
+
+  addPushSubscriber(sub:any) {
+  let id = '';
+     this.sharedService.getRolUser().subscribe(data => {
+      id = (data.id === null) ? '1' : data.id;
+    }) 
+    return this.http.post(`${this.url}notificacion/${id}`, sub, {
+      headers: {
+        'content-type': 'application/json'
+      }
+    }).pipe(map(data => {console.log('dataresss', data)})
+    ,catchError( (error:any) => {
+      console.log(error)
+      return throwError(() =>{ return error} )
+    }))
+}
+
+send() {
+    return this.http.post('/api/newsletter', null);
+}
+
 
 }

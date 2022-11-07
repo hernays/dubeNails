@@ -28,11 +28,14 @@ export class CalendarioComponent implements OnInit {
   public cargandoData: boolean = false;
   public detalleComponent : boolean = false;
   public clienteDay : any;
+  public sumaValorMes : number = 0;
+  public rolUsuario :string = '';
   @Output('telefono')  telefono : EventEmitter<any> = new EventEmitter();
   @Output('loginAdmin') loginAdmin : EventEmitter<any> = new EventEmitter();
   @Output('dia') dia : any;
   public showModalDetalle : boolean = false;
   public form : FormGroup;
+  public diaHabilitado : boolean = true;
   
   constructor(
     private agendaService : AgendaService,
@@ -50,7 +53,15 @@ export class CalendarioComponent implements OnInit {
   ngOnInit(): void {
     moment.locale('es');
     this.fechas();
+    this.verificarUsuario()
+    this.totalMes(this.mesAgenda);
   }
+
+  verificarUsuario(){
+    this.sharedService.getRolUser().subscribe((rol) => {
+      this.rolUsuario = (rol.rol) ? rol.rol : '';
+    })
+   }
 
   modalRegister(dia:any){
     this.selectDia = dia;
@@ -97,6 +108,7 @@ export class CalendarioComponent implements OnInit {
       }
       this.mesAgenda = month;
 
+      this.totalMes(this.mesAgenda)
       console.log("mes",this.mes,"mesAgenda",this.mesAgenda,"mesNumber",this.mesNumber)
   } 
 
@@ -105,9 +117,21 @@ export class CalendarioComponent implements OnInit {
      this.showModalDetalle = false;
    }
 
-   modalAgenda(day:any , month:string){
-     this.dia = {day , month}; 
+   modalAgenda(day:any , month:string , diaName:string){
+     this.dia = {day , month , diaName}; 
      this.showModalDetalle = true;
+   }
+
+   totalMes(mes:number){
+    console.log('mes',this.mesAgenda)
+    this.agendaService.getTotalValorMes(mes).subscribe({next: (valor:number) => {
+        
+       this.sumaValorMes = valor;
+    },
+    error:(error:any) => {
+             console.log('error', error)
+    }
+  })
    }
 
 }

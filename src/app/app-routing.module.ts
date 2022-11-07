@@ -12,7 +12,8 @@ const routes: Routes = [
   {path: 'home'     , component : HomeComponent},
   {path: 'galeria'  , component : GalleryComponent},
   {path: 'agenda'   , component : AgendaComponent},
-  {path: 'usuarios' , component : UsuarioComponent}   
+  {path: 'usuarios' , component : UsuarioComponent},
+  {path: 'articulo' , component : HomeComponent}   
 ];
 
 @NgModule({

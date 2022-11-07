@@ -23,7 +23,8 @@ export class AgendaService {
         servicio : datos.servicio,
         horaServicio    : datos.horaServicio,
         telefono        : datos.telefono,
-        mes             : datos.mes
+        mes             : datos.mes,
+        id              :datos.id
        }
        console.log("body",body)
 
@@ -67,6 +68,21 @@ export class AgendaService {
    )
   }
 
+  habilitarDia(dataDay:any):any{
+    return this.http.get<any>(`${this.url}/${dataDay.day}/${dataDay.month}/${dataDay.habilitar}`)
+    .pipe(
+     map((data :any) => {
+      /*  let array:any[] = [];
+       data.agenda.forEach((element:any) =>   array.push(element));
+       array.sort((a:any , b:any) => a.hora - b.hora)
+       return array; */
+       return data.habilitar;
+     }),catchError((error:any) => {
+       return throwError(() => error.error.msg );
+     })
+    )
+   }
+
   borrarHora(body:any){
    return  this.http.post<any>(`${this.url}/borrarHora` , body)
    .pipe( 
@@ -78,5 +94,25 @@ export class AgendaService {
     })
    )
   }
+
+  getTotalValorMes(mes:number){
+    return this.http.get<any>(`${this.url}/${mes}`).pipe(
+      map((data) => {
+       let sumaValor = 0;
+        data.filter((element:any) => element.valor !== null)
+        .map((dataValor:any) => {
+             sumaValor = sumaValor + dataValor.valor;
+        })
+        return sumaValor
+           
+      })
+      ,catchError((error:any) => {
+        return throwError(() => { console.log(error); return error;})
+      })
+    )
+
+  }
+
+
 }
 
