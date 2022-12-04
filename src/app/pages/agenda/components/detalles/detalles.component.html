@@ -27,8 +27,14 @@
                   
                     <p><strong>hora:</strong> {{ clientes.hora | pipes}} 
                         - {{clientes.tramo | pipes}}</p>
-                    <p class="telefono" *ngIf="rol !== 'user' && rol && clientes.telefono">
+                    
+                        <p class="telefono" *ngIf="rol === 'admin' && rol && clientes.telefono">
                     <strong>Telefono: </strong>{{clientes.telefono}} </p>
+                    
+                    <p 
+                     *ngIf="rol === 'admin' && rol && clientes.nuevo && clientes.nuevo === true"
+                     >
+                        <strong>Estado: </strong><span [class.nuevaAgenda]="clientes.nuevo === true">{{(clientes.nuevo) ? 'Nuevo' : 'Visto'}}</span></p>
                     <app-cancelar-hora 
                         *ngIf="rol === 'admin' && rol"
                         [dia]="dia" 
@@ -52,12 +58,15 @@
             <strong *ngIf="sumaServicios !== 0 && rol === 'admin'"> Resumen del dia - Total: ${{sumaServicios}}.000</strong>
             <p class="sinRegistro" *ngIf="clienteDetalle.length === 0">{{sinAgenda}}</p>
         </div>
-
-        <button *ngIf="day <= dia.day && month <= dia.month 
-        && dia.diaName !== 'domingo'
-        && habilitar === true"
+        <button *ngIf="dia.day >= day && dia.diaName !== 'domingo' && habilitar === true
+            ||  month < dia.month && dia.diaName !== 'domingo' && habilitar === true
+            ||  month > dia.month && dia.diaName !== 'domingo' && habilitar === true"
         (click)="modalActive()">AGENDAR</button>
     </div>
-    <app-modal-register *ngIf="modalRegisters" [dia]="dia" (registerModal)="hideModalRegister($event)"></app-modal-register>
+    <app-modal-register *ngIf="modalRegisters" 
+    [dia]="dia" 
+    [horas]="horas" 
+    [horasCopias]="horasCopias"
+    (registerModal)="hideModalRegister($event)"></app-modal-register>
         
 </div>

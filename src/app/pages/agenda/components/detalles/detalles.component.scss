@@ -1,9 +1,10 @@
 @import '../../../../../styles.scss';
 
-.modalP{
+.modalP {
     padding-top: 45px;
 }
-.contenido{
+
+.contenido {
     display: flex;
     flex-flow: column;
     width: 80%;
@@ -13,30 +14,34 @@
     border-radius: 5px;
     overflow-y: auto;
     justify-content: space-between;
-    
-   .sinRegistro{
+
+    .sinRegistro {
         text-align: center;
         background: #0000001a;
-        padding: 5px;  
+        padding: 5px;
     }
-    .headerAgenda{
+
+    .headerAgenda {
         display: flex;
         justify-content: center;
         width: 100%;
         margin-bottom: 28px;
-        h3{
+
+        h3 {
             width: 72%;
             text-align: end;
             margin-top: 10%;
             margin-right: 15%;
         }
-        .h3Admin{
+
+        .h3Admin {
             width: 72%;
             text-align: center;
             margin-top: 10%;
             margin-right: 0%;
         }
-        span{
+
+        span {
             width: 20px;
             height: 20px;
             text-align: center;
@@ -47,47 +52,50 @@
             margin-top: 10px;
             margin-right: 10px;
         }
-        span:first-child{
+
+        span:first-child {
             width: auto;
             padding: 4px;
             background-color: white;
             margin-right: 0px;
         }
-        .habilitar{
+
+        .habilitar {
             color: $colorExito;
         }
-        .desabilitar{
+
+        .desabilitar {
             color: $colorError;
         }
     }
 
-    .bodyAgenda{
+    .bodyAgenda {
         display: flex;
         flex-flow: column;
         gap: 5px;
         box-shadow: 0px 0px 3px black;
         margin-top: 16px;
         margin-bottom: 10px;
-        padding : 5px;
+        padding: 5px;
 
 
-        p:first-child{
-          display: flex;
-          flex-flow: row wrap;
-          justify-content: space-between;
+        p:first-child {
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
 
-            .valorServicio{
+            .valorServicio {
                 display: flex;
             }
         }
 
     }
 
-    .backgroundBody{
+    .backgroundBody {
         background-color: $colorInputs;
 
 
-        .telefono{
+        .telefono {
             background-color: green;
             color: white;
             padding: 5px;
@@ -95,7 +103,24 @@
     }
 }
 
-app-modal-register{
+@keyframes nuevo {
+    0% {
+        color: red;
+    }
+    50% {
+        color: blue;
+    }
+    100% {
+        color: red;
+    }
+}
+
+.nuevaAgenda {
+    font-weight: bold;
+    animation: nuevo 300ms infinite;
+}
+
+app-modal-register {
     position: fixed;
     width: 100%;
     height: 100%;

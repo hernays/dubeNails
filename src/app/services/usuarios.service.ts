@@ -57,12 +57,15 @@ export class UsuariosService {
         authorization: id}
     })
     .pipe(map((data:any) => {
+      console.log(data)
          return {
           id: data.id,
           nombre : data.nombre,
-          apellido : data.apelldio,
           rol : data.rol,
-          image:data.image
+          image:data.image,
+          direccion : data.direccion,
+          telefono : data.telefono,
+          correo : data.correo
          }
     })
     ,catchError( (error:any) => {
@@ -85,6 +88,18 @@ export class UsuariosService {
 
   cargaImg(formData:any , id:string){
     return this.http.put<any>(`${this.url}usuarioImg/${id}`, formData);
+  }
+
+  actualizarUsuario(body:any , id:string){
+
+    return this.http.put<any>(`${this.url}usuario/${id}`,body)
+    .pipe(map((data) => {
+        return data;
+    })
+    ,catchError((error) => {
+      return throwError(() => error.error.msg)
+    })
+    )
   }
 
 

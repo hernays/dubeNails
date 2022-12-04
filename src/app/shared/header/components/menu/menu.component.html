@@ -43,7 +43,10 @@
             
             <ul *ngIf="lista">
                 <li>
-                    <a (click)="actualizarUser()">Subir Foto de Perfil</a>
+                    <a (click)="actualizarFoto()">Subir Foto de Perfil</a>
+                </li>
+                <li>
+                    <a (click)="actualizarUser()">Actualizar Perfil</a>
                 </li>
                 <li *ngIf="rolUser === 'admin'">
                     <a (click)="RegistrarArticulos()">Registrar Articulo</a>
@@ -55,10 +58,11 @@
             <app-registrar-articulos 
             (success)="cargaArticulo($event)"
             [idUser]="id" *ngIf="showRegistroArticulos" ></app-registrar-articulos>
-            <app-actualizar-user
+            <app-actualizar-foto
              [idUser]="id"
              (imgUser)="imgUserCargada($event)"  
-             *ngIf="showActualizarUser"></app-actualizar-user>
+             *ngIf="showActualizarFoto"></app-actualizar-foto>
+             <app-actualizar-user *ngIf="showActualizarUser"></app-actualizar-user>
         </ng-container>
     
         <ng-template #menuActive>

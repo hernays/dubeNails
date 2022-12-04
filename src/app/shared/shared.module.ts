@@ -11,6 +11,7 @@ import { TituloComponent } from './header/components/titulo/titulo.component';
 import { RegistroComponent } from './header/components/menu/components/registro/registro.component';
 import { LoginComponent } from './header/components/menu/components/login/login.component';
 import { ActualizarUserComponent } from './header/components/menu/components/actualizar-user/actualizar-user.component';
+import { ActualizarFotoComponent } from './header/components/menu/components/actualizar-foto/actualizar-foto.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpinnerModule } from './spinner/spinner.module';
 import { SpinnerInterceptor } from '../interceptores/interceptor';
@@ -29,6 +30,7 @@ import { RegistrarArticulosComponent } from './header/components/menu/components
     LoginComponent,
     ActualizarUserComponent,
     RegistrarArticulosComponent,
+    ActualizarFotoComponent
   ],
   imports: [
     CommonModule,

@@ -96,6 +96,8 @@ export class CalendarioComponent implements OnInit {
     let month = this.mesNumber;
     const year = moment().year();
     month += valor;
+    if(month === 12) month = 0;
+    
     let monthNext = moment([year,month]).format('MMMM');
     this.mes = monthNext;
     const monthDay = moment([year,month]).daysInMonth();
@@ -123,7 +125,6 @@ export class CalendarioComponent implements OnInit {
    }
 
    totalMes(mes:number){
-    console.log('mes',this.mesAgenda)
     this.agendaService.getTotalValorMes(mes).subscribe({next: (valor:number) => {
         
        this.sumaValorMes = valor;

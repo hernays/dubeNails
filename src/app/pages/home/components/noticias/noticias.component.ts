@@ -21,21 +21,23 @@ export class NoticiasComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('algo llego--------------');
-     console.log(this.router.url);
-
    this.sharedService.getRolUser().subscribe((data) => {
     this.rol = data?.rol;
    });
     this.traerArticulos();
-    this.cargaArticulosAsync()
+    this.cargaArticulosAsync();
   }
 
 
+
+
+
   traerArticulos(){
+    const limit = 10;
+
      this.sharedService.getArticulos().subscribe(data => {
       if(data === null){
-        this.articulosService.getArticulos().subscribe({next:(data) =>{
+        this.articulosService.getArticulos(limit).subscribe({next:(data) =>{
           this.datas = data.map((element :any) => {
             const img = element.img.split('.');
             const data = {
@@ -48,7 +50,6 @@ export class NoticiasComponent implements OnInit {
             }
             return data;
           })
-
           this.sharedService.setArticulos(this.datas);
         },error: (error)=>{
         console.log(error)
@@ -63,7 +64,9 @@ export class NoticiasComponent implements OnInit {
 
   cargaArticulosAsync(){
    this.eventsService.cargaArticulos.subscribe(data => {
-    this.datas.push(data);
+    data.id = data._id;
+    this.datas.unshift(data);
+    this.sharedService.setArticulos(this.datas);
    })
   }
 
@@ -76,6 +79,7 @@ export class NoticiasComponent implements OnInit {
     this.articulosService.deleteArticulos(id).subscribe({next:(data) => {
         this.datas = this.datas.filter((element:any) => element.id !== data._id)
         this.eventsService.alertMessage('success','Articulo borrado');
+        this.datas = this.datas.filter(e => e.id !== id);
     },error:(error)=> {
        console.log(error)
        this.eventsService.alertMessage('error','No se pudo Borrar el Articulo')

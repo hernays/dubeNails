@@ -13,10 +13,9 @@ export class ArticulosService {
   ) {}
 
 
-  getArticulos(){
-    return this.http.get<any>(`${this.url}`)
+  getArticulos(limit:Number){
+    return this.http.get<any>(`${this.url}/${limit}`)
     .pipe(map((data) => {
-      console.log(data)
       return data;
   })
   ,catchError((error) => {

@@ -17,16 +17,16 @@ export class AgendaService {
 
   recibirDatos(datos:any):any{
        const body = {
-        nombre : datos.nombre,
+        nombre : datos.nombre.trim(),
         dia    : datos.dia,
         hora   : datos.horaNueva,
         servicio : datos.servicio,
         horaServicio    : datos.horaServicio,
         telefono        : datos.telefono,
         mes             : datos.mes,
-        id              :datos.id
+        id              :datos.id,
+        nuevo           :datos.nuevo
        }
-       console.log("body",body)
 
        return this.http.post<any>(`${this.url}/save` , body)
        .pipe(
@@ -113,6 +113,17 @@ export class AgendaService {
 
   }
 
+
+  actualizarEstado(data:any):any{
+    return this.http.post<any>(`${this.url}/estado`, data)
+    .pipe(
+     map((data : boolean) => {
+       return data;
+     }),catchError((error:any) => {
+       return throwError(() => error.error.msg );
+     })
+    )
+   }
 
 }
 

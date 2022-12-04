@@ -1,8 +1,15 @@
-.btn{
-    width: 80%;
-    margin-top: 20px
-}
+.registro{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
 
-.carga{
-    font-size: 15px;
+
+    form{
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    height: 55vh;
+    gap: 10px;
+    }
 }

@@ -15,7 +15,8 @@ export class EventsService {
  
   }
 
-  alertMessage(type:string = 'success' , message:any){
+  alertMessage(type:string = 'success' , message:string){
+    console.log("en alerta",message)
     const icons = (type === 'success') ? type : 'error';
     return Swal.fire({
       position: 'center',

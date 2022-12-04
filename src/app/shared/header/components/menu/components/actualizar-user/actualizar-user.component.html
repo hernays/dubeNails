@@ -1,5 +1,18 @@
+<div class="registro">
+    <form [formGroup]="formRegister">
+        <label name="alias">Alias:</label>
+        <input formControlName="nombre" type="text" placeholder="Alias...." />
 
+        <label name="correo">Correo:</label>
+        <input formControlName="correo" type="text" placeholder="correo...." />
 
+        <label name="telefono">Telefono:</label>
+        <input formControlName="telefono" type="text" placeholder="Telefono...." />
 
-    <input class="carga" id="imgUser" type="file" (change)="cargarImg($event)" />
-    <button class="btn" (click)="submit()">Subir</button>
+        <label name="direccion">Dirección:</label>
+        <input formControlName="direccion" type="text" placeholder="direccion...." />
+
+        <input type="submit" value="Actualizar" (click)="enviar()">
+        <!-- <p class="errorMessage" *ngIf="messageError">{{messageError}}</p> -->
+    </form>
+</div>

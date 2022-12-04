@@ -20,6 +20,7 @@ export class MenuComponent implements OnInit {
    public usuarioData : any;
    public test : any = false;
    public showActualizarUser : boolean = false;
+   public showActualizarFoto : boolean = false;
    public rolUser : string = '';
    @Output('id')  id : any;
 
@@ -31,7 +32,6 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit(){
-    console.log('aqui')
       this.eventsService.cerrarModalLogin.subscribe( (valor: any) => {
                       this.menu = valor;     
                       this.showlogin = valor;
@@ -47,7 +47,6 @@ export class MenuComponent implements OnInit {
       if(data === null){
         const token = localStorage.getItem('token') as string;
         this.usuariosService.autorizarToken(token).subscribe({next: (data:any) => {
-          console.log("aqui valida",data)
           this.rolUser = data.rol;
           this.sharedService.setRolUser(data);
         },
@@ -106,13 +105,19 @@ export class MenuComponent implements OnInit {
       this.menu = false;
       break;
       case 'Subir Foto':
-      this.showActualizarUser = false;
+      this.showActualizarFoto = false;
       this.tituloMenu = 'Menu';
       this.lista = false; 
       this.menu = false;
       break;
       case 'Registrar Articulos':
       this.showRegistroArticulos = false;
+      this.tituloMenu = 'Menu';
+      this.lista = false; 
+      this.menu = false;
+      break;
+      case 'Actualizar perfil':
+      this.showActualizarUser = false;
       this.tituloMenu = 'Menu';
       this.lista = false; 
       this.menu = false;
@@ -125,10 +130,11 @@ export class MenuComponent implements OnInit {
     const id = localStorage.getItem('token') as string;
     
   this.usuariosService.getUsuario(id).subscribe({next: (data) => {
+    console.log('data', data)
+   this.sharedService.setDataUsuario(data)
   this.usuarioData = data;
   this.usuarioActivo = true;
   this.id = data.id;
-  console.log('data' , data.id)
   if(data.image){ 
     const image = data.image.split('.');
     this.usuarioData.image = image[0] +'.'+ image[1]+'.'+ image[2]+'.jpg';
@@ -151,9 +157,14 @@ export class MenuComponent implements OnInit {
 
   actualizarUser(){
   this.lista = false;
-  this.tituloMenu = 'Subir Foto';
+  this.tituloMenu = 'Actualizar perfil';
   this.showActualizarUser = true;
   }
+  actualizarFoto(){
+    this.lista = false;
+    this.tituloMenu = 'Subir Foto';
+    this.showActualizarFoto = true;
+    }
 
   RegistrarArticulos(){
   this.lista = false;

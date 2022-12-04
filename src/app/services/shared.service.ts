@@ -10,6 +10,7 @@ export class SharedService {
   public rolUser$ : BehaviorSubject<any> = new BehaviorSubject(null);
   public articulos$ : BehaviorSubject<any> = new BehaviorSubject(null);
   public diaHabilitado$ : BehaviorSubject<boolean> = new BehaviorSubject(true); 
+  public dataUsuario$: BehaviorSubject<boolean> = new BehaviorSubject(true); 
 
   constructor( ) { 
  
@@ -47,4 +48,15 @@ export class SharedService {
    getDiaHabilitado():BehaviorSubject<any>{
        return this.diaHabilitado$;
    }
+
+   setDataUsuario(data:any){
+    this.dataUsuario$.next(data);
+   }
+ 
+   getDataUsuario():BehaviorSubject<any>{
+       return this.dataUsuario$;
+   }
+
+
+
 }

@@ -44,7 +44,7 @@
          <span (click)="hideModalServicios()">x</span>
        </div>
        <ul class="listaHoras ulServicios">
-         <li *ngFor="let servicio of lista" (click)="SeleccionServicio($event.target)">{{servicio}}</li>
+         <li *ngFor="let servicio of lista" (click)="SeleccionServicio($event.target)">{{servicio.nombre}}</li>
        </ul>
       </div>
     </div>
@@ -60,7 +60,7 @@
     <button class="submit" (click)="enviarDatos()">Registrar Hora</button>
   </form>
 
-  <div class=" success error" *ngIf="horaDisponible === 'Hora no se encuentra Disponible.' || horaDisponible === 'El servicio es obligatorio'">
+  <div class=" success error" *ngIf="horaDisponible.length > 0">
     <p>{{horaDisponible}}</p>
   </div>
 </div>
