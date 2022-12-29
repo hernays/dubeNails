@@ -18,6 +18,7 @@ import { SpinnerInterceptor } from '../interceptores/interceptor';
 import { RegistrarArticulosComponent } from './header/components/menu/components/registrar-articulos/registrar-articulos.component';
 
 
+
 @NgModule({
   declarations: [
     FooterComponent,

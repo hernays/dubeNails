@@ -7,10 +7,13 @@ import { ModalRegisterComponent } from './components/modal-register/modal-regist
 import { CancelarHoraComponent } from './components/cancelar-hora/cancelar-hora.component';
 import { DetallesComponent } from './components/detalles/detalles.component';
 import { PipesPipe } from 'src/app/pipes.pipe';
+import { AgendaRoutes } from './agenda-routing';
+import { AgendaComponent } from './agenda.component';
  
 
 @NgModule({
   declarations: [
+    AgendaComponent,
     CalendarioComponent,
     ModalRegisterComponent,
     CancelarHoraComponent,
@@ -19,7 +22,8 @@ import { PipesPipe } from 'src/app/pipes.pipe';
   ],
   imports: [
     CommonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgendaRoutes
   ],
   exports :[
     CalendarioComponent

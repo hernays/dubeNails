@@ -3,10 +3,11 @@
     display: flex;
     flex-flow: column;
     width: 100%;
+    max-width: 800px;
+    margin: 0px auto;
     height: 100vh;
-    margin: 0px;
     padding: 0px;
-    background-color: fd0d0d52;
+    background-color: ghostwhite;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 

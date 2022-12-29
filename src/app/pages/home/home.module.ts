@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NoticiasComponent } from './components/noticias/noticias.component';
 import { HomeComponent } from './home.component';
+import { HomeRouter } from './home-routing';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { HomeComponent } from './home.component';
     HomeComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    HomeRouter
   ],
   exports:[
     NoticiasComponent,

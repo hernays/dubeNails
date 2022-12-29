@@ -42,9 +42,10 @@
         }
 
         span {
-            width: 20px;
-            height: 20px;
+            width: 30px;
+            height: 30px;
             text-align: center;
+            line-height: 30px;
             border-radius: 50px;
             background-color: #b0a4a4;
             color: white;
@@ -123,6 +124,7 @@
 app-modal-register {
     position: fixed;
     width: 100%;
+    max-width: 800px;
     height: 100%;
     display: flex;
     justify-content: center;
