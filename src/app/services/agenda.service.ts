@@ -107,7 +107,7 @@ export class AgendaService {
            
       })
       ,catchError((error:any) => {
-        return throwError(() => { console.log(error); return error;})
+        return throwError(() => { return error;})
       })
     )
 

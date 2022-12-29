@@ -57,7 +57,6 @@ export class UsuariosService {
         authorization: id}
     })
     .pipe(map((data:any) => {
-      console.log(data)
          return {
           id: data.id,
           nombre : data.nombre,
@@ -69,7 +68,6 @@ export class UsuariosService {
          }
     })
     ,catchError( (error:any) => {
-      console.log(error)
       return throwError(() =>{ return error} )
     }))
   }
@@ -112,9 +110,8 @@ export class UsuariosService {
       headers: {
         'content-type': 'application/json'
       }
-    }).pipe(map(data => {console.log('dataresss', data)})
+    }).pipe(map(data => {})
     ,catchError( (error:any) => {
-      console.log(error)
       return throwError(() =>{ return error} )
     }))
 }

@@ -11,7 +11,6 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit(): void {
     this.images = this.collectionsNails();
-    console.log(this.images)
   }
 
   collectionsNails(){

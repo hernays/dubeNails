@@ -51,7 +51,7 @@ export class MenuComponent implements OnInit {
           this.sharedService.setRolUser(data);
         },
       error : (error) => {
-        console.log(error)
+        
       }})
       }
       })
@@ -130,7 +130,6 @@ export class MenuComponent implements OnInit {
     const id = localStorage.getItem('token') as string;
     
   this.usuariosService.getUsuario(id).subscribe({next: (data) => {
-    console.log('data', data)
    this.sharedService.setDataUsuario(data)
   this.usuarioData = data;
   this.usuarioActivo = true;

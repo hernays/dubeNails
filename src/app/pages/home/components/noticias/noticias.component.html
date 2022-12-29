@@ -1,5 +1,5 @@
 <div class="cardNoticias" *ngFor="let data of datas;let index = index">
-    <img class="noticiaImg" [src]="data.img">
+    <img class="noticiaImg" [src]="data.img" [alt]="data.nombre">
     <div class="content">
         <span> Publicado: {{data.fecha}}</span>
         <div class="menuArticle" (click)="activarMenu(data.id)">

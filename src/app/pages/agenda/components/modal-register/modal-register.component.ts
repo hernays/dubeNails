@@ -208,14 +208,16 @@ export class ModalRegisterComponent implements OnInit {
 
   setDataCliente() {
     this.sharedService.getRolUser().subscribe(data => {
-      this.idUser = data.id;
-      this.rol = data.rol;
-      if (data?.nombre && data?.rol !== 'admin') {
-        this.formGroup.controls['nombre'].disable();
-        this.formGroup.controls['nombre'].setValue(data.nombre);
-        if (data?.telefono) {
-          this.formGroup.controls['telefono'].disable();
-          this.formGroup.controls['telefono'].setValue(data.telefono);
+      if(data){
+        this.idUser = data.id;
+        this.rol = data.rol;
+        if (data?.nombre && data?.rol !== 'admin') {
+          this.formGroup.controls['nombre'].disable();
+          this.formGroup.controls['nombre'].setValue(data.nombre);
+          if (data?.telefono) {
+            this.formGroup.controls['telefono'].disable();
+            this.formGroup.controls['telefono'].setValue(data.telefono);
+          }
         }
       }
     })

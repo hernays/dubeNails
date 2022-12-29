@@ -55,9 +55,7 @@ export class DetallesComponent implements OnInit {
     if (this.ids.length > 0) {
       this.agendaService.actualizarEstado(this.ids).subscribe({
         next: (valor: boolean) => {
-          console.log(valor)
         }, error: (error: any) => {
-          console.log('error', error)
         }
       })
     }
@@ -87,7 +85,6 @@ export class DetallesComponent implements OnInit {
 
   modalActive() {
     this.clienteDetalle.forEach((element:any) => {
-      console.log("elementos",element)
       this.horas.push({horaInicio : element.hora, horaFin : element.tramo})
       this.horasCopias.push({horaInicio : element.hora, horaFin : element.tramo})
     })
@@ -109,7 +106,6 @@ export class DetallesComponent implements OnInit {
             this.ids.push(element._id);
           }
         });
-        console.log('clienteDetalle', this.clienteDetalle)
         this.habilitar = data[0].diaHabilitado;
         this.sharedService.setDiaHabilitado(this.habilitar);
         this.clienteDetalle.forEach(data => this.sumaServicios = this.sumaServicios + data.valor)
@@ -152,7 +148,6 @@ export class DetallesComponent implements OnInit {
         this.sharedService.setDiaHabilitado(this.habilitar);
       },
       error: (error: any) => {
-        console.log(error)
       }
     })
   }
@@ -163,10 +158,9 @@ export class DetallesComponent implements OnInit {
     })
       .then(sub => {
         this.usuariosService.addPushSubscriber(sub).subscribe((data) => {
-          console.log('entro en notificacion 3 ')
         })
       })
-      .catch(err => console.error("Could not subscribe to notifications", err));
+      .catch(err => {});
 
   }
 }

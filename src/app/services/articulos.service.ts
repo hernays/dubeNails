@@ -19,7 +19,6 @@ export class ArticulosService {
       return data;
   })
   ,catchError((error) => {
-    console.log(error)
     return throwError(() => error)
   }))
 

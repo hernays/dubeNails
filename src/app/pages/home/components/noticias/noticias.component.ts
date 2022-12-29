@@ -41,7 +41,7 @@ export class NoticiasComponent implements OnInit {
           this.datas = data.map((element :any) => {
             const img = element.img.split('.');
             const data = {
-               nombre : element.nombre,
+               nombre : element.nombre.trim(),
                fecha : element.fecha,
                usuario : element.usuario,
                descripcion : element.descripcion,
