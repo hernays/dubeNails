@@ -6,29 +6,23 @@
   <form [formGroup]="formGroup">
     <label name="nombre">Nombre</label>
     <br>
-    <input type="text" 
-    autocomplete="off"
-    placeholder="nombre..." 
-    formControlName="nombre">
+    <input type="text" autocomplete="off" placeholder="nombre..." formControlName="nombre">
     <br>
     <label name="hora">Hora</label>
     <br>
-    <input formControlName="hora"
-     type="button" 
-     (click)="mostrarHoras()"
-     autocomplete="off"
-     >
+    <input formControlName="hora" type="button" (click)="mostrarHoras()" autocomplete="off">
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalHoras">
       <div class="modalHoras">
-        <div>     
+        <div>
           <h3>Selección de Horas</h3>
-         <span (click)="hideModalHoras()">x</span>
-       </div>
-       <ul class="listaHoras">
-         <li *ngFor="let hora of listaHora" (click)="SeleccionHora($event.target)">{{(hora.indexOf('.') > 0) ? hora.slice(0 ,hora.length-2) + ':30' : hora+':00'}}</li>
-       </ul>
+          <span (click)="hideModalHoras()">x</span>
+        </div>
+        <ul class="listaHoras">
+          <li *ngFor="let hora of listaHora" (click)="SeleccionHora($event.target)">{{(hora.indexOf('.') > 0) ?
+            hora.slice(0 ,hora.length-2) + ':30' : hora+':00'}}</li>
+        </ul>
       </div>
     </div>
 
@@ -39,25 +33,27 @@
 
     <div class="modalGeneric modalHora" *ngIf="modalServicios">
       <div class="modalHoras modalServicio">
-        <div>     
+        <div>
           <h3>Selección de Horas</h3>
-         <span (click)="hideModalServicios()">x</span>
-       </div>
-       <ul class="listaHoras ulServicios">
-         <li *ngFor="let servicio of lista" (click)="SeleccionServicio($event.target)">{{servicio.nombre}}</li>
-       </ul>
+          <span (click)="hideModalServicios()">x</span>
+        </div>
+        <ul class="listaHoras ulServicios">
+          <li *ngFor="let servicio of lista" (click)="SeleccionServicio($event.target)">{{servicio.nombre}}</li>
+        </ul>
       </div>
     </div>
 
     <label name="telefono">Telefono</label>
     <br>
-    <input type="text" 
-    placeholder="telefono..." 
-    formControlName="telefono"
-    autocomplete="off"
-    >
+    <input type="text" placeholder="telefono..." formControlName="telefono" autocomplete="off">
     <br>
-    <button class="submit" (click)="enviarDatos()">Registrar Hora</button>
+
+    <label  *ngIf="rol !== 'admin'" name="correo">Correo</label>
+    <br *ngIf="rol !== 'admin'">
+    <input *ngIf="rol !== 'admin'" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
+    <br *ngIf="rol !== 'admin'">
+    <button *ngIf="rol === 'admin'" class="submit" (click)="enviarDatos()">Registrar Hora</button>
+    <button *ngIf="rol !== 'admin'" class="submit" (click)="pagar()">Pagar Abono</button>
   </form>
 
   <div class=" success error" *ngIf="horaDisponible.length > 0">

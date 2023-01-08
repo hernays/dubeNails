@@ -7,18 +7,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { PagesRouter } from './pages-routing-module';
 import { GalleryModule } from './gallery/gallery.module';
 import { ContactoModule } from './usuario/contacto.module';
+import { ConfirmacionModule } from './confirmacion/confirmacion.module';
 
 
 @NgModule({
-  declarations: [ ],
+  declarations: [ 
+  ],
   imports: [
     CommonModule,
+    BrowserModule,
     AgendaModule,
     HomeModule,
     GalleryModule,
     ContactoModule,
     BrowserModule,
-    PagesRouter
+    ConfirmacionModule,
+    PagesRouter,
   ],
   exports:[]
 })

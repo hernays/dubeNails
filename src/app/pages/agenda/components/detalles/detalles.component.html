@@ -2,71 +2,61 @@
     <div class="contenido">
         <div>
             <div class="headerAgenda">
-                <span *ngIf="rol === 'admin' && rol" (click)="disabledDay()"
-                [class.h3Admin]="rol === 'admin' && rol"
-                [class.habilitar]="!habilitar"
-                [class.desabilitar]="habilitar">
-                {{(habilitar) ? 'Desabilitar' : 'Habilitar'}}
+                <span *ngIf="rol === 'admin' && rol" (click)="disabledDay()" [class.h3Admin]="rol === 'admin' && rol"
+                    [class.habilitar]="!habilitar" [class.desabilitar]="habilitar">
+                    {{(habilitar) ? 'Desabilitar' : 'Habilitar'}}
                 </span>
                 <h3>Detalle de horas</h3>
                 <span (click)="hideModalServicios()">x</span>
             </div>
 
-            <div  *ngFor="let clientes of clienteDetalle; let i = index"
-            [class.backgroundBody]="i%2 === 0"    
-            >
-                <div *ngIf="habilitar || rol === 'admin'; else message" class="bodyAgenda" >
+            <div *ngFor="let clientes of clienteDetalle; let i = index" [class.backgroundBody]="i%2 === 0">
+                <div *ngIf="habilitar && clientes.estado || rol === 'admin' && clientes.estado; else message"
+                    class="bodyAgenda">
                     <p>
                         <span>
                             <strong>Nombre:</strong> {{clientes.nombre}}
                         </span>
-                        <span *ngIf="sumaServicios !== 0 && rol === 'admin'"
-                        class="valorServicio"> ${{clientes.valor}}.000</span>
+                        <span *ngIf="sumaServicios !== 0 && rol === 'admin'" class="valorServicio">
+                            ${{clientes.valor}}.000</span>
                     </p>
                     <p><strong>Servicio:</strong> {{clientes.servicio}}</p>
-                  
-                    <p><strong>hora:</strong> {{ clientes.hora | pipes}} 
+
+                    <p><strong>hora:</strong> {{ clientes.hora | pipes}}
                         - {{clientes.tramo | pipes}}</p>
-                    
-                        <p class="telefono" *ngIf="rol === 'admin' && rol && clientes.telefono">
-                    <strong>Telefono: </strong>{{clientes.telefono}} </p>
-                    
-                    <p 
-                     *ngIf="rol === 'admin' && rol && clientes.nuevo && clientes.nuevo === true"
-                     >
-                        <strong>Estado: </strong><span [class.nuevaAgenda]="clientes.nuevo === true">{{(clientes.nuevo) ? 'Nuevo' : 'Visto'}}</span></p>
-                    <app-cancelar-hora 
-                        *ngIf="rol === 'admin' && rol"
-                        [dia]="dia" 
-                        [telefono]="clientes.telefono" 
-                        [nombre]="clientes.nombre"
-                        [botonCancelars]="retornaBoton" 
-                        (returnData)="returnData($event)">
+
+                    <p class="telefono" *ngIf="rol === 'admin' && rol && clientes.telefono">
+                        <strong>Telefono: </strong>{{clientes.telefono}}
+                    </p>
+
+                    <p *ngIf="rol === 'admin' && rol && clientes.nuevo && clientes.nuevo === true">
+                        <strong>Estado: </strong><span [class.nuevaAgenda]="clientes.nuevo === true">{{(clientes.nuevo)
+                            ? 'Nuevo' : 'Visto'}}</span>
+                    </p>
+                    <app-cancelar-hora *ngIf="rol === 'admin' && rol" [dia]="dia" [telefono]="clientes.telefono"
+                        [nombre]="clientes.nombre" [botonCancelars]="retornaBoton" (returnData)="returnData($event)">
                     </app-cancelar-hora>
                 </div>
 
+
                 <ng-template #message>
-                    <h3>No estamos laborado el dia de hoy</h3>
-
-                    <span [innerHtml]="symbol" 
-                    [ngStyle]="{'font-size': '220px',
-                                                            'text-aling': 'center'}"></span>
-
+                    <h3 *ngIf="!habilitar">No estamos laborado el dia de hoy</h3>
+                    <span *ngIf="!habilitar" [innerHtml]="symbol" [ngStyle]="{'font-size': '220px',
+                                                                'text-aling': 'center'}">
+                    </span>
                 </ng-template>
-                
+
             </div>
-            <strong *ngIf="sumaServicios !== 0 && rol === 'admin'"> Resumen del dia - Total: ${{sumaServicios}}.000</strong>
+            <strong *ngIf="sumaServicios !== 0 && rol === 'admin'"> Resumen del dia - Total:
+                ${{sumaServicios}}.000</strong>
             <p class="sinRegistro" *ngIf="clienteDetalle.length === 0">{{sinAgenda}}</p>
         </div>
         <button *ngIf="dia.day >= day && dia.diaName !== 'domingo' && habilitar === true
             ||  month < dia.month && dia.diaName !== 'domingo' && habilitar === true
             ||  month > dia.month && dia.diaName !== 'domingo' && habilitar === true"
-        (click)="modalActive()">AGENDAR</button>
+            (click)="modalActive()">AGENDAR</button>
     </div>
-    <app-modal-register *ngIf="modalRegisters" 
-    [dia]="dia" 
-    [horas]="horas" 
-    [horasCopias]="horasCopias"
-    (registerModal)="hideModalRegister($event)"></app-modal-register>
-        
+    <app-modal-register *ngIf="modalRegisters" [dia]="dia" [horas]="horas" [horasCopias]="horasCopias"
+        (registerModal)="hideModalRegister($event)"></app-modal-register>
+
 </div>

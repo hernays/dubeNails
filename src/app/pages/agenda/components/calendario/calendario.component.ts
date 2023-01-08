@@ -52,7 +52,6 @@ export class CalendarioComponent implements OnInit {
 
   verificarUsuario() {
     this.sharedService.getRolUser().subscribe((rol) => {
-      console.log('rols', rol)
       if (rol) {
         this.rolUsuario = (rol.rol) ? rol.rol : '';
         this.totalMes(this.mesAgenda);

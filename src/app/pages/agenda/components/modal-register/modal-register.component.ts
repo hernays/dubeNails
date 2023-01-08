@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
 import { SharedService } from 'src/app/services/shared.service';
+import { PagoService } from 'src/app/services/pago.service';
 import * as moment from 'moment';
 
 @Component({
@@ -36,19 +37,22 @@ export class ModalRegisterComponent implements OnInit {
   public modalServicios: boolean = false;
   public idUser: string = '';
   public rol: string = '';
+  public token : string = '';
 
 
   constructor(
     private formBuilder: FormBuilder,
     private agendaService: AgendaService,
     private eventsService: EventsService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private pagoService : PagoService
   ) {
     this.formGroup = this.formBuilder.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       servicio: ['Seleccione un servicio...', [Validators.required]],
       hora: ['Seleccione una hora...', [Validators.required, Validators.minLength(2)]],
-      telefono: ['']
+      telefono: [''],
+      correo:['']
     })
   }
 
@@ -89,31 +93,35 @@ export class ModalRegisterComponent implements OnInit {
   async enviarDatos() {
     this.formGroup.controls['nombre'].enable();
     this.formGroup.controls['telefono'].enable();
-    const { nombre, servicio, telefono } = this.formGroup.value;
+    this.formGroup.controls['correo'].enable();
+    const { nombre, servicio, telefono , correo} = this.formGroup.value;
     const dia = Number(this.dia.day);
     const mes = Number(this.dia.month);
     const hora = Number(this.horaSelecciona);
     const  horaServicio  = this.lista.filter(e => e.nombre === servicio)[0].numberServicio;
-    this.traerData(Number(hora), nombre, servicio, dia, horaServicio, telefono, mes)
+    this.traerData(Number(hora), nombre, servicio, dia, horaServicio, telefono, mes )
   }
 
   async traerData(horaNueva: number, nombre: string, servicio: string, dia: number, horaServicio: number, telefono: any, mes: number) {
     this.agendaService.getDatosDay(this.dia).subscribe({
       next: (data: any) => {
-        const tramos = data.map((element: any) => {
-          return { horaInicio: element.hora, horaFin: element.tramo, dia: Number(element.dia), mes: element.mes }
-        })
-        for (let horasDB of tramos) {
-
-         /*  const tiempoServicio = horasDB.horaFin - horasDB.horaInicio; */
-            if(dia === horasDB.dia && mes === horasDB.mes && horaNueva === horasDB.horaInicio ||
-               dia === horasDB.dia && mes === horasDB.mes && horaNueva > horasDB.horaInicio && horaNueva+horaServicio < horasDB.horaFin ||
-               dia === horasDB.dia && mes === horasDB.mes && horaNueva < horasDB.horaInicio && horaNueva+horaServicio > horasDB.horaInicio){
-            
-               const formatearHoraServicio = (String(horaServicio).length > 1 ) ? String(horaServicio).split('.')[0]+':30' : horaServicio;
-            this.horaDisponible = `Servicio ${servicio} demora ${formatearHoraServicio}hrs esta cochando con otra hora revisa la agenda e intenta de nuevo.`;
-            this.success = false; break;
-            }
+        console.log(data)
+        if(Array.isArray(data)){
+          const tramos = data.map((element: any) => {
+            return { horaInicio: element.hora, horaFin: element.tramo, dia: Number(element.dia), mes: element.mes }
+          })
+          for (let horasDB of tramos) {
+  
+           /*  const tiempoServicio = horasDB.horaFin - horasDB.horaInicio; */
+              if(dia === horasDB.dia && mes === horasDB.mes && horaNueva === horasDB.horaInicio ||
+                 dia === horasDB.dia && mes === horasDB.mes && horaNueva > horasDB.horaInicio && horaNueva+horaServicio < horasDB.horaFin ||
+                 dia === horasDB.dia && mes === horasDB.mes && horaNueva < horasDB.horaInicio && horaNueva+horaServicio > horasDB.horaInicio){
+              
+              const formatearHoraServicio = (String(horaServicio).length > 1 ) ? String(horaServicio).split('.')[0]+':30' : horaServicio;
+              this.horaDisponible = `Servicio ${servicio} demora ${formatearHoraServicio}hrs esta chocando con otra hora revisa la agenda e intenta de nuevo.`;
+              this.success = false;
+              }
+          }
         }
         if ( this.horaDisponible === '') {
           this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser)
@@ -184,17 +192,21 @@ export class ModalRegisterComponent implements OnInit {
     } */
 
     const nuevo = (this.rol === 'admin') ? false : true;
-    this.agendaService.recibirDatos({ nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, id, nuevo }).subscribe({
+    const token = this.token;
+    const estado = (this.rol === 'admin') ? true : false;
+    this.agendaService.recibirDatos({ nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, id, nuevo , token , estado}).subscribe({
       next: (msg: string) => {
         this.formGroup.controls['nombre'].setValue('');
         this.formGroup.controls['hora'].setValue('');
         this.formGroup.controls['servicio'].setValue('');
         this.formGroup.controls['telefono'].setValue('');
+        this.formGroup.controls['correo'].setValue('');
         this.success = true;
         this.error = '';
         this.eventsService.alertMessage('success', 'Registrado con Exito')
         this.eventsService.successDatos.emit(true);
         this.setDataCliente();
+        this.registerModal.emit(false);
       },
       error: (msg: string) => {
         this.error = msg;
@@ -214,6 +226,10 @@ export class ModalRegisterComponent implements OnInit {
         if (data?.nombre && data?.rol !== 'admin') {
           this.formGroup.controls['nombre'].disable();
           this.formGroup.controls['nombre'].setValue(data.nombre);
+          if(data?.correo){
+            this.formGroup.controls['correo'].disable();
+            this.formGroup.controls['correo'].setValue(data.correo);
+          }
           if (data?.telefono) {
             this.formGroup.controls['telefono'].disable();
             this.formGroup.controls['telefono'].setValue(data.telefono);
@@ -221,5 +237,26 @@ export class ModalRegisterComponent implements OnInit {
         }
       }
     })
+  }
+
+
+  pagar(){
+    const dia = this.dia.day;
+    const mes = this.dia.month;
+    const hora = String(this.horaSelecciona);
+    const correo = this.formGroup.controls['correo'].getRawValue();
+    const tokenUsuario = localStorage.getItem('token') as string;
+    this.pagoService.generarPago(correo,tokenUsuario,mes,dia,hora).subscribe({next : (data:any) => {
+      this.token = data.token;
+      this.enviarDatos()
+ 
+      setTimeout(() => {
+        if(this.horaDisponible.length === 0){
+          open(data.urlRedirect);
+        }
+      },1000)
+    },error : (error) => {
+console.log(error)
+    }})
   }
 }

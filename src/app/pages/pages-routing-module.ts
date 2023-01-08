@@ -23,6 +23,10 @@ const pagesRoutes: Routes = [
   {
     path:'contacto',
     loadChildren : () => import('./usuario/contacto.module').then(m => m.ContactoModule)
+  },
+  {
+    path:'confirmacion',
+    loadChildren : () => import('./confirmacion/confirmacion.module').then(m => m.ConfirmacionModule)
   }
 ];
 @NgModule({

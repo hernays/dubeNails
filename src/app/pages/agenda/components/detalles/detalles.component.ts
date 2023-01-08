@@ -66,17 +66,19 @@ export class DetallesComponent implements OnInit {
 
   verificarUsuario() {
     const token = localStorage.getItem('token') as string;
-    this.usuariosService.autorizarToken(token).subscribe({
-      next: (data: any) => {
-        this.rol = data?.rol;
-        this.nombre = data.nombre; // temporal 
-        this.sharedService.setRolUser(data);
-        this.retornaBoton.emit(true);
-      },
-      error: (error) => {
-        this.retornaBoton.emit(false);
-      }
-    })
+    if(token){
+      this.usuariosService.autorizarToken(token).subscribe({
+        next: (data: any) => {
+          this.rol = data?.rol;
+          this.nombre = data.nombre; // temporal 
+          this.sharedService.setRolUser(data);
+          this.retornaBoton.emit(true);
+        },
+        error: (error) => {
+          this.retornaBoton.emit(false);
+        }
+      })
+    }
   }
 
   returnData(event: any) {
@@ -99,16 +101,22 @@ export class DetallesComponent implements OnInit {
   showHoras() {
     this.agendaService.getDatosDay(this.dia).subscribe({
       next: (data: any) => {
-        this.sharedService.setDataAgenda(data);
-        this.clienteDetalle = data;
-        data.forEach((element: any) => {
-          if (element.nuevo && this.rol === 'admin' && this.nombre !== 'hernays') {
-            this.ids.push(element._id);
-          }
-        });
-        this.habilitar = data[0].diaHabilitado;
-        this.sharedService.setDiaHabilitado(this.habilitar);
-        this.clienteDetalle.forEach(data => this.sumaServicios = this.sumaServicios + data.valor)
+
+        if(Array.isArray(data)){
+          this.sharedService.setDataAgenda(data);
+          this.clienteDetalle = data;
+          data.forEach((element: any) => {
+            if (element.nuevo && this.rol === 'admin' && this.nombre !== 'hernays') {
+              this.ids.push(element._id);
+            }
+          });
+          this.habilitar = data[0].diaHabilitado;
+          this.sharedService.setDiaHabilitado(this.habilitar);
+          this.clienteDetalle.forEach(data => this.sumaServicios = this.sumaServicios + data.valor)
+        }else{
+          this.clienteDetalle = [];
+          this.sinAgenda = data;
+        }
       }, error: (error: string) => {
         this.clienteDetalle = [];
         this.sinAgenda = error;
@@ -119,13 +127,20 @@ export class DetallesComponent implements OnInit {
       if (valor) {
         this.agendaService.getDatosDay(this.dia).subscribe({
           next: (data: any) => {
-            this.clienteDetalle = data;
-            this.sharedService.setDataAgenda(data);
-            this.sumaServicios = 0;
-            this.habilitar = data[0].diaHabilitado;
-            this.sharedService.setDiaHabilitado(this.habilitar);
-            this.clienteDetalle.forEach(data => this.sumaServicios = this.sumaServicios + data.valor)
-          }, error: (error: string) => {
+            if(Array.isArray(data)){
+              this.clienteDetalle = data;
+              this.sharedService.setDataAgenda(data);
+              this.sumaServicios = 0;
+              this.habilitar = data[0].diaHabilitado;
+              this.sharedService.setDiaHabilitado(this.habilitar);
+              this.clienteDetalle.forEach(data => this.sumaServicios = this.sumaServicios + data.valor)
+           
+            }else{
+              this.clienteDetalle = [];
+              this.sinAgenda = data;
+              this.sumaServicios = 0;
+            }
+           }, error: (error: string) => {
             this.clienteDetalle = [];
             this.sinAgenda = error;
             this.sumaServicios = 0;
