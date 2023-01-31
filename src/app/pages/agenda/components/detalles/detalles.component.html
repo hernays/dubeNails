@@ -56,7 +56,12 @@
             ||  month > dia.month && dia.diaName !== 'domingo' && habilitar === true"
             (click)="modalActive()">AGENDAR</button>
     </div>
-    <app-modal-register *ngIf="modalRegisters" [dia]="dia" [horas]="horas" [horasCopias]="horasCopias"
-        (registerModal)="hideModalRegister($event)"></app-modal-register>
+    <app-modal-register *ngIf="modalRegisters" 
+    [dia]="dia" 
+    [horas]="horas" 
+    [horasCopias]="horasCopias"
+    (cerrarDetalle)="cerrarDetalles($event)"
+    (dato)="test($event)"
+    (registerModal)="hideModalRegister($event)"></app-modal-register>
 
 </div>

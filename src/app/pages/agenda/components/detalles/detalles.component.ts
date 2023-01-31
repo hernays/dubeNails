@@ -41,6 +41,7 @@ export class DetallesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.log('aqui')
     this.modalServicios = true;
     this.verificarUsuario();
     this.showHoras();
@@ -97,12 +98,21 @@ export class DetallesComponent implements OnInit {
   hideModalRegister(event: any) {
     this.modalRegisters = event;
   }
+  cerrarDetalles(event:boolean){
+    console.log("eventoooo",event)
+    this.modalServicios = false;
+    this.detalleComponent.emit(false);
+  }
+
+  test(event:any){
+    console.log('prueba de oupet' , event)
+
+  }
 
   showHoras() {
     this.agendaService.getDatosDay(this.dia).subscribe({
       next: (data: any) => {
-
-        if(Array.isArray(data)){
+        if(Array.isArray(data) && data.length !== 0){
           this.sharedService.setDataAgenda(data);
           this.clienteDetalle = data;
           data.forEach((element: any) => {
@@ -127,7 +137,7 @@ export class DetallesComponent implements OnInit {
       if (valor) {
         this.agendaService.getDatosDay(this.dia).subscribe({
           next: (data: any) => {
-            if(Array.isArray(data)){
+            if(Array.isArray(data) && data.length !== 0){
               this.clienteDetalle = data;
               this.sharedService.setDataAgenda(data);
               this.sumaServicios = 0;

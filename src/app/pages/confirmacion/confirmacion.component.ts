@@ -34,7 +34,7 @@ export class ConfirmacionComponent implements OnInit {
       this.usuariosService.autorizarToken(token).subscribe({
         next: (data: any) => {
           this.sharedService.setRolUser(data);
-          this.eventsService.cerrarModalLogin.emit(false);
+/*           this.eventsService.cerrarModalLogin.emit(false); */
         },
         error: (error) => {
 
@@ -45,18 +45,22 @@ export class ConfirmacionComponent implements OnInit {
 
 
   verificarAgenda() {
-    const id = this.router.snapshot.paramMap.get('token') as string;
+    const id = this.router.snapshot.paramMap.get('tokenUsuario') as string;
     const mes = this.router.snapshot.paramMap.get('mes') as string;
     const dia = this.router.snapshot.paramMap.get('dia') as string;
     const hora = this.router.snapshot.paramMap.get('hora') as string;
     this.agendaService.buscarAgendaPorUsuario(id, mes, dia, hora).subscribe({
       next: (data: any) => {
+        console.log("ver que trraeae",data)
         const { id, token } = data;
+        console.log(token)
         this.pagoService.verificarPago(token, id).subscribe({
           next: (data) => {
             console.log("pago realizado", data)
+              /* window.close(); */
           }, error: (error) => {
             console.log("error---------", error)
+            window.close();
           }
         })
 

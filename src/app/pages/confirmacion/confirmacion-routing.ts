@@ -4,7 +4,7 @@ import { ConfirmacionComponent } from './confirmacion.component';
 
 const confirmacionRoutes: Routes = [
     {
-        path: 'confirmacion/:token/:mes/:dia/:hora',
+        path: 'confirmacion/:tokenUsuario/:mes/:dia/:hora',
         component: ConfirmacionComponent
     }
 ]

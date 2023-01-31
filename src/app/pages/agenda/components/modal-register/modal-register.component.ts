@@ -4,7 +4,6 @@ import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { PagoService } from 'src/app/services/pago.service';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-modal-register',
@@ -13,6 +12,8 @@ import * as moment from 'moment';
 })
 export class ModalRegisterComponent implements OnInit {
   @Output('registerModal') registerModal: EventEmitter<any> = new EventEmitter();
+  @Output('cerrarDetalle') cerrarDetalle:EventEmitter<any> = new EventEmitter();
+  @Output('dato') dato: EventEmitter<any> = new EventEmitter();
   @Input('dia') dia: any;
   @Input('horas') horas: any;
   @Input('horasCopias') horasCopias: any;
@@ -124,7 +125,8 @@ export class ModalRegisterComponent implements OnInit {
           }
         }
         if ( this.horaDisponible === '') {
-          this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser)
+          this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser);
+          this.cerrarDetalle.emit(false); 
         }
 
       }, error: (error: any) => {
@@ -162,6 +164,7 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   SeleccionHora(event: any) {
+     this.horaDisponible = ''; 
     const evento = event.innerText.split(':');
     this.formGroup.controls['hora'].setValue(
       (evento[1].includes('3')) ? evento[0] + ':30' :
@@ -240,21 +243,22 @@ export class ModalRegisterComponent implements OnInit {
   }
 
 
-  pagar(){
+  async pagar(){
     const dia = this.dia.day;
     const mes = this.dia.month;
     const hora = String(this.horaSelecciona);
     const correo = this.formGroup.controls['correo'].getRawValue();
     const tokenUsuario = localStorage.getItem('token') as string;
     this.pagoService.generarPago(correo,tokenUsuario,mes,dia,hora).subscribe({next : (data:any) => {
+      console.log("dataaaa",data)
       this.token = data.token;
-      this.enviarDatos()
- 
-      setTimeout(() => {
-        if(this.horaDisponible.length === 0){
-          open(data.urlRedirect);
+      this.enviarDatos();
+      if(this.horaDisponible.length === 0){
+          setTimeout(() => {
+            open(data.urlRedirect);
+          },500)
         }
-      },1000)
+
     },error : (error) => {
 console.log(error)
     }})
