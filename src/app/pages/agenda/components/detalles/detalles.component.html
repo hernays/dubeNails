@@ -9,13 +9,18 @@
                 <h3>Detalle de horas</h3>
                 <span (click)="hideModalServicios()">x</span>
             </div>
+            <strong class="diaName">{{dia.diaName}} - {{dia.day}}</strong>
 
             <div *ngFor="let clientes of clienteDetalle; let i = index" [class.backgroundBody]="i%2 === 0">
-                <div *ngIf="habilitar && clientes.estado || rol === 'admin' && clientes.estado; else message"
-                    class="bodyAgenda">
+                <div *ngIf="habilitar && clientes.estado ||
+                 rol === 'admin' && clientes.estado; else message" class="bodyAgenda">
                     <p>
                         <span>
-                            <strong>Nombre:</strong> {{clientes.nombre}}
+                            <strong>Nombre:</strong>
+                            <span *ngIf="
+                            dia.day === day || rol === 'admin';  else privado"> {{clientes.nombre}} </span>
+                            <ng-template #privado> Reservado</ng-template>
+
                         </span>
                         <span *ngIf="sumaServicios !== 0 && rol === 'admin'" class="valorServicio">
                             ${{clientes.valor}}.000</span>
@@ -51,17 +56,14 @@
                 ${{sumaServicios}}.000</strong>
             <p class="sinRegistro" *ngIf="clienteDetalle.length === 0">{{sinAgenda}}</p>
         </div>
-        <button *ngIf="dia.day >= day && dia.diaName !== 'domingo' && habilitar === true
-            ||  month < dia.month && dia.diaName !== 'domingo' && habilitar === true
-            ||  month > dia.month && dia.diaName !== 'domingo' && habilitar === true"
+        <button *ngIf="
+                dia.day >= day && dia.diaName !== 'domingo' && habilitar === true && rol
+            ||  month < dia.month && dia.diaName !== 'domingo' && habilitar === true && rol
+            ||  month > dia.month && dia.diaName !== 'domingo' && habilitar === true && rol"
             (click)="modalActive()">AGENDAR</button>
     </div>
-    <app-modal-register *ngIf="modalRegisters" 
-    [dia]="dia" 
-    [horas]="horas" 
-    [horasCopias]="horasCopias"
-    (cerrarDetalle)="cerrarDetalles($event)"
-    (dato)="test($event)"
-    (registerModal)="hideModalRegister($event)"></app-modal-register>
+    <app-modal-register *ngIf="modalRegisters" [dia]="dia" [horas]="horas" [horasCopias]="horasCopias"
+        (cerrarDetalle)="cerrarDetalles($event)" (dato)="test($event)"
+        (registerModal)="hideModalRegister($event)"></app-modal-register>
 
 </div>

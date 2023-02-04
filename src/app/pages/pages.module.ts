@@ -8,6 +8,7 @@ import { PagesRouter } from './pages-routing-module';
 import { GalleryModule } from './gallery/gallery.module';
 import { ContactoModule } from './usuario/contacto.module';
 import { ConfirmacionModule } from './confirmacion/confirmacion.module';
+import { GiftcardModule } from './giftcard/giftcard.module';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { ConfirmacionModule } from './confirmacion/confirmacion.module';
     ContactoModule,
     BrowserModule,
     ConfirmacionModule,
+    GiftcardModule,
     PagesRouter,
   ],
   exports:[]

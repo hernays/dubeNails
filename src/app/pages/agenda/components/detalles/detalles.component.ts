@@ -41,15 +41,11 @@ export class DetallesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    console.log('aqui')
     this.modalServicios = true;
     this.verificarUsuario();
     this.showHoras();
     this.day = new Date().getDate();
     this.month = new Date().getMonth();
-
-    setTimeout(() => {
-    }, 5000)
   }
 
   hideModalServicios() {
@@ -74,6 +70,7 @@ export class DetallesComponent implements OnInit {
           this.nombre = data.nombre; // temporal 
           this.sharedService.setRolUser(data);
           this.retornaBoton.emit(true);
+          console.log("rol",this.rol)
         },
         error: (error) => {
           this.retornaBoton.emit(false);

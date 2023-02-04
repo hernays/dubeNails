@@ -70,7 +70,6 @@ export class ModalRegisterComponent implements OnInit {
         h.horaInicio = h.horaInicio + contador;
       }
     })
-
   }
 
   hideModal() {

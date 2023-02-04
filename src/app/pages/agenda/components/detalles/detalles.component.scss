@@ -25,7 +25,7 @@
         display: flex;
         justify-content: center;
         width: 100%;
-        margin-bottom: 28px;
+        margin-bottom: 10px;
 
         h3 {
             width: 72%;
@@ -68,6 +68,11 @@
         .desabilitar {
             color: $colorError;
         }
+    }
+    .diaName{
+        display: block;
+        width: 100%;
+        text-align: center;
     }
 
     .bodyAgenda {

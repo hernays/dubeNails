@@ -53,13 +53,13 @@ export class ConfirmacionComponent implements OnInit {
       next: (data: any) => {
         console.log("ver que trraeae",data)
         const { id, token } = data;
-        console.log(token)
         this.pagoService.verificarPago(token, id).subscribe({
           next: (data) => {
             console.log("pago realizado", data)
-              /* window.close(); */
           }, error: (error) => {
             console.log("error---------", error)
+          }, complete: () => {
+            console.log('entro al complete')
             window.close();
           }
         })

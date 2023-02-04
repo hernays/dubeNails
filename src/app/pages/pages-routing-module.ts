@@ -27,6 +27,10 @@ const pagesRoutes: Routes = [
   {
     path:'confirmacion',
     loadChildren : () => import('./confirmacion/confirmacion.module').then(m => m.ConfirmacionModule)
+  },
+  {
+    path:'giftcard',
+    loadChildren : () => import('./giftcard/giftcard.module').then(m => m.GiftcardModule)
   }
 ];
 @NgModule({

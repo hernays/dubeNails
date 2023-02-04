@@ -1,0 +1,47 @@
+<div class="body fondoBody"
+#body>
+    <div 
+    id="regalo"
+    #caja
+    >
+        <h1>Felicitadades Abre tu Regalo</h1>
+        <img 
+        #regalo
+        class="regalo" 
+        src="../../../assets/img/regalo.png"
+        (click)="abrirRegalo()">
+
+        <span>Espero lo disfrutes......</span>
+    </div>
+
+    <img 
+    id="fuegos"
+    #fuegos>
+
+    <h1 id="cajah"
+    #cajah>Gratitulación</h1>
+    <div id="card"
+        #card>
+        <div class="logo">
+            <h1 id="gift">GiftCard</h1>
+            <img class="imgCard" src="../../../assets/img/logo_dubenails_arreglada.jpg">
+        </div>
+        <div class="head">
+            <h3 id="cirugia">DubeNails</h3>
+            <h3 class="santiago">{{nombreServicio}}</h3>
+        </div>
+        <ul id="ul">
+            <li>Sector: La Serena</li>
+            <li>Dirección: Las Orquideas 5330 depto 206</li>
+            <li>Contacto: +56 964573708</li>
+            <li><a href="https://dubenails.xyz/agenda" target="_black">Agenda tu hora aqui</a></li>
+        </ul>
+
+    </div>
+
+
+    <audio #audio controls id="audio">
+        <source autoplay src="../../../assets/img/MUSICA ELECTRONICA PARA HACER EJERCICIO (Alan Walker - Dennis 2014)_160k.mp3" type="audio/mp3">
+    </audio>
+<script src="index.js"></script>
+</div>
