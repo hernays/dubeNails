@@ -1,0 +1,11 @@
+
+<div class="for">
+    
+     <label>Servicio</label>
+     <div class="cajaPrincipal" >
+        <div *ngFor="let opt of opts" (click)="producto(opt)">
+            {{opt}}
+          </div>
+     </div>
+    <a class="link" *ngIf="url" [href]="url">Giftcard {{productoSelect}}</a>
+</div>
