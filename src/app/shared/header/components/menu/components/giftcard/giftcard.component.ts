@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-giftcard',
@@ -7,19 +7,44 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GiftcardComponent implements OnInit {
 
+  @ViewChild('copiar' , {static:true} )  copiar! : ElementRef;
+
   public url :string  = '';
   public urlStatic : string = 'https://dubenails.xyz/giftcard/';
-  public opts = ['Esmaltado_Permanente','Poligel','Acrilicas'];
+  public opts = ['Esmaltado_Permanente','Polygel','Acrilicas'];
   public productoSelect : string = '';
+  public copiado : string = '';
+  public nombrePara : string = '';
+  public nombreDe : string = '';
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.nombrePara)
   }
 
   producto(producto:string){
     this.url = '';
-    this.url = this.urlStatic + producto;
+    const nombrePara = (this.nombrePara) ? '/'+this.nombrePara : '/'+'null';
+    const nombreDe = (this.nombreDe) ? '/'+this.nombreDe : '/'+'null';
+    this.url = this.urlStatic + producto + nombrePara + nombreDe;
     this.productoSelect = producto;
+    this.copiado = '';
+  }
+
+  urls(){
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = this.url;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+
+    this.copiado = 'copiado';
   }
 
 }
