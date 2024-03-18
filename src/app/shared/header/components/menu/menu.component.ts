@@ -21,6 +21,7 @@ export class MenuComponent implements OnInit {
    public test : any = false;
    public showActualizarUser : boolean = false;
    public showActualizarFoto : boolean = false;
+   public showGift: boolean = false;
    public rolUser : string = '';
    @Output('id')  id : any;
 
@@ -122,6 +123,12 @@ export class MenuComponent implements OnInit {
       this.lista = false; 
       this.menu = false;
       break;
+      case 'Crear GiftCard':
+      this.showGift = false;
+      this.tituloMenu = 'Menu';
+      this.lista = false; 
+      this.menu = false;
+      break;
     }
   }
 
@@ -184,6 +191,12 @@ export class MenuComponent implements OnInit {
 
   cargaArticulo(event:any){
     this.cerrarModal();
+  }
+
+  crearGiftCard(){
+  this.lista = false;
+  this.tituloMenu = 'Crear GiftCard';
+  this.showGift = true;
   }
 
 }

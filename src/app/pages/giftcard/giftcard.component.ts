@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router , Params , Route   } from '@angular/router';
+import { Router , Params , Route , ActivatedRoute  } from '@angular/router';
 
 @Component({
   selector: 'app-giftcard',
@@ -16,14 +16,24 @@ export class GiftcardComponent implements OnInit {
   @ViewChild('body', {static:true}) body! : ElementRef;
   @ViewChild('cajah', {static:true}) cajah! : ElementRef;
   @ViewChild('audio', {static:true}) audio! : ElementRef;
+  para:string= '';
+  de:string='';
 
   constructor(
-    private router : Router
+    private router : Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    console.log('esta lleganooooo')
    const servicio = this.router.url.split('/')[2];
    this.nombreServicio = servicio.replace('_',' ');
+
+   // nombre 
+   this.route.params.subscribe(({nombrePara, nombreDe}) => {
+    this.para = nombrePara;
+    this.de = nombreDe;
+   })
     
   }
 

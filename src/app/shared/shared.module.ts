@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
@@ -14,6 +14,7 @@ import { ActualizarUserComponent } from './header/components/menu/components/act
 import { ActualizarFotoComponent } from './header/components/menu/components/actualizar-foto/actualizar-foto.component';
 import { SpinnerModule } from './spinner/spinner.module';
 import { RegistrarArticulosComponent } from './header/components/menu/components/registrar-articulos/registrar-articulos.component';
+import { GiftcardComponent } from './header/components/menu/components/giftcard/giftcard.component';
 
 
 
@@ -29,13 +30,15 @@ import { RegistrarArticulosComponent } from './header/components/menu/components
     LoginComponent,
     ActualizarUserComponent,
     RegistrarArticulosComponent,
-    ActualizarFotoComponent
+    ActualizarFotoComponent,
+    GiftcardComponent
   ],
   imports: [
     CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    SpinnerModule
+    SpinnerModule,
+    FormsModule
   ],
   exports:[
     FooterComponent,

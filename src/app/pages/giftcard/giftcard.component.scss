@@ -1,4 +1,24 @@
+@font-face {
+    font-family: 'Allura';
+    src: url('../../../assets/letras/Allura-Regular.eed472f0f82f250f.ttf');
+}
+@font-face {
+    font-family: 'Explora';
+    src: url('../../../assets/letras/Explora-Regular.cc8129149adbb784.ttf');
+}
+@font-face {
+    font-family: 'NotoSansSy';
+    src: url('../../../assets/letras/NotoSansSylotiNagri-Regular.dab974f4323dac04.ttf');
+}
+@font-face {
+    font-family: 'Paprika';
+    src: url('../../../assets/letras/Paprika-Regular.fb41e585540504ed.ttf');
+}
 
+@font-face {
+    font-family: 'Solitreo';
+    src: url('../../../assets/letras/Solitreo-Regular.ff68aac2289eb97b.ttf');
+}
 
 .body{
     display: flex;
@@ -10,7 +30,11 @@
 }
 
 .fondoBody{
-    background: linear-gradient(60deg, rgb(215, 237, 105), rgb(70, 4, 84));
+    background-image: url('../../../assets/img/fondo_regalo.jpg');
+
+    .nombres{
+        margin-bottom: 20px;
+    }
 }
 
 .imgBody{
@@ -31,7 +55,7 @@
 }
 
 #regalo h1{
-    color: white;
+    color: black;
     font-size: 24px;
     font-family: sans-serif;
     letter-spacing: 1px;
@@ -41,7 +65,7 @@
 
 #regalo span{
     display: block;
-    color: white;
+    color: black;
     font-size: 20px;
     padding-top: 100px;
 }
@@ -129,10 +153,15 @@
 #card{
     display: none;
     width:85%;
+    height: 310px;
     margin-top: calc(100% - 90%);
-    background: linear-gradient(60deg ,rgb(186, 114, 114), #eb5df8);
+    background-image: url('../../../assets/img/fondo_giftcard.jpg');
     border-radius: 10px;
     z-index: 1;
+
+    div{
+        margin-bottom: 20px;
+    }
 
 }
 
@@ -159,6 +188,7 @@
 }
 
 #gift{
+    font-family: 'Solitreo';
     font-size:30px;
     margin-left: 10px;
     margin-top: 10px;
@@ -166,19 +196,30 @@
 
 
 #cirugia{
+    font-family: 'auto';
     font-size:25px;
     text-align: center;
     letter-spacing: 4px;
 }
 
 .santiago{
+    font-family: "NotoSansSy";
     text-align: center;
-    font-size:20px;
-    font-weight: bold;
+    font-size: 17px;
+    text-decoration: underline;
+    font-weight: 100;
     margin-top: 5px;
-    color: black;
-    text-shadow:  0px 0px 3px white;
-    animation: monto 3s linear infinite;
+    text-shadow: 0px 1px 3px #cf55fc;
+    text-shadow: purple;
+    letter-spacing: 3px;
+}
+
+.nombre{
+    font-size: 150%;
+    font-style: oblique;
+    font-family: initial;
+    text-decoration: none;
+    letter-spacing: 3px;
 }
 
 
@@ -194,14 +235,24 @@
 }
 
 #ul{
+    margin-top: 30px;
     padding: 5px;
     list-style: none;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column-reverse;
+
+    img{
+        width: 40px;
+    }
 }
 
 #ul > li{
-    color:rgb(255, 255, 255);
-    text-shadow: 0px 0px 3px black;
+    color: #000;
+    font-weight: 700;
+    text-shadow: 0px 0px 3px white;
+    display: flex;
+    align-items: center;
 }
 
 #audio{

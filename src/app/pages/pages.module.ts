@@ -23,7 +23,6 @@ import { GiftcardModule } from './giftcard/giftcard.module';
     ContactoModule,
     BrowserModule,
     ConfirmacionModule,
-    GiftcardModule,
     PagesRouter,
   ],
   exports:[]

@@ -9,16 +9,16 @@ const giftCardRouter: Routes = [
         component: GiftcardComponent,
     },
     {
-        path: 'giftcard/Esmaltado_Permanente',
+        path: 'Esmaltado_Permanente/:nombrePara/:nombreDe',
         component: GiftcardComponent
     },
     {
-        path: 'giftcard/Acrilicas',
+        path: 'Acrilicas/:nombrePara/:nombreDe',
         component: GiftcardComponent
     }
     ,
     {
-        path: 'giftcard/Poligel',
+        path: 'Polygel/:nombrePara/:nombreDe',
         component: GiftcardComponent
     }
 

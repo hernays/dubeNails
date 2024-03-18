@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-giftcard',
@@ -9,17 +10,22 @@ export class GiftcardComponent implements OnInit {
 
   @ViewChild('copiar' , {static:true} )  copiar! : ElementRef;
 
+  //  https://dubenails.xyz
   public url :string  = '';
-  public urlStatic : string = 'https://dubenails.xyz/giftcard/';
+  public urlStatic : string = '/giftcard/';
   public opts = ['Esmaltado_Permanente','Polygel','Acrilicas'];
   public productoSelect : string = '';
   public copiado : string = '';
-  public nombrePara : string = '';
-  public nombreDe : string = '';
+  public nombrePara : any = '';
+  public nombreDe : any = '';
   constructor() { }
 
   ngOnInit(): void {
     console.log(this.nombrePara)
+
+    this.urlStatic = ( environment.urlLocal.indexOf('localhost')) 
+    ? 'http://localhost:4200' + this.urlStatic
+    : 'https://dubenails.xyz' + this.urlStatic
   }
 
   producto(producto:string){

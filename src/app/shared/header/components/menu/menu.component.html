@@ -52,17 +52,24 @@
                     <a (click)="RegistrarArticulos()">Registrar Articulo</a>
                 </li>
                 <li>
+                    <a (click)="crearGiftCard()">Crear GiftCard</a>
+                </li>
+                <li>
                     <a (click)="salir()">Cerrar Sessión</a>
                 </li>
             </ul>
             <app-registrar-articulos 
             (success)="cargaArticulo($event)"
-            [idUser]="id" *ngIf="showRegistroArticulos" ></app-registrar-articulos>
+            [idUser]="id" *ngIf="showRegistroArticulos" >
+            </app-registrar-articulos>
             <app-actualizar-foto
              [idUser]="id"
              (imgUser)="imgUserCargada($event)"  
-             *ngIf="showActualizarFoto"></app-actualizar-foto>
-             <app-actualizar-user *ngIf="showActualizarUser"></app-actualizar-user>
+             *ngIf="showActualizarFoto">
+            </app-actualizar-foto>
+             <app-actualizar-user *ngIf="showActualizarUser">
+             </app-actualizar-user>
+             <app-giftcard *ngIf="showGift"></app-giftcard>
         </ng-container>
     
         <ng-template #menuActive>
