@@ -12,7 +12,7 @@ export class GiftcardComponent implements OnInit {
 
   //  https://dubenails.xyz
   public url :string  = '';
-  public urlStatic : string = '/giftcard/';
+  public urlStatic : string = 'https://dubenails.xyz/giftcard/';
   public opts = ['Esmaltado_Permanente','Polygel','Acrilicas'];
   public productoSelect : string = '';
   public copiado : string = '';
@@ -22,10 +22,6 @@ export class GiftcardComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.nombrePara)
-
-    this.urlStatic = ( environment.urlLocal.indexOf('localhost')) 
-    ? 'http://localhost:4200' + this.urlStatic
-    : 'https://dubenails.xyz' + this.urlStatic
   }
 
   producto(producto:string){
