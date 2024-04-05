@@ -15,7 +15,8 @@ export class UpdateService {
   }
 
   public checkForUpdates(): void {
-    this.updates.available.subscribe(event => this.promptUser());
+    // this.updates.available.subscribe(event => this.promptUser());
+    this.updates.versionUpdates.subscribe(event => this.promptUser());
   }
 
   private promptUser(): void {
