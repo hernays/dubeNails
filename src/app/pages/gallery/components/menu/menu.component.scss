@@ -1,0 +1,64 @@
+:host {
+    .contentMenu {
+        .listPrice {
+            font-size: 28px;
+            font-weight: normal;
+            margin-top: 20px;
+            margin-bottom: -20px;
+        }
+
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: CENTER;
+        gap: 40px;
+
+        .boxMenu {
+            h1 {
+                width: 90%;
+                font-size: 24px;
+            }
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            gap: 15px;
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                width: 90%;
+                align-items: center;
+                gap: 5px;
+
+            }
+        }
+
+        .contentIcons {
+            display: flex;
+            flex-direction: column;
+            align-items: baseline;
+            gap: 10px;
+
+            div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+
+                img {
+                    display: block;
+                    width: 40px;
+                }
+
+                a {
+                    color: #000000;
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+}

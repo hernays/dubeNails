@@ -10,15 +10,15 @@ const pagesRoutes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
+    loadChildren: () => import('./gallery/gallery.module').then(m => m.GalleryModule)
   },
   {
     path: 'agenda',
     loadChildren: () => import('./agenda/agenda.module').then(m => m.AgendaModule)
   },
   {
-    path: 'galeria',
-    loadChildren: () => import('./gallery/gallery.module').then(m => m.GalleryModule)
+    path: 'articulos',
+    loadChildren: () => import('./home/home.module').then(m => m.HomeModule)
   },
   {
     path:'contacto',
