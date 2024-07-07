@@ -45,7 +45,11 @@
 
     <label name="telefono">Telefono</label>
     <br>
-    <input type="text" placeholder="telefono..." formControlName="telefono" autocomplete="off">
+    <input 
+    type="text" 
+    placeholder="telefono..." 
+    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
+    formControlName="telefono" autocomplete="off">
     <br>
 
     <label  *ngIf="rol !== 'admin'" name="correo">Correo</label>

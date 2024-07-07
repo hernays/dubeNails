@@ -48,6 +48,9 @@ export class CalendarioComponent implements OnInit {
     moment.locale('es');
     this.fechas();
     this.verificarUsuario();
+    this.sharedService.getDeleteAgenda().subscribe( res => {
+      this.showModalDetalle = res;
+    })
   }
 
   verificarUsuario() {

@@ -11,6 +11,7 @@ export class SharedService {
   public articulos$ : BehaviorSubject<any> = new BehaviorSubject(null);
   public diaHabilitado$ : BehaviorSubject<boolean> = new BehaviorSubject(true); 
   public dataUsuario$: BehaviorSubject<boolean> = new BehaviorSubject(true); 
+  public deleteAgenda$: BehaviorSubject<boolean> = new BehaviorSubject(false); 
 
   constructor( ) { 
  
@@ -56,6 +57,15 @@ export class SharedService {
    getDataUsuario():BehaviorSubject<any>{
        return this.dataUsuario$;
    }
+
+   setDeleteAgenda(data:any){
+    this.deleteAgenda$.next(data);
+   }
+
+   getDeleteAgenda():BehaviorSubject<any>{
+    return this.deleteAgenda$;
+   }
+
 
 
 

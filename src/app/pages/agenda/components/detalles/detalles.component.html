@@ -38,8 +38,16 @@
                         <strong>Estado: </strong><span [class.nuevaAgenda]="clientes.nuevo === true">{{(clientes.nuevo)
                             ? 'Nuevo' : 'Visto'}}</span>
                     </p>
-                    <app-cancelar-hora *ngIf="rol === 'admin' && rol" [dia]="dia" [telefono]="clientes.telefono"
-                        [nombre]="clientes.nombre" [botonCancelars]="retornaBoton" (returnData)="returnData($event)">
+                    <!-- <app-cancelar-hora *ngIf="rol === 'admin' && rol" [dia]="dia" [telefono]="clientes.telefono" -->
+                        <app-cancelar-hora  
+                        [dia]="dia" 
+                        [telefono]="clientes.telefono"
+                        [nombre]="clientes.nombre" 
+                        [servicio]="clientes.servicio"
+                        [hora]="clientes.hora"
+                        [mes]="clientes.mes"
+                        [botonCancelars]="retornaBoton" 
+                        (returnData)="returnData($event)">
                     </app-cancelar-hora>
                 </div>
 

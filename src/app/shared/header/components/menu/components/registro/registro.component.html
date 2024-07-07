@@ -1,7 +1,10 @@
 <div class="registro">
     <form [formGroup]="formRegister">
-        <label name="alias">Alias:</label>
-        <input formControlName="nombre" type="text" placeholder="Alias...." />
+        <label name="usuario">Usuario:</label>
+        <input 
+        formControlName="nombre"
+        maxlength="12"
+         type="text" placeholder="Nombre Usuario...." />
 
         <label name="correo">Correo:</label>
         <input formControlName="correo" type="text" placeholder="correo@gmail.com" />
@@ -13,7 +16,11 @@
         <input formControlName="password2" type="password" placeholder="Minimo 6 digitos"  />
 
         <label name="telefono">Telefono:</label>
-        <input formControlName="telefono" type="text" placeholder="911112222" />
+        <input 
+        formControlName="telefono"
+        maxlength="10"
+        onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
+         type="text" placeholder="1234567890" />
 
         <label name="direccion">Dirección:</label>
         <input formControlName="direccion" type="text" placeholder="direccion...." />

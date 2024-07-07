@@ -13,6 +13,9 @@ export class CancelarHoraComponent implements OnInit{
 @Input('nombre') nombre : string = '';
 @Input('telefono') telefono : any;
 @Input('botonCancelars') botonCancelars : any ;
+@Input('servicio') servicio: any;
+@Input('hora') hora: any;
+@Input('mes') mes: any;
 @Output('returnData') returnData : EventEmitter<any> = new EventEmitter();
 public telefonoPrivado = false;
 public modalCancelar : boolean = false;
@@ -20,7 +23,8 @@ public day : any = '';
 public botonCancelar : boolean = false;
   constructor(
     private agendaService : AgendaService,
-    private eventsService : EventsService
+    private eventsService : EventsService,
+    private sharedService: SharedService
   ) {
     this.day = new Date().getDate();
   }
@@ -34,12 +38,18 @@ public botonCancelar : boolean = false;
     this.modalCancelar = true;
   }
 
-
   cancelarOperacion(valor:boolean){
-      const body = {dia : this.dia.day , nombre : this.nombre}
+      const body = {
+        dia : this.dia.day , 
+        nombre : this.nombre, 
+        mes: this.mes,
+        servicio: this.servicio,
+        hora: this.hora
+      }
       if(valor){
         this.agendaService.borrarHora(body).subscribe({next: (resp) => {
           this.eventsService.successDatos.emit(true);
+          this.sharedService.setDeleteAgenda(false)
        },
     error : () => {
 
