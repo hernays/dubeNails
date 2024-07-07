@@ -195,7 +195,8 @@ export class ModalRegisterComponent implements OnInit {
 
     const nuevo = (this.rol === 'admin') ? false : true;
     const token = this.token;
-    const estado = (this.rol === 'admin') ? true : false;
+    const estado = true;
+    // const estado = (this.rol === 'admin') ? true : false;
     this.agendaService.recibirDatos({ nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, id, nuevo , token , estado}).subscribe({
       next: (msg: string) => {
         this.formGroup.controls['nombre'].setValue('');

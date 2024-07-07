@@ -52,8 +52,9 @@
     <br *ngIf="rol !== 'admin'">
     <input *ngIf="rol !== 'admin'" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
     <br *ngIf="rol !== 'admin'">
-    <button *ngIf="rol === 'admin'" class="submit" (click)="enviarDatos()">Registrar Hora</button>
-    <button *ngIf="rol !== 'admin'" class="submit" (click)="pagar()">Pagar Abono</button>
+    <button class="submit" (click)="enviarDatos()">Registrar Hora</button>
+    <!-- <button *ngIf="rol === 'admin'" class="submit" (click)="enviarDatos()">Registrar Hora</button> -->
+    <!-- <button *ngIf="rol !== 'admin'" class="submit" (click)="pagar()">Pagar Abono</button> -->
   </form>
 
   <div class=" success error" *ngIf="horaDisponible.length > 0">
