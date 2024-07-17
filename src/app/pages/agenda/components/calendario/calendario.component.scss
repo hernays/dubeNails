@@ -109,3 +109,16 @@ app-modal-register{
     justify-content: center;
 }
 
+app-registrar-usuario {
+    display: block;
+    position: fixed;
+    z-index: 3;
+    top: 0px;
+    background: rgb(0 0 0 / 91%);
+    width: 100%;
+    max-width: 800px;
+    height: 100%;
+    color: white;
+    padding-top: 93px;
+}
+

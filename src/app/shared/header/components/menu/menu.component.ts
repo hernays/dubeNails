@@ -37,6 +37,9 @@ export class MenuComponent implements OnInit {
                       this.menu = valor;     
                       this.showlogin = valor;
       })
+      this.eventsService.showRegistro.subscribe( data => {
+        this.loginUser(data)
+      })
       this.getusuario();
       this.ocultarMenu();
       this.validarRol();
@@ -80,7 +83,7 @@ export class MenuComponent implements OnInit {
   showRegister(){
     this.showRegistro = true;
     this.lista = false;
-    this.tituloMenu = 'Registro';
+    this.tituloMenu = 'Registrate';
   }
 
   login(){
@@ -93,7 +96,7 @@ export class MenuComponent implements OnInit {
     switch(this.tituloMenu){
       case 'Menu':  
       this.menu = false; break;
-      case 'Registro' : 
+      case 'Registrate' : 
       this.showRegistro = false;
       this.tituloMenu = 'Menu';
       this.lista = false; 

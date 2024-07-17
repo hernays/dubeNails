@@ -32,6 +32,7 @@ export class DetallesComponent implements OnInit {
   public n: any = 10;
   readonly VAPID_PUBLIC_KEY = 'BBG9Ywk7mvin-aXmEpLorIVjGeo_8cahwFMYXqFD1VKsCldi_dAYXssJ5moV2pe3vcdqzCtXWS4ru8jn9UlGlrs';
   public symbol: string = '&#128577;';
+  public idUserLogin: string = '';
   constructor(
     private usuariosService: UsuariosService,
     private agendaService: AgendaService,
@@ -68,9 +69,9 @@ export class DetallesComponent implements OnInit {
         next: (data: any) => {
           this.rol = data?.rol;
           this.nombre = data.nombre; // temporal 
+          this.idUserLogin = data.id
           this.sharedService.setRolUser(data);
           this.retornaBoton.emit(true);
-          console.log("rol",this.rol)
         },
         error: (error) => {
           this.retornaBoton.emit(false);

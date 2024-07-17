@@ -30,9 +30,9 @@
   "dataGroups": [{
     "name":"agenda-api",
     "urls": [
-      "https://dubenails.xyz/api/usuarios",
-      "https://dubenails.xyz/api/auth/authorization",
-      "https://dubenails.xyz/api/agenda"
+      "https://dubenails.com/api/usuarios",
+      "https://dubenails.com/api/auth/authorization",
+      "https://dubenails.com/api/agenda"
     ],
     "cacheConfig": {
       "strategy": "freshness",

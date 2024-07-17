@@ -9,6 +9,7 @@ import { GalleryModule } from './gallery/gallery.module';
 import { ContactoModule } from './usuario/contacto.module';
 import { ConfirmacionModule } from './confirmacion/confirmacion.module';
 import { GiftcardModule } from './giftcard/giftcard.module';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { GiftcardModule } from './giftcard/giftcard.module';
     BrowserModule,
     ConfirmacionModule,
     PagesRouter,
+    SharedModule
   ],
   exports:[]
 })

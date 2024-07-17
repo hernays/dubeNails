@@ -24,3 +24,8 @@
 [dia]="dia"
 (detalleComponent)="detalleComponents($event)"
 ></app-detalles> 
+
+<app-registrar-usuario 
+*ngIf="this.rolUsuario === ''"
+(registroExitoso)="registroExitoso($event)"
+></app-registrar-usuario>

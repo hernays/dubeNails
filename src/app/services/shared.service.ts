@@ -35,6 +35,7 @@ export class SharedService {
    }
 
    setArticulos(data:any){
+    console.log('cuantas veces entra')
     this.articulos$.next(data);
    }
  

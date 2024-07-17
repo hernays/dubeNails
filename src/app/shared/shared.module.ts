@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -43,7 +43,11 @@ import { GiftcardComponent } from './header/components/menu/components/giftcard/
   exports:[
     FooterComponent,
     HeaderComponent,
-    ContentComponent
+    ContentComponent,
+    RegistroComponent
+  ],
+  schemas:[
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class SharedModule { }

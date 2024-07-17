@@ -48,6 +48,9 @@ export class CalendarioComponent implements OnInit {
     moment.locale('es');
     this.fechas();
     this.verificarUsuario();
+    if(this.rolUsuario === ''){
+
+    }
     this.sharedService.getDeleteAgenda().subscribe( res => {
       this.showModalDetalle = res;
     })
@@ -133,4 +136,8 @@ export class CalendarioComponent implements OnInit {
     }
   }
 
+
+  registroExitoso(event:any){
+    this.rolUsuario = event;
+  }
 }
