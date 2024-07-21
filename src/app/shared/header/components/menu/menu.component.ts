@@ -87,7 +87,7 @@ export class MenuComponent implements OnInit {
   login() {
     this.showlogin = true;
     this.lista = false;
-    this.tituloMenu = 'Iniciar Sesion';
+    this.tituloMenu = 'Inicia Sesión';
   }
 
   cerrarModal() {
@@ -100,7 +100,7 @@ export class MenuComponent implements OnInit {
         this.lista = false;
         this.menu = false;
         break;
-      case 'Iniciar Sesion':
+      case 'Inicia Sesión':
         this.showlogin = false;
         this.tituloMenu = 'Menu';
         this.lista = false;

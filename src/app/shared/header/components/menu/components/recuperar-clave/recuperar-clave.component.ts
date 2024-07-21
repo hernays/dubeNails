@@ -22,12 +22,12 @@ export class RecuperarClaveComponent {
   usuariosService = inject(UsuariosService);
   router = inject(Router);
   url: string = '';
-  email: string = '';
+  token: string = '';
 
   ngOnInit() {
     this.router.events.subscribe((data: any) => {
       const datos = data.routerEvent.url.split('/');
-      this.email = datos[2]
+      this.token = datos[2]
       this.url = datos[1];
        if(this.url === 'recuperar'){
          this.formTwo = new FormGroup({
@@ -47,10 +47,14 @@ export class RecuperarClaveComponent {
     if(this.form.valid){
       this.error = false;
       const { email }= this.form.value
-      this.usuariosService.enviarEmail({email}).subscribe({next: (data:any) => {
-        this.eventsService.alertMessage('success','Mensaje Enviado');
+      this.usuariosService.enviarEmail({email :email.toLocaleLowerCase()}).subscribe({next: (data:any) => {
+        this.eventsService.alertMessage('success','Mensaje Enviado Revisa tu Correo...');
         this.form.addControl('email', {value: ''})
-        console.log(this.form.value)
+        this.url = '';
+        setTimeout(() => {
+
+          window.location.reload()
+        },3000)
       }, error: (err) => {
         this.eventsService.alertMessage('error',`${err}`);
       }}) 
@@ -70,7 +74,7 @@ export class RecuperarClaveComponent {
     }
     if(this.formTwo.valid){
       this.errorTwo = false;
-      this.usuariosService.recuperarClave({password , email: this.email}).subscribe({next: (data:any) => {
+      this.usuariosService.recuperarClave({password , token: this.token}).subscribe({next: (data:any) => {
         this.formTwo.addControl('password', {value: ''})
         this.formTwo.addControl('password2', {value: ''})
         this.url = '';
