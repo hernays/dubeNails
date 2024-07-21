@@ -11,6 +11,7 @@ export class EventsService {
   @Output('ocultarMenu') ocultarMenu : EventEmitter<boolean> = new EventEmitter();
   @Output('cargaArticulos') cargaArticulos : EventEmitter<any> = new EventEmitter();
   @Output() showRegistro : EventEmitter<any> = new EventEmitter();
+  @Output() offMenu : EventEmitter<any> = new EventEmitter();
 
   constructor( ) { 
  

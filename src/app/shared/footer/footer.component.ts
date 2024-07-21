@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-footer',
@@ -10,13 +11,19 @@ export class FooterComponent implements OnInit {
 
   @Input('iphoneFooter') iphoneFooter : boolean = false;
   constructor(
-    private router : Router
+    private router : Router,
+    public eventsService: EventsService
   ) { }
 
   ngOnInit(): void {
 
   }
 
+  cerrarMenu(){
+
+    this.eventsService.offMenu.emit(false);
+
+  }
 
 
  

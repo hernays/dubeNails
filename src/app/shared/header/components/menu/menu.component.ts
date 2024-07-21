@@ -34,6 +34,9 @@ export class MenuComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.eventsService.offMenu.subscribe(valor => {
+      this.cerrarTodoMenu(valor)
+    })
     this.eventsService.cerrarModalLogin.subscribe((valor: any) => {
       this.menu = valor;
       this.showlogin = valor;
@@ -218,4 +221,20 @@ export class MenuComponent implements OnInit {
     this.tituloMenu = 'Recuperar Contraseña';
   }
 
+  cerrarTodoMenu(valor:boolean){
+
+    if(!valor){
+      this.tituloMenu = 'Menu';
+          this.showRegistro = false;
+          this.lista = false;
+          this.menu = false;
+          this.showlogin = false;
+          this.showActualizarFoto = false;
+          this.showRegistroArticulos = false;
+          this.showActualizarUser = false;
+          this.showGift = false;
+          this.showRecuperarClave = false;
+    }
+
+  }
 }
