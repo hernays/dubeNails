@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-calendario',
@@ -36,7 +37,8 @@ export class CalendarioComponent implements OnInit {
   constructor(
     private agendaService: AgendaService,
     private sharedService: SharedService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
 
     this.form = this.formBuilder.group({
@@ -139,5 +141,9 @@ export class CalendarioComponent implements OnInit {
 
   registroExitoso(event:any){
     this.rolUsuario = event;
+  }
+
+  navigateInicio(){
+    this.router.navigateByUrl('home')
   }
 }

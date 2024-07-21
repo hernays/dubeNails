@@ -29,3 +29,6 @@
 *ngIf="this.rolUsuario === ''"
 (registroExitoso)="registroExitoso($event)"
 ></app-registrar-usuario>
+<div class="btnInicio" *ngIf="this.rolUsuario === ''">
+    <button (click)="navigateInicio()"> Ir al Inicio </button>
+</div>

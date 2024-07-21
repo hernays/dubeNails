@@ -14,6 +14,9 @@
             <li>
                 <a (click)="showRegister()">Registrate</a>
             </li>
+            <li>
+                <a (click)="RecuperarClave()">Recuperar Contraseña</a>
+            </li>
         </ul>
 
         <app-registro 
@@ -21,6 +24,7 @@
         (userActive)="loginUser($event)"
         ></app-registro>
         <app-login (userActive)="loginUser($event)" *ngIf="showlogin" > </app-login>
+        <app-recuperar-clave *ngIf="showRecuperarClave"></app-recuperar-clave>
     </ng-container>
 
     <ng-template #menuActive>

@@ -39,8 +39,12 @@
                             ? 'Nuevo' : 'Visto'}}</span>
                     </p>
                     <!-- <app-cancelar-hora *ngIf="rol === 'admin' && rol" [dia]="dia" [telefono]="clientes.telefono" -->
+
+                         <!-- para que usuario pueda cancelar su hora-->
+                         <!--  *ngIf="rol === 'admin' && rol || idUserLogin === clientes.usuario._id"--> 
+
                         <app-cancelar-hora  
-                        *ngIf="rol === 'admin' && rol || idUserLogin === clientes.usuario._id"
+                        *ngIf="rol === 'admin'"
                         [dia]="dia" 
                         [telefono]="clientes.telefono"
                         [nombre]="clientes.nombre" 

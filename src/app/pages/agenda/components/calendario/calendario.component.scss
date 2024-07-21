@@ -122,3 +122,22 @@ app-registrar-usuario {
     padding-top: 93px;
 }
 
+.btnInicio{
+    display: flex;
+    position: absolute;
+    bottom: 50px;
+    z-index: 3;
+    max-width: 800px;
+    width: 100%;
+    align-content: center;
+    justify-content: center;
+
+    button{
+       width: 70%;
+       background: white;
+       color: black;
+       font-weight: bold;
+       cursor: pointer;
+    }
+}
+

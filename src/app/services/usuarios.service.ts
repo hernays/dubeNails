@@ -100,6 +100,30 @@ export class UsuariosService {
     )
   }
 
+  enviarEmail(body:any){
+    return this.http.post<any>(`${this.url}/enviarEmail`,body)
+    .pipe(map((data) => {
+        return data;
+    })
+    ,catchError((error) => {
+      return throwError(() => error.error.msg)
+    })
+    )
+  }
+
+  recuperarClave(body:any){
+    return this.http.post<any>(`${this.url}/actualizarClave`,body)
+    .pipe(map((data) => {
+        return data;
+    })
+    ,catchError((error) => {
+      return throwError(() => error.error.msg)
+    })
+    )
+  }
+
+
+
 
   addPushSubscriber(sub:any) {
   let id = '';

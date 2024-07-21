@@ -15,6 +15,7 @@ import { ActualizarFotoComponent } from './header/components/menu/components/act
 import { SpinnerModule } from './spinner/spinner.module';
 import { RegistrarArticulosComponent } from './header/components/menu/components/registrar-articulos/registrar-articulos.component';
 import { GiftcardComponent } from './header/components/menu/components/giftcard/giftcard.component';
+import { RecuperarClaveComponent } from "./header/components/menu/components/recuperar-clave/recuperar-clave.component";
 
 
 
@@ -38,8 +39,9 @@ import { GiftcardComponent } from './header/components/menu/components/giftcard/
     AppRoutingModule,
     ReactiveFormsModule,
     SpinnerModule,
-    FormsModule
-  ],
+    FormsModule,
+    RecuperarClaveComponent
+],
   exports:[
     FooterComponent,
     HeaderComponent,

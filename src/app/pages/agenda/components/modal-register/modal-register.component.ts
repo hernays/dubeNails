@@ -20,13 +20,15 @@ export class ModalRegisterComponent implements OnInit {
 
   public formGroup: FormGroup<any>;
   public lista: any[] = [
-    {nombre :'Acrilicas', numberServicio : 3}, 
-    {nombre:'Esmaltado Permanente',numberServicio : 1.5},
-    {nombre:'Polygel', numberServicio : 2.5}, 
-    {nombre:'Solo Retiro', numberServicio :1},
-    {nombre:'Manicura (limpieza)',numberServicio : 1.5}, 
-    {nombre:'kapping (revestimiento)', numberServicio: 2},
-    {nombre:'Relleno acrilico/polygel',numberServicio:1}];
+      {nombre: 'Manicura (solo limpieza)', numberServicio: 1   },
+      {nombre: 'Manicura luxury',          numberServicio: 1.5 },
+      {nombre: 'kapping gel',              numberServicio: 1.5 },
+      {nombre: 'Acrilicas',                numberServicio: 2.5 },
+      {nombre: 'Polygel',                  numberServicio: 2   },
+      {nombre: 'Pedicura clasica',         numberServicio: 1.5 },
+      {nombre: 'Pedicura + kapping',       numberServicio: 2   },
+      {nombre: 'Retoque',                  numberServicio: 1   }
+  ];
   public success: boolean = false;
   public error: string = '';
   public horaDisponible: string = '';
@@ -79,13 +81,14 @@ export class ModalRegisterComponent implements OnInit {
   formatearServicio(servicio: string) {
     let numberServicio = 0;
     switch (servicio) {
-      case 'Acrilicas': numberServicio = 3; break;
-      case 'Esmaltado Permanente': numberServicio = 1.5; break;
-      case 'Polygel': numberServicio = 2.5; break;
-      case 'Manicura (limpieza)': numberServicio = 1.5; break;
-      case 'kapping (revestimiento)': numberServicio = 2; break;
-      case 'Relleno acrilico/polygel': numberServicio = 1.5; break;
-      case 'Solo Retiro': numberServicio = 1; break;
+      case 'Manicura (solo limpieza)': numberServicio = 1; break;
+      case 'Manicura luxury': numberServicio = 1.5; break;
+      case 'kapping gel': numberServicio = 1.5; break;
+      case 'Acrilicas': numberServicio = 2.5; break;
+      case 'Polygel': numberServicio = 2; break;
+      case 'Pedicura clasica': numberServicio = 1.5; break;
+      case 'Pedicura + kapping': numberServicio = 2; break;
+      case 'Retoque': numberServicio = 1; break;
     }
     return numberServicio;
   }
