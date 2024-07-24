@@ -31,8 +31,9 @@ export class LoginComponent implements OnInit {
 
   login(){
     const { usuario , clave } = this.formLogin.value;
+    const nombre = usuario.replaceAll(' ','_')
       const body  = {
-        nombre : usuario.toLowerCase() , password :clave
+        nombre : nombre.toLowerCase() , password :clave
       }
     this.usuariosService.autorizacionUser(body).subscribe({next: (data:any) => {
                  localStorage.setItem('token' , data?.token );

@@ -46,8 +46,10 @@ export class ActualizarUserComponent implements OnInit {
 
   enviar() {
     const { nombre , telefono , direccion , correo } = this.formRegister.value;
+      const nombreFormat = nombre.replaceAll(' ', '_');
+      console.log(nombreFormat)
        const body = {
-        nombre , telefono , direccion , correo
+        nombre: nombreFormat , telefono , direccion , correo
        }
      this.usuariosService.actualizarUsuario(body , this.usuario[0].id).subscribe({next: (data:any) => {
          this.usuario[0].nombre = nombre;
