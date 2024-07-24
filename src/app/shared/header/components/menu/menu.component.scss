@@ -168,6 +168,7 @@ app-actualizar-foto{
         flex-flow: column wrap;
         width: 38%;
         padding-top: 10px;
+        overflow-x: scroll;
 
         h3{
             width: 100%;
@@ -188,8 +189,8 @@ app-actualizar-foto{
 
 .zoom{
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100% !important;
-    height: 100% !important;
+    display: flex;
+    align-items: center;
+    width: 75% !important;
+    height: 60% !important;
 }
