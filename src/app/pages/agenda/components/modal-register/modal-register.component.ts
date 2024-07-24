@@ -211,6 +211,7 @@ export class ModalRegisterComponent implements OnInit {
         this.error = '';
         this.eventsService.alertMessage('success', 'Registrado con Exito')
         this.eventsService.successDatos.emit(true);
+        this.eventsService.setValorMontoTotal.emit(true);
         this.setDataCliente();
         this.registerModal.emit(false);
       },

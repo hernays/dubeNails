@@ -3,6 +3,7 @@ import { EventsService } from 'src/app/services/events.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Router } from '@angular/router';
 import { SharedService } from 'src/app/services/shared.service';
+import { UsuarioData } from 'src/app/interface/usuarioData.interface';
 
 @Component({
   selector: 'app-menu',
@@ -18,7 +19,7 @@ export class MenuComponent implements OnInit {
   public showlogin: boolean = false;
   public showRegistroArticulos: boolean = false;
   public usuarioActivo: boolean = false;
-  public usuarioData: any;
+  public usuarioData !: UsuarioData;
   public test: any = false;
   public showActualizarUser: boolean = false;
   public showActualizarFoto: boolean = false;
@@ -146,14 +147,17 @@ export class MenuComponent implements OnInit {
     const id = localStorage.getItem('token') as string;
 
     this.usuariosService.getUsuario(id).subscribe({
-      next: (data) => {
+      next: (data: UsuarioData) => {
         this.sharedService.setDataUsuario(data)
         this.usuarioData = data;
+        console.log(this.usuarioData)
         this.usuarioActivo = true;
         this.id = data.id;
         if (data.image) {
           const image = data.image.split('.');
           this.usuarioData.image = image[0] + '.' + image[1] + '.' + image[2] + '.jpg';
+        }else{
+          this.usuarioData.image = '../../../../../assets/img/userIcon.jpg'
         }
 
 
@@ -224,7 +228,7 @@ export class MenuComponent implements OnInit {
   cerrarTodoMenu(valor:boolean){
 
     if(!valor){
-      this.tituloMenu = 'Menu';
+          this.tituloMenu = 'Menu';
           this.showRegistro = false;
           this.lista = false;
           this.menu = false;
@@ -236,5 +240,14 @@ export class MenuComponent implements OnInit {
           this.showRecuperarClave = false;
     }
 
+  }
+
+  zoomImg(){
+    const img = document.querySelector('#imgPerfil');
+    if(img?.classList.contains('zoom')){
+      img?.classList.remove('zoom')
+    }else{ 
+      img?.classList.add('zoom')
+    }
   }
 }

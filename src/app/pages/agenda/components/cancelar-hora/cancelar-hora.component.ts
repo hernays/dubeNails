@@ -49,6 +49,7 @@ public botonCancelar : boolean = false;
       if(valor){
         this.agendaService.borrarHora(body).subscribe({next: (resp) => {
           this.eventsService.successDatos.emit(true);
+          this.eventsService.setValorMontoTotal.emit(true);
           this.sharedService.setDeleteAgenda(false)
        },
     error : () => {

@@ -36,8 +36,9 @@
         }
     }
 
-    div {
-        width: 100%;
+    .div {
+        width: 46px;
+        height: 40px;
 
         hr {
             background-color: white;
@@ -129,7 +130,7 @@ app-actualizar-foto{
 }
 
 .userImgNone{
-    background-position-x: 94px;
+    background-position-x: 90px;
     background-position-y: 46px;
     background-image: url('../../../../../assets/img/userIcon.svg');
 }
@@ -148,4 +149,47 @@ app-actualizar-foto{
     width: 100%;
     text-align: center;
     color: black;
+}
+
+.perfil{
+    display: flex;
+    width: 80% !important;
+    height: auto;
+
+        .usuario_img{
+            width: 190px;
+            height: 180px;
+            padding: 5px;
+            border-radius: 50px;
+            padding-top: 10px;
+    }
+    .informacion{
+        display: flex;
+        flex-flow: column wrap;
+        width: 38%;
+        padding-top: 10px;
+
+        h3{
+            width: 100%;
+            text-align: center;
+            border-bottom: 1px solid;
+            font-size: 12px;
+        }
+
+        p{
+            span{
+                display: block;
+                width: 100%;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+.zoom{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100% !important;
+    height: 100% !important;
 }

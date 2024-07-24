@@ -3,9 +3,9 @@
     <ng-container *ngIf="menu ; else menuActive">
         <span (click)="cerrarModal()">x</span>
         <h3>{{tituloMenu}}</h3>
-        <div>
+        <section style="width: 90%;">
             <hr class="lineaMenu">
-        </div>
+        </section>
         
         <ul *ngIf="lista">
             <li>
@@ -44,8 +44,22 @@
         <ng-container *ngIf="menu ; else menuActive">
             <span (click)="cerrarModal()">x</span>
             <h3>{{tituloMenu}}</h3>
-            <div>
+            <section style="width: 90%;">
                 <hr class="lineaMenu">
+            </section>
+            <div class="perfil">
+                    <img id="imgPerfil" *ngIf="usuarioData.image" class="usuario_img" [src]="usuarioData.image" (click)="zoomImg()"/>
+                    <div class="informacion">
+                        <h3>Información</h3>
+                        <div>
+                            <p>
+                                <span>Nombre:     <br>  {{usuarioData.nombre}}</span>
+                                <span>Correo:     <br>  {{usuarioData.correo}}</span>
+                                <span>Teléfono:   <br>  {{usuarioData.telefono}}</span>
+                                <span>Dirección:  <br>  {{usuarioData.direccion}}</span>
+                            </p>
+                        </div>
+                    </div>
             </div>
             
             <ul *ngIf="lista">

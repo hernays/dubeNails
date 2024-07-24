@@ -12,6 +12,7 @@ export class EventsService {
   @Output('cargaArticulos') cargaArticulos : EventEmitter<any> = new EventEmitter();
   @Output() showRegistro : EventEmitter<any> = new EventEmitter();
   @Output() offMenu : EventEmitter<any> = new EventEmitter();
+  @Output() setValorMontoTotal : EventEmitter<any> = new EventEmitter();
 
   constructor( ) { 
  

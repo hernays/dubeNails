@@ -10,9 +10,9 @@ export class GiftcardComponent implements OnInit {
 
   @ViewChild('copiar' , {static:true} )  copiar! : ElementRef;
 
-  //  https://dubenails.xyz
+  //  https://dubenails.com
   public url :string  = '';
-  public urlStatic : string = 'https://dubenails.xyz/giftcard/';
+  public urlStatic : string = 'https://dubenails.com/giftcard/';
   public opts = ['Esmaltado_Permanente','Polygel','Acrilicas'];
   public productoSelect : string = '';
   public copiado : string = '';

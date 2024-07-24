@@ -4,6 +4,7 @@ import { AgendaService } from 'src/app/services/agenda.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EventsService } from 'src/app/services/events.service';
 
 @Component({
   selector: 'app-calendario',
@@ -33,12 +34,14 @@ export class CalendarioComponent implements OnInit {
   public showModalDetalle: boolean = false;
   public form: FormGroup;
   public diaHabilitado: boolean = true;
+  mesCalculo: any;
 
   constructor(
     private agendaService: AgendaService,
     private sharedService: SharedService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    public eventsService: EventsService
   ) {
 
     this.form = this.formBuilder.group({
@@ -47,6 +50,11 @@ export class CalendarioComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.eventsService.setValorMontoTotal.subscribe(valor => {
+      if(valor){
+       this.totalMes(this.mesCalculo);
+      }
+    })
     moment.locale('es');
     this.fechas();
     this.verificarUsuario();
@@ -128,6 +136,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   totalMes(mes: number) {
+    this.mesCalculo = mes;
     if (this.rolUsuario === 'admin') {
       this.agendaService.getTotalValorMes(mes).subscribe({
         next: (valor: number) => {
