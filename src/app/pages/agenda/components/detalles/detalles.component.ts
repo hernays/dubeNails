@@ -47,6 +47,9 @@ export class DetallesComponent implements OnInit {
     this.showHoras();
     this.day = new Date().getDate();
     this.month = new Date().getMonth();
+    this.eventsService.diaHabilitado.subscribe( value => {
+      this.habilitar = value;
+    })
   }
 
   hideModalServicios() {
@@ -97,14 +100,8 @@ export class DetallesComponent implements OnInit {
     this.modalRegisters = event;
   }
   cerrarDetalles(event:boolean){
-    console.log("eventoooo",event)
     this.modalServicios = false;
     this.detalleComponent.emit(false);
-  }
-
-  test(event:any){
-    console.log('prueba de oupet' , event)
-
   }
 
   showHoras() {
@@ -161,14 +158,14 @@ export class DetallesComponent implements OnInit {
 
   disabledDay() {
     const dataDay = {
-      day: this.clienteDetalle[0].dia,
-      month: this.clienteDetalle[0].mes,
-      habilitar: !this.clienteDetalle[0].diaHabilitado
+      day: this.dia.day.toString(),
+      month: this.dia.month,
+      habilitar: !this.habilitar
     }
     this.agendaService.habilitarDia(dataDay).subscribe({
-      next: (data: boolean) => {
-        this.habilitar = data;
+      next: (data: string) => {
         this.sharedService.setDiaHabilitado(this.habilitar);
+        this.habilitar = data === 'false' ? false : true;
       },
       error: (error: any) => {
       }

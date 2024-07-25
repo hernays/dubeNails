@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, Observable, pipe, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { EventsService } from './events.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,8 @@ export class AgendaService {
   public url: any = `${environment.urlLocal}api/agenda`;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    public eventsService: EventsService
   ) { }
 
   recibirDatos(datos: any): any {
@@ -60,8 +62,8 @@ export class AgendaService {
     return this.http.get<any>(`${this.url}/${dataDay.day}/${dataDay.month}`)
       .pipe(
         map((data: any) => {
-          console.log(data)
           if (data.data) {
+            this.eventsService.diaHabilitado.emit(data.data[0].diaHabilitado)
             let array: any[] = [];
             data.data.forEach((element: any) => array.push(element));
             array.sort((a: any, b: any) => a.hora - b.hora)
@@ -132,7 +134,6 @@ export class AgendaService {
   }
 
   buscarAgendaPorUsuario(id: string, mes: string, dia: string, hora: string) {
-    console.log(hora)
     return this.http.get<any>(`${this.url}/${id}/${mes}/${dia}/${hora}`).pipe(
       map(data => { 
         return data;

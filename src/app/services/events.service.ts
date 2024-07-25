@@ -13,6 +13,7 @@ export class EventsService {
   @Output() showRegistro : EventEmitter<any> = new EventEmitter();
   @Output() offMenu : EventEmitter<any> = new EventEmitter();
   @Output() setValorMontoTotal : EventEmitter<any> = new EventEmitter();
+  @Output() diaHabilitado : EventEmitter<any> = new EventEmitter();
 
   constructor( ) { 
  
