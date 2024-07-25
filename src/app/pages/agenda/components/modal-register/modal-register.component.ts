@@ -27,7 +27,9 @@ export class ModalRegisterComponent implements OnInit {
       {nombre: 'Polygel',                  numberServicio: 2   },
       {nombre: 'Pedicura clasica',         numberServicio: 1.5 },
       {nombre: 'Pedicura + kapping',       numberServicio: 2   },
-      {nombre: 'Retoque',                  numberServicio: 1   }
+      {nombre: 'Retoque',                  numberServicio: 1   },
+      {nombre: 'Retiro esmaltado',         numberServicio: 0.5 },
+      {nombre: 'Retiro acrilica o poligel',numberServicio: 0.5 }
   ];
   public success: boolean = false;
   public error: string = '';
@@ -89,6 +91,8 @@ export class ModalRegisterComponent implements OnInit {
       case 'Pedicura clasica': numberServicio = 1.5; break;
       case 'Pedicura + kapping': numberServicio = 2; break;
       case 'Retoque': numberServicio = 1; break;
+      case 'Retiro acrilica o poligel': numberServicio = 0.5; break;
+      case 'Retiro esmaltado': numberServicio = 0.5; break;
     }
     return numberServicio;
   }
