@@ -23,7 +23,6 @@ export class ConfirmacionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('confirmar activo')
     this.verificarUsuario();
     this.verificarAgenda();
   }
@@ -51,15 +50,12 @@ export class ConfirmacionComponent implements OnInit {
     const hora = this.router.snapshot.paramMap.get('hora') as string;
     this.agendaService.buscarAgendaPorUsuario(id, mes, dia, hora).subscribe({
       next: (data: any) => {
-        console.log("ver que trraeae",data)
         const { id, token } = data;
         this.pagoService.verificarPago(token, id).subscribe({
           next: (data) => {
-            console.log("pago realizado", data)
           }, error: (error) => {
             console.log("error---------", error)
           }, complete: () => {
-            console.log('entro al complete')
             window.close();
           }
         })

@@ -60,15 +60,12 @@ export class RecuperarClaveComponent {
       }}) 
     }else{
       this.error = true;
-      console.log('no valido')
     }
   }
 
 
   OnSubmitTwo() : any{
     const { password, password2 }= this.formTwo.value;
-
-    console.log(password, password2 )
     if(password !== password2){
       return this.errorTwo = true;
     }
@@ -88,7 +85,6 @@ export class RecuperarClaveComponent {
       }}) 
     }else{
       this.errorTwo = true;
-      console.log('no valido')
     }
   }
 
@@ -96,7 +92,6 @@ export class RecuperarClaveComponent {
   write(e:any){
 
     const { password , password2 } = this.formTwo.value;
-console.log(password)
     if(password || password2){
       this.errorTwo = false;
     }

@@ -23,7 +23,6 @@ export class UsuariosService {
    return  this.http.post(`${this.url}auth/login` , body  , )
     .pipe(
       map((data:any) => {
-        console.log("data",data)
         return data;
       }),
       catchError((error:any) => {

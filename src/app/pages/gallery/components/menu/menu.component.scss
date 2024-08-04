@@ -38,7 +38,7 @@
                     justify-content: space-between;
                     cursor: pointer;
                     background: #ccc;
-                    color: white;
+                    color: black;
                     padding: 10px;
                     text-align: center;
                     border-radius: 5px;
@@ -46,8 +46,20 @@
                 }
 
                 li:hover {
-                    border-bottom: 1px solid #000000;
                     background: #3f5b45;
+                    color: white;
+                }
+
+                .decoracion{
+                    display: block;
+                    background-color: transparent;
+                    text-align: justify;
+                    cursor:default;
+                                }
+                .decoracion:hover {
+                    display: block;
+                    background: transparent !important;
+                    color: black !important;
                 }
 
             }

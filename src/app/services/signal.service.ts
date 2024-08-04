@@ -11,11 +11,9 @@ import { Injectable, signal, Signal } from "@angular/core";
 
 
     setRegistroExitoso(){
-        console.log('aqui el valor ')
         this.registroExitoso.update(value => !value)
     }
     getRegistroExitoso(){
-        console.log(this.registroExitoso())
         return this.registroExitoso();
     }
 

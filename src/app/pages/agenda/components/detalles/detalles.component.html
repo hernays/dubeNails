@@ -18,7 +18,7 @@
                         <span>
                             <strong>Nombre:</strong>
                             <span *ngIf="
-                            dia.day === day || rol === 'admin';  else privado"> {{clientes.nombre}} </span>
+                            dia.day === day || rol === 'admin' || nombre === clientes.nombre;  else privado"> {{clientes.nombre}} </span>
                             <ng-template #privado> Reservado</ng-template>
 
                         </span>

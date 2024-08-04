@@ -16,7 +16,6 @@ export class UpdateService {
 
   public checkForUpdates(): void {
     this.updates.checkForUpdate().then(valor => {
-      console.log('vaor', valor)
       if(valor){
         this.promptUser()
       }

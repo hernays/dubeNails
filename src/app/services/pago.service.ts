@@ -14,12 +14,9 @@ export class PagoService {
 
 
   generarPago(correo: string, tokenUsuario: string, mes: string, dia: string, hora: string) {
-    console.log('aqui entro')
     const horaformato = hora.replace('.','_');
-    console.log("hora:",horaformato) 
     return this.http.get<any>(`${this.url}/generar/${correo}/${tokenUsuario}/${mes}/${dia}/${horaformato}`)
       .pipe(map((data) => {
-        console.log(data)
         return data;
       })
         , catchError((error) => {
@@ -29,7 +26,6 @@ export class PagoService {
   }
 
    verificarPago(token:string, id:string){
-    console.log(token)
   return this.http.post<any>(`${this.url}/confirmar`, {token , id})
   .pipe(map((data) => {
       return data;

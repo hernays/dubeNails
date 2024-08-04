@@ -2,7 +2,7 @@
     <form [formGroup]="formArticulos">
         <label name="titulo">Titulo:</label>
         <input formControlName="nombre" type="text" placeholder="Titulo...." />
-         <textarea formControlName="descripcion"></textarea>
+         <textarea formControlName="descripcion" placeholder="Descripcion..."></textarea>
         <input class="carga" id="imgUser" type="file" (change)="cargarImg($event)" />
         <input type="submit" value="Registrar" (click)="enviar()">
         <!-- <p *ngIf="messageError" class="errorMessage">{{messageError}}</p>

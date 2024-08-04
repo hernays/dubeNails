@@ -25,6 +25,7 @@ export class MenuComponent implements OnInit {
   public showActualizarFoto: boolean = false;
   public showGift: boolean = false;
   public rolUser: string = '';
+  public perfil: boolean = false;
   @Output('id') id: any;
 
   constructor(
@@ -81,6 +82,7 @@ export class MenuComponent implements OnInit {
   showMenu() {
     this.menu = true;
     this.lista = true;
+    this.perfil = true;
   }
 
   hideMenu() {
@@ -109,20 +111,23 @@ export class MenuComponent implements OnInit {
         this.tituloMenu = 'Menu';
         this.lista = false;
         this.menu = false;
+        this.perfil = false;
         break;
       case 'Subir Foto':
+        this.perfil = true;
         this.showActualizarFoto = false;
         this.tituloMenu = 'Menu';
         this.lista = false;
         this.menu = false;
         break;
-      case 'Registrar Articulos':
+      case 'Subir En Muro':
         this.showRegistroArticulos = false;
         this.tituloMenu = 'Menu';
         this.lista = false;
         this.menu = false;
         break;
       case 'Actualizar perfil':
+        this.perfil = true;
         this.showActualizarUser = false;
         this.tituloMenu = 'Menu';
         this.lista = false;
@@ -150,8 +155,8 @@ export class MenuComponent implements OnInit {
       next: (data: UsuarioData) => {
         this.sharedService.setDataUsuario(data)
         this.usuarioData = data;
-        console.log(this.usuarioData)
         this.usuarioActivo = true;
+        this.perfil = true;
         this.id = data.id;
         if (data.image) {
           const image = data.image.split('.');
@@ -193,8 +198,9 @@ export class MenuComponent implements OnInit {
   }
 
   RegistrarArticulos() {
+    this.perfil = false;
     this.lista = false;
-    this.tituloMenu = 'Registrar Articulos';
+    this.tituloMenu = 'Subir En Muro';
     this.showRegistroArticulos = true;
   }
 

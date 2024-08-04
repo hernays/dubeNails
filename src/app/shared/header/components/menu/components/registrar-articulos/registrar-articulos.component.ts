@@ -27,12 +27,10 @@ export class RegistrarArticulosComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  console.log('id',this.idUser)
   }
 
   cargarImg(event:any){
     this.img = event.target.files[0];
-    console.log(this.img)
   }
 
   enviar(){

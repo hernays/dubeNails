@@ -47,7 +47,6 @@ export class ActualizarUserComponent implements OnInit {
   enviar() {
     const { nombre , telefono , direccion , correo } = this.formRegister.value;
       const nombreFormat = nombre.replaceAll(' ', '_');
-      console.log(nombreFormat)
        const body = {
         nombre: nombreFormat , telefono , direccion , correo
        }

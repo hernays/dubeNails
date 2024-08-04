@@ -25,7 +25,6 @@ export class GiftcardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log('esta lleganooooo')
    const servicio = this.router.url.split('/')[2];
    this.nombreServicio = servicio.replace('_',' ');
 
@@ -44,7 +43,6 @@ export class GiftcardComponent implements OnInit {
       setTimeout(() => {
 
         this.caja.nativeElement.classList.add('ocultar');
-        console.log(this.fuegos.nativeElement)
         setTimeout(() => {
 
              this.fuegos.nativeElement.classList.add('fuegos');

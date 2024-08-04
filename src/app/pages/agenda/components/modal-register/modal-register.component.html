@@ -56,12 +56,31 @@
     <br *ngIf="rol !== 'admin'">
     <input *ngIf="rol !== 'admin'" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
     <br *ngIf="rol !== 'admin'">
-    <button class="submit" (click)="enviarDatos()">Registrar Hora</button>
+    <button class="submit" (click)="handleModal()">Registrar Hora</button>
     <!-- <button *ngIf="rol === 'admin'" class="submit" (click)="enviarDatos()">Registrar Hora</button> -->
     <!-- <button *ngIf="rol !== 'admin'" class="submit" (click)="pagar()">Pagar Abono</button> -->
   </form>
 
   <div class=" success error" *ngIf="horaDisponible.length > 0">
     <p>{{horaDisponible}}</p>
+  </div>
+</div>
+
+<div *ngIf="showModal" class="modalNotifica">
+  <div>
+    <h3>Confirma tu Hora</h3>
+  
+    <p class="messageModal">Este servicio solo puede ser cancelado 24 horas antes de su cita. debe contactarse con nosotros para poder cancelar. <span class="textConfirmar" >Confirme si desea agendar.</span></p>
+
+    <div class="messageServices">
+      <p>Servicio: {{serviceSelection}}</p>
+      <p>Fecha: {{dia.day}} de {{mes}}</p>
+      <p>Hora: {{hourSelection}}</p>
+    </div>
+  
+    <div>
+      <button class="btn" (click)="enviarDatos()">Si</button>
+      <button class="btn" (click)="closeModal()">No</button>
+    </div>
   </div>
 </div>

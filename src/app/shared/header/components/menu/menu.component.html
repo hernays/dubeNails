@@ -47,7 +47,7 @@
             <section style="width: 90%;">
                 <hr class="lineaMenu">
             </section>
-            <div class="perfil">
+            <div *ngIf="perfil" class="perfil">
                     <img id="imgPerfil" *ngIf="usuarioData.image" class="usuario_img" [src]="usuarioData.image" (click)="zoomImg()"/>
                     <div class="informacion">
                         <h3>Información</h3>
@@ -70,7 +70,7 @@
                     <a >Actualizar Perfil</a>
                 </li>
                 <li (click)="RegistrarArticulos()">
-                    <a >Registrar Articulo</a>
+                    <a >Subir En Muro</a>
                 </li>
                 <li *ngIf="rolUser === 'admin'" (click)="crearGiftCard()">
                     <a >Crear GiftCard</a>

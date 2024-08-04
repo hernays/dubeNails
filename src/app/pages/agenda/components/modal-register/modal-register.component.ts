@@ -4,6 +4,7 @@ import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { PagoService } from 'src/app/services/pago.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-modal-register',
@@ -17,6 +18,10 @@ export class ModalRegisterComponent implements OnInit {
   @Input('dia') dia: any;
   @Input('horas') horas: any;
   @Input('horasCopias') horasCopias: any;
+  showModal: boolean = false;
+  serviceSelection: string = '';
+  hourSelection: string = '';
+  mes:any;
 
   public formGroup: FormGroup<any>;
   public lista: any[] = [
@@ -52,6 +57,7 @@ export class ModalRegisterComponent implements OnInit {
     private sharedService: SharedService,
     private pagoService : PagoService
   ) {
+    moment.locale('es');
     this.formGroup = this.formBuilder.group({
       nombre: ['', [Validators.required, Validators.minLength(2)]],
       servicio: ['Seleccione un servicio...', [Validators.required]],
@@ -97,6 +103,14 @@ export class ModalRegisterComponent implements OnInit {
     return numberServicio;
   }
 
+  handleModal(){
+    const year = moment().year();
+    this.mes = moment([year, this.dia.month]).format('MMMM');
+    this.showModal = true;
+    const { servicio} = this.formGroup.value;
+    this.serviceSelection = servicio;
+  }
+
   async enviarDatos() {
     this.formGroup.controls['nombre'].enable();
     this.formGroup.controls['telefono'].enable();
@@ -106,13 +120,12 @@ export class ModalRegisterComponent implements OnInit {
     const mes = Number(this.dia.month);
     const hora = Number(this.horaSelecciona);
     const  horaServicio  = this.lista.filter(e => e.nombre === servicio)[0].numberServicio;
-    this.traerData(Number(hora), nombre, servicio, dia, horaServicio, telefono, mes )
+    this.traerData(Number(hora), nombre, servicio, dia, horaServicio, telefono, mes, correo )
   }
 
-  async traerData(horaNueva: number, nombre: string, servicio: string, dia: number, horaServicio: number, telefono: any, mes: number) {
+  async traerData(horaNueva: number, nombre: string, servicio: string, dia: number, horaServicio: number, telefono: any, mes: number, correo:any) {
     this.agendaService.getDatosDay(this.dia).subscribe({
       next: (data: any) => {
-        console.log(data)
         if(Array.isArray(data)){
           const tramos = data.map((element: any) => {
             return { horaInicio: element.hora, horaFin: element.tramo, dia: Number(element.dia), mes: element.mes }
@@ -123,7 +136,7 @@ export class ModalRegisterComponent implements OnInit {
               if(dia === horasDB.dia && mes === horasDB.mes && horaNueva === horasDB.horaInicio ||
                  dia === horasDB.dia && mes === horasDB.mes && horaNueva > horasDB.horaInicio && horaNueva+horaServicio < horasDB.horaFin ||
                  dia === horasDB.dia && mes === horasDB.mes && horaNueva < horasDB.horaInicio && horaNueva+horaServicio > horasDB.horaInicio){
-              
+                  this.showModal = false;
               const formatearHoraServicio = (String(horaServicio).length > 1 ) ? String(horaServicio).split('.')[0]+':30' : horaServicio;
               this.horaDisponible = `Servicio ${servicio} demora ${formatearHoraServicio}hrs esta chocando con otra hora revisa la agenda e intenta de nuevo.`;
               this.success = false;
@@ -131,13 +144,14 @@ export class ModalRegisterComponent implements OnInit {
           }
         }
         if ( this.horaDisponible === '') {
-          this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser);
+          this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser, correo);
           this.cerrarDetalle.emit(false); 
         }
 
       }, error: (error: any) => {
+        this.showModal = false;
         if (error === 'No se encontraron registros.') {
-          this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser)
+          this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser, correo)
         }
       }
     })
@@ -170,6 +184,7 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   SeleccionHora(event: any) {
+    this.hourSelection = event.innerText;
      this.horaDisponible = ''; 
     const evento = event.innerText.split(':');
     this.formGroup.controls['hora'].setValue(
@@ -193,7 +208,7 @@ export class ModalRegisterComponent implements OnInit {
     this.modalServicios = false;
   }
 
-  agendarHora(nombre: string, horaNueva: any, servicio: string, dia: number, horaServicio: any, telefono: any, mes: number, id: string) {
+  agendarHora(nombre: string, horaNueva: any, servicio: string, dia: number, horaServicio: any, telefono: any, mes: number, id: string, correo:any) {
     /* if (!this.lista.includes(servicio)) {
       this.horaDisponible = 'El servicio es obligatorio';
       this.success = false;
@@ -204,7 +219,7 @@ export class ModalRegisterComponent implements OnInit {
     const token = this.token;
     const estado = true;
     // const estado = (this.rol === 'admin') ? true : false;
-    this.agendaService.recibirDatos({ nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, id, nuevo , token , estado}).subscribe({
+    this.agendaService.recibirDatos({ nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, id, nuevo , token , estado, correo}).subscribe({
       next: (msg: string) => {
         this.formGroup.controls['nombre'].setValue('');
         this.formGroup.controls['hora'].setValue('');
@@ -220,6 +235,7 @@ export class ModalRegisterComponent implements OnInit {
         this.registerModal.emit(false);
       },
       error: (msg: string) => {
+        this.showModal = false;
         this.error = msg;
         this.success = false;
         this.eventsService.alertMessage('error', msg)
@@ -258,7 +274,6 @@ export class ModalRegisterComponent implements OnInit {
     const correo = this.formGroup.controls['correo'].getRawValue();
     const tokenUsuario = localStorage.getItem('token') as string;
     this.pagoService.generarPago(correo,tokenUsuario,mes,dia,hora).subscribe({next : (data:any) => {
-      console.log("dataaaa",data)
       this.token = data.token;
       this.enviarDatos();
       if(this.horaDisponible.length === 0){
@@ -268,7 +283,11 @@ export class ModalRegisterComponent implements OnInit {
         }
 
     },error : (error) => {
-console.log(error)
     }})
+  }
+
+
+  closeModal(){
+    this.showModal = false;
   }
 }

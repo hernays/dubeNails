@@ -21,7 +21,6 @@ export class GiftcardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.nombrePara)
   }
 
   producto(producto:string){

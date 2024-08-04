@@ -29,10 +29,18 @@ export class AgendaService {
       id: datos.id,
       nuevo: datos.nuevo,
       token: datos.token,
-      estado: datos.estado
+      estado: datos.estado,
+      correo: datos.correo
     }
 
-    return this.http.post<any>(`${this.url}/save`, body)
+    const token = localStorage.getItem('token')
+
+
+
+    return this.http.post<any>(`${this.url}/save`, body, {
+      headers: {
+        authorization: token ? token : ''
+    }})
       .pipe(
         map((resp) => {
           return resp.msg;
@@ -45,7 +53,10 @@ export class AgendaService {
   }
 
   getDatos(): any {
-    return this.http.get<any>(`${this.url}`)
+    const token = localStorage.getItem('token');
+    return this.http.get<any>(`${this.url}`, {headers:{
+      authorization: token ? token : ''
+    }})
       .pipe(
         map((data: any) => {
           let array: any[] = [];
@@ -59,7 +70,10 @@ export class AgendaService {
   }
 
   getDatosDay(dataDay: any): any {
-    return this.http.get<any>(`${this.url}/${dataDay.day}/${dataDay.month}`)
+    const token = localStorage.getItem('token')
+    return this.http.get<any>(`${this.url}/${dataDay.day}/${dataDay.month}`,{headers:{
+      authorization: token ? token : ''
+    }})
       .pipe(
         map((data: any) => {
           if (data.data) {
@@ -77,7 +91,10 @@ export class AgendaService {
   }
 
   habilitarDia(dataDay: any): any {
-    return this.http.get<any>(`${this.url}/${dataDay.day}/${dataDay.month}/${dataDay.habilitar}`)
+    const token = localStorage.getItem('token')
+    return this.http.get<any>(`${this.url}/${dataDay.day}/${dataDay.month}/${dataDay.habilitar}`, {headers:{
+      authorization: token ? token : ''
+    }})
       .pipe(
         map((data: any) => {
           /*  let array:any[] = [];
@@ -92,7 +109,11 @@ export class AgendaService {
   }
 
   borrarHora(body: any) {
-    return this.http.post<any>(`${this.url}/borrarHora`, body)
+    const token = localStorage.getItem('token');
+
+    return this.http.post<any>(`${this.url}/borrarHora`, body, {headers:{
+      authorization: token ? token : ''
+    }})
       .pipe(
         map(resp => {
           return resp;
@@ -104,7 +125,10 @@ export class AgendaService {
   }
 
   getTotalValorMes(mes: number) {
-    return this.http.get<any>(`${this.url}/${mes}`).pipe(
+    const token = localStorage.getItem('token')
+    return this.http.get<any>(`${this.url}/${mes}`,{headers:{
+      authorization: token ? token : ''
+    }}).pipe(
       map((data) => {
         let sumaValor = 0;
         data.filter((element: any) => element.valor !== null)
@@ -123,7 +147,10 @@ export class AgendaService {
 
 
   actualizarEstado(data: any): any {
-    return this.http.post<any>(`${this.url}/estado`, data)
+    const token = localStorage.getItem('token')
+    return this.http.post<any>(`${this.url}/estado`, data, {headers:{
+      authorization: token ? token : ''
+    }})
       .pipe(
         map((data: boolean) => {
           return data;
@@ -134,7 +161,10 @@ export class AgendaService {
   }
 
   buscarAgendaPorUsuario(id: string, mes: string, dia: string, hora: string) {
-    return this.http.get<any>(`${this.url}/${id}/${mes}/${dia}/${hora}`).pipe(
+    const token = localStorage.getItem('token')
+    return this.http.get<any>(`${this.url}/${id}/${mes}/${dia}/${hora}`, {headers:{
+      authorization: token ? token : ''
+    }}).pipe(
       map(data => { 
         return data;
       }),catchError((error:any) => {

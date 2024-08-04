@@ -37,7 +37,6 @@ export class LoginComponent implements OnInit {
       }
     this.usuariosService.autorizacionUser(body).subscribe({next: (data:any) => {
                  localStorage.setItem('token' , data?.token );
-                 console.log('entrando login' , data?.rol)
                  this.sharedService.setRolUser(data);
                  this.eventsService.cerrarModalLogin.emit(false);
                  this.userActive.emit(true)
