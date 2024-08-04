@@ -50,21 +50,18 @@
     margin-top: 20px;
     justify-content: center;
 
-    .buttonNextPrev{
-    padding: 0px;
-    font-size: 22px;
-    background: transparent !important;
-    border: none !important;
-    margin-left: 10px;
-    margin-right: 10px;
-    color: black;
-    font-weight: bold;
+    .contentTitulo{
+        display: flex;
+        width: 60%;
+        justify-content: end;
+        align-items: center;
     }
+
     .montoTotal{
-        display: block;
-        position: relative;
-        right: -12%;
-        color : #00b700;
+        width: 30%;
+        display: flex;
+        color: #00b700;
+        justify-content: end;
     }
 }
 
@@ -117,14 +114,15 @@ app-registrar-usuario {
     background: rgb(0 0 0 / 91%);
     width: 100%;
     max-width: 800px;
-    height: 100vh;
+    min-height: 598px;
+    overflow-y: scroll;
     color: white;
 }
 
 .btnInicio{
     display: flex;
     position: absolute;
-    bottom: 40px;
+    bottom: 27px;
     z-index: 3;
     max-width: 800px;
     width: 100%;

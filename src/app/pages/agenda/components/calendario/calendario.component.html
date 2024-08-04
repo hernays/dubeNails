@@ -1,9 +1,11 @@
 
 
         <div class="boxTitulo">
-            <button *ngIf="mesNumber !== mesAgenda" class="buttonNextPrev" (click)="dateNext(0)" ><</button>    
-             <h3>{{this.mes.toUpperCase()}}</h3> 
-            <button *ngIf="mesNumber === mesAgenda" class="buttonNextPrev"(click)="dateNext(+1)">></button>
+            <div class="contentTitulo">
+                <button *ngIf="mesNumber !== mesAgenda" class="buttonNextPrev" (click)="dateNext(0)" ><</button>    
+                 <h3 class="mes">{{this.mes.toUpperCase()}}</h3> 
+                <button *ngIf="mesNumber === mesAgenda" class="buttonNextPrev"(click)="dateNext(+1)">></button>
+            </div>
             <h4 *ngIf="rolUsuario === 'admin'" class="montoTotal"> Total ${{sumaValorMes | number}}</h4>
         </div>
 

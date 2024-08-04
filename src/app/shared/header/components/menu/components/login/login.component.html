@@ -2,6 +2,7 @@
     <form [formGroup]="formLogin">
         <label name="alias">Nombre Usuario:</label>
         <input 
+        class="inputs"
         preventCutCopyPaste
         autocomplete="off"
         type="text" placeholder="Nombre Usuario...."
@@ -11,7 +12,9 @@
         />
 
         <label name="clave">Contraseña:</label>
-        <input type="password" placeholder="contraseña...."
+        <input 
+        class="inputs"
+        type="password" placeholder="contraseña...."
         preventCutCopyPaste
         autocomplete="off"
         formControlName="clave" />

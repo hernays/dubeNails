@@ -13,13 +13,15 @@
     app-header{
         position: fixed;
         width: 100%;
+        max-width: 800px;
         height: 70px;
         top: 0px;
-        background-color: rgba(204, 204, 204, 0.3607843137);
+        background-color: black;
     }
     app-footer{
         position: fixed;
         width: 100%;
+        max-width: 800px;
         bottom: 0px;
     }
 }

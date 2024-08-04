@@ -6,11 +6,11 @@
   <form [formGroup]="formGroup">
     <label name="nombre">Nombre</label>
     <br>
-    <input type="text" autocomplete="off" placeholder="nombre..." formControlName="nombre">
+    <input class="inputs" type="text" autocomplete="off" placeholder="nombre..." formControlName="nombre">
     <br>
     <label name="hora">Hora</label>
     <br>
-    <input formControlName="hora" type="button" (click)="mostrarHoras()" autocomplete="off">
+    <input class="inputs" formControlName="hora" type="button" (click)="mostrarHoras()" autocomplete="off">
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalHoras">
@@ -28,7 +28,7 @@
 
     <label name="servicio">Servicios</label>
     <br>
-    <input formControlName="servicio" type="button" (click)="mostrarServicios()">
+    <input class="inputs" formControlName="servicio" type="button" (click)="mostrarServicios()">
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalServicios">
@@ -46,6 +46,7 @@
     <label name="telefono">Telefono</label>
     <br>
     <input 
+    class="inputs"
     type="text" 
     placeholder="telefono..." 
     onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
@@ -54,7 +55,7 @@
 
     <label  *ngIf="rol !== 'admin'" name="correo">Correo</label>
     <br *ngIf="rol !== 'admin'">
-    <input *ngIf="rol !== 'admin'" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
+    <input *ngIf="rol !== 'admin'" class="inputs" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
     <br *ngIf="rol !== 'admin'">
     <button class="submit" (click)="handleModal()">Registrar Hora</button>
     <!-- <button *ngIf="rol === 'admin'" class="submit" (click)="enviarDatos()">Registrar Hora</button> -->
@@ -79,8 +80,8 @@
     </div>
   
     <div>
-      <button class="btn" (click)="enviarDatos()">Si</button>
       <button class="btn" (click)="closeModal()">No</button>
+      <button class="btn" (click)="enviarDatos()">Si</button>
     </div>
   </div>
 </div>
