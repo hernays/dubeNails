@@ -11,12 +11,18 @@ export class AppComponent{
   public respuesta : any;
   public iphoneFooter: boolean = false;
    readonly VAPID_PUBLIC_KEY = 'BBG9Ywk7mvin-aXmEpLorIVjGeo_8cahwFMYXqFD1VKsCldi_dAYXssJ5moV2pe3vcdqzCtXWS4ru8jn9UlGlrs';
+   alturaContent: any;
  
   constructor(
     private sw: UpdateService
     ) {
     // check the service worker for updates
     this.sw.checkForUpdates();
+  }
+
+  ngAfterViewInit(): void {
+    console.log(window.screen.height - 140)
+    this.alturaContent = String(window.screen.height - 140);
   }
 
 }

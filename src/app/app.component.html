@@ -1,5 +1,7 @@
 <div class="app">
   <app-header></app-header>
-  <app-content [class.IphoneMenuContent]="iphoneFooter" [iphoneFooter]="iphoneFooter"></app-content>
+  <app-content 
+  [ngStyle]="{'height': alturaContent+'px', 'overflow-y': 'scroll'} "
+  [class.IphoneMenuContent]="iphoneFooter" [iphoneFooter]="iphoneFooter"></app-content>
   <app-footer [class.IphoneMenuFooter]="iphoneFooter" [iphoneFooter]="iphoneFooter"></app-footer>
 </div>
