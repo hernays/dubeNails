@@ -32,7 +32,6 @@ export class ActualizarFotoComponent implements OnInit {
       this.eventsService.alertMessage('success','Imagen cargada con Exito');
       this.img = null;
     }, error: (err) => {
-      console.log(err)
       this.eventsService.alertMessage('error','No se pudo cargar la Imagen');
     }})
   }

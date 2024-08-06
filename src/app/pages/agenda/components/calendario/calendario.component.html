@@ -11,10 +11,10 @@
 
 <div class="calendario">
     <div class="contenidoAgenda" *ngFor="let diaAgenda of dias">
-        <div class="dias" 
+        <div class="dias"
         [class.ocupado]="diaAgenda.dia < day && mesNumber === mesAgenda
-        || diaAgenda.diaName === 'domingo'" 
-        (click)="modalAgenda(diaAgenda.dia , mesAgenda , diaAgenda.diaName)">
+        || diaAgenda.diaName === 'domingo'  || diaAgenda.dia  < day +1 && rolUsuario !== 'admin' && mesNumber === mesAgenda" 
+        (click)="modalAgenda(diaAgenda.dia , mesAgenda , diaAgenda.diaName,  day, mesNumber, mesAgenda)">
                 
                 <div class="diaSemana">{{diaAgenda.diaName}}</div>
                 <p>{{diaAgenda.dia}}</p>
@@ -24,6 +24,7 @@
 
 <app-detalles *ngIf="showModalDetalle"
 [dia]="dia"
+[desabilitarDia]="desabilitarDia"
 (detalleComponent)="detalleComponents($event)"
 ></app-detalles> 
 

@@ -61,7 +61,6 @@ export class ConfirmacionComponent implements OnInit {
         })
 
       }, error: (error) => {
-        console.log('errooroo- tokennnn', error)
 
       }
     })

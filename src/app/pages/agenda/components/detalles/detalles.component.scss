@@ -97,6 +97,14 @@
     .backgroundBody {
         background-color: $colorInputs;
     }
+    .backgroundBody2{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 30px;
+        background: #fff;
+    }
     .telefono {
         background-color: green;
         color: white;

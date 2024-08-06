@@ -23,6 +23,7 @@ export class DetallesComponent implements OnInit {
   @Input('horas') horas : any[] = [];
   @Input('horasCopias') horasCopias : any[] = [];
   @Input('mes') mes: any;
+  @Input('desabilitarDia') desabilitarDia: boolean = false;
   @Output('modalRegisters') modalRegisters: any;
   public sinAgenda: string = '';
   public rol: string = '';
@@ -50,7 +51,8 @@ export class DetallesComponent implements OnInit {
     this.eventsService.diaHabilitado.subscribe( value => {
       this.habilitar = value;
     })
-  }
+    
+    }
 
   hideModalServicios() {
     if (this.ids.length > 0) {
@@ -156,7 +158,29 @@ export class DetallesComponent implements OnInit {
   }
 
 
-  disabledDay() {
+  disabledDay(): any {
+    if(this.clienteDetalle.length === 0 && this.habilitar === true){
+      this.agendaService.recibirDatos2(
+        { nombre:'nombre', 
+          horaNueva: 10, 
+          servicio: 'servicio', 
+          dia:this.dia.day.toString(), 
+          horaServicio: 2, 
+          telefono:'121212', 
+          mes: this.dia.month, 
+          id: this.idUserLogin, 
+          nuevo: false , 
+          token: '' , 
+          estado:true, 
+          correo:'correo@gmail.com',
+          diaHabilitado: false
+        }
+      ).subscribe((data:any )=> {
+        this.sharedService.setDiaHabilitado(this.habilitar);
+        this.habilitar = false;
+      })
+      return false;
+    }
     const dataDay = {
       day: this.dia.day.toString(),
       month: this.dia.month,

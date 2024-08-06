@@ -174,5 +174,40 @@ export class AgendaService {
 
   }
 
+  recibirDatos2(datos: any): any {
+    const diaHabilitado = datos.diaHabilitado !== undefined ? datos.diaHabilitado : true;
+    const body = {
+      nombre: datos.nombre.trim(),
+      dia: datos.dia,
+      hora: datos.horaNueva,
+      servicio: datos.servicio,
+      horaServicio: datos.horaServicio,
+      telefono: datos.telefono,
+      mes: datos.mes,
+      id: datos.id,
+      nuevo: datos.nuevo,
+      token: datos.token,
+      estado: datos.estado,
+      correo: datos.correo,
+      diaHabilitado
+    }
+
+    const token = localStorage.getItem('token')
+
+    return this.http.post<any>(`${this.url}/save`, body, {
+      headers: {
+        authorization: token ? token : ''
+    }})
+      .pipe(
+        map((resp) => {
+          return resp.msg;
+        }),
+        catchError((error: any) => {
+          return throwError(() => error.error.msg);
+        })
+      )
+  }
+
+
 }
 

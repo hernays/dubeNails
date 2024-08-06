@@ -12,8 +12,8 @@
             <strong class="diaName">{{dia.diaName}} - {{dia.day}}</strong>
 
             <div *ngFor="let clientes of clienteDetalle; let i = index" [class.backgroundBody]="i%2 === 0">
-                <div *ngIf="habilitar && clientes.estado ||
-                 rol === 'admin' && clientes.estado; else message" class="bodyAgenda">
+                <div *ngIf="habilitar && clientes.estado && clientes.nombre !== 'nombre'||
+                 rol === 'admin' && clientes.estado && clientes.nombre !== 'nombre'; else message" class="bodyAgenda">
                     <p>
                         <span>
                             <strong>Nombre:</strong>
@@ -58,10 +58,12 @@
 
 
                 <ng-template #message>
-                    <h3 *ngIf="!habilitar">No estamos laborado el dia de hoy</h3>
-                    <span *ngIf="!habilitar" [innerHtml]="symbol" [ngStyle]="{'font-size': '220px',
-                                                                'text-aling': 'center'}">
-                    </span>
+                    <div class="backgroundBody2">
+                        <h3 *ngIf="!habilitar">No estamos atendiendo en este dia</h3>
+                        <span *ngIf="!habilitar" [innerHtml]="symbol" [ngStyle]="{'font-size': '220px',
+                                                                    'text-aling': 'center'}">
+                        </span>
+                    </div>
                 </ng-template>
 
             </div>
@@ -70,9 +72,11 @@
             <p class="sinRegistro" *ngIf="clienteDetalle.length === 0">{{sinAgenda}}</p>
         </div>
         <button *ngIf="
-                dia.day >= day && dia.diaName !== 'domingo' && habilitar === true && rol
-            ||  month < dia.month && dia.diaName !== 'domingo' && habilitar === true && rol
-            ||  month > dia.month && dia.diaName !== 'domingo' && habilitar === true && rol"
+                dia.day >= day && dia.diaName && habilitar === true && rol
+            ||  month < dia.month && dia.diaName && habilitar === true && rol
+            ||  month > dia.month && dia.diaName && habilitar === true && rol
+            || desabilitarDia === true && habilitar === true"
+            
             (click)="modalActive()">AGENDAR</button>
     </div>
     <app-modal-register *ngIf="modalRegisters" [dia]="dia" [horas]="horas" [horasCopias]="horasCopias"

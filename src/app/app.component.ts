@@ -22,7 +22,6 @@ export class AppComponent{
   }
 
   ngAfterViewInit(): void {
-    console.log(window.screen.height - 140 - 40)
     this.altura = String(window.screen.height);
     this.alturaContent = String(window.screen.height - 140 - 40);
   }

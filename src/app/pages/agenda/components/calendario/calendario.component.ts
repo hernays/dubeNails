@@ -35,6 +35,7 @@ export class CalendarioComponent implements OnInit {
   public form: FormGroup;
   public diaHabilitado: boolean = true;
   mesCalculo: any;
+  desabilitarDia: boolean = false;
 
   constructor(
     private agendaService: AgendaService,
@@ -130,7 +131,14 @@ export class CalendarioComponent implements OnInit {
     this.showModalDetalle = false;
   }
 
-  modalAgenda(day: any, month: string, diaName: string) {
+  modalAgenda(day: any, month: string, diaName: string, eventday:any,mesNumber:any, mesAgenda:any):any {
+
+        if( day < eventday && mesNumber === mesAgenda && this.rolUsuario !== 'admin'
+          || day < eventday +1 && this.rolUsuario !== 'admin' && mesNumber === mesAgenda
+          || diaName === 'domingo' && this.rolUsuario !== 'admin'){
+            this.desabilitarDia = true;
+            return false;
+        }
     this.dia = { day, month, diaName };
     this.showModalDetalle = true;
   }
