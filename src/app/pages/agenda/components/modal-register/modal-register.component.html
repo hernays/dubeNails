@@ -53,11 +53,16 @@
     formControlName="telefono" autocomplete="off">
     <br>
 
-    <label  *ngIf="rol !== 'admin'" name="correo">Correo</label>
+    <label   name="correo">Correo</label>
+    <br >
+    <input class="inputs" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
+    <br>
+    <button class="submit" (click)="handleModal()">Registrar Hora</button>
+    <!-- <label  *ngIf="rol !== 'admin'" name="correo">Correo</label>
     <br *ngIf="rol !== 'admin'">
     <input *ngIf="rol !== 'admin'" class="inputs" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
     <br *ngIf="rol !== 'admin'">
-    <button class="submit" (click)="handleModal()">Registrar Hora</button>
+    <button class="submit" (click)="handleModal()">Registrar Hora</button> -->
     <!-- <button *ngIf="rol === 'admin'" class="submit" (click)="enviarDatos()">Registrar Hora</button> -->
     <!-- <button *ngIf="rol !== 'admin'" class="submit" (click)="pagar()">Pagar Abono</button> -->
   </form>
