@@ -143,5 +143,20 @@ send() {
     return this.http.post('/api/newsletter', null);
 }
 
+ findUsuarioExpress(letra:any){
+  const body = {
+    letra
+  }
+    return this.http.post<any>(`${this.url}usuarios-express`, body)
+    .pipe(map((data) => {
+        return data;
+    })
+    ,catchError((error) => {
+      return throwError(() => error.error.msg)
+    })
+    )
+  }
+
+
 
 }

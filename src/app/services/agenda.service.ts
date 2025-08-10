@@ -208,6 +208,21 @@ export class AgendaService {
       )
   }
 
+   checkAgenda(): any {
+
+    const token = localStorage.getItem('token')
+
+    return this.http.get<any>(`${this.url}/check`)
+      .pipe(
+        map((resp) => {
+          return resp.msg;
+        }),
+        catchError((error: any) => {
+          return throwError(() => error.error.msg);
+        })
+      )
+  }
+
 
 }
 

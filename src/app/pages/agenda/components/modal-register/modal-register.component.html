@@ -6,11 +6,11 @@
   <form [formGroup]="formGroup">
     <label name="nombre">Nombre</label>
     <br>
-    <input class="inputs" type="text" autocomplete="off" placeholder="nombre..." formControlName="nombre">
+    <input class="inputs" type="text" placeholder="nombre..." formControlName="nombre">
     <br>
     <label name="hora">Hora</label>
     <br>
-    <input class="inputs" formControlName="hora" type="button" (click)="mostrarHoras()" autocomplete="off">
+    <input class="inputs" formControlName="hora" type="button" (click)="mostrarHoras()" >
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalHoras">
@@ -50,12 +50,28 @@
     type="text" 
     placeholder="telefono..." 
     onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
-    formControlName="telefono" autocomplete="off">
+    formControlName="telefono" >
     <br>
 
     <label   name="correo">Correo</label>
     <br >
-    <input class="inputs" type="text" placeholder="correo..." formControlName="correo" autocomplete="off">
+    <input 
+    (keyup)="find($event)"
+    class="inputs" 
+    type="text" 
+    placeholder="correo..." 
+    formControlName="correo"
+    >
+
+    <div 
+    class="emailStyles"
+    *ngFor="let usuariosR of listEmail "
+    >
+      <span 
+      (click)="selectEmail(usuariosR.correo, usuariosR.nombre, usuariosR.telefono)"
+      (value)="usuariosR.correo"
+      >{{usuariosR.correo}}</span>
+    </div>
     <br>
     <button class="submit" (click)="handleModal()">Registrar Hora</button>
     <!-- <label  *ngIf="rol !== 'admin'" name="correo">Correo</label>

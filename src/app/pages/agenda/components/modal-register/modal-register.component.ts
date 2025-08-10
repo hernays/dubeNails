@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AgendaService } from 'src/app/services/agenda.service';
 import { EventsService } from 'src/app/services/events.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { PagoService } from 'src/app/services/pago.service';
 import * as moment from 'moment';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 
 @Component({
   selector: 'app-modal-register',
@@ -13,7 +14,7 @@ import * as moment from 'moment';
 })
 export class ModalRegisterComponent implements OnInit {
   @Output('registerModal') registerModal: EventEmitter<any> = new EventEmitter();
-  @Output('cerrarDetalle') cerrarDetalle:EventEmitter<any> = new EventEmitter();
+  @Output('cerrarDetalle') cerrarDetalle: EventEmitter<any> = new EventEmitter();
   @Output('dato') dato: EventEmitter<any> = new EventEmitter();
   @Input('dia') dia: any;
   @Input('horas') horas: any;
@@ -21,20 +22,23 @@ export class ModalRegisterComponent implements OnInit {
   showModal: boolean = false;
   serviceSelection: string = '';
   hourSelection: string = '';
-  mes:any;
+  mes: any;
+  findUsuario: string = ''
+  public listEmail: any[] = [];
+  captur: ElementRef<HTMLInputElement> = '' as any;
 
   public formGroup: FormGroup<any>;
   public lista: any[] = [
-      {nombre: 'Manicura (solo limpieza)', numberServicio: 1   },
-      {nombre: 'Manicura luxury',          numberServicio: 1.5 },
-      {nombre: 'kapping gel',              numberServicio: 1.5 },
-      {nombre: 'Acrilicas',                numberServicio: 2.5 },
-      {nombre: 'Polygel',                  numberServicio: 2   },
-      {nombre: 'Pedicura clasica',         numberServicio: 1.5 },
-      {nombre: 'Pedicura + kapping',       numberServicio: 2   },
-      {nombre: 'Retoque',                  numberServicio: 1   },
-      {nombre: 'Retiro esmaltado',         numberServicio: 0.5 },
-      {nombre: 'Retiro acrilica o poligel',numberServicio: 0.5 }
+    { nombre: 'Manicura (solo limpieza)', numberServicio: 1 },
+    { nombre: 'Manicura luxury', numberServicio: 1.5 },
+    { nombre: 'kapping gel', numberServicio: 1.5 },
+    { nombre: 'Acrilicas', numberServicio: 2.5 },
+    { nombre: 'Polygel', numberServicio: 2 },
+    { nombre: 'Pedicura clasica', numberServicio: 1.5 },
+    { nombre: 'Pedicura + kapping', numberServicio: 2 },
+    { nombre: 'Retoque', numberServicio: 1 },
+    { nombre: 'Retiro esmaltado', numberServicio: 0.5 },
+    { nombre: 'Retiro acrilica o poligel', numberServicio: 0.5 }
   ];
   public success: boolean = false;
   public error: string = '';
@@ -47,7 +51,7 @@ export class ModalRegisterComponent implements OnInit {
   public modalServicios: boolean = false;
   public idUser: string = '';
   public rol: string = '';
-  public token : string = '';
+  public token: string = '';
 
 
   constructor(
@@ -55,7 +59,8 @@ export class ModalRegisterComponent implements OnInit {
     private agendaService: AgendaService,
     private eventsService: EventsService,
     private sharedService: SharedService,
-    private pagoService : PagoService
+    private pagoService: PagoService,
+    private usuariosService: UsuariosService
   ) {
     moment.locale('es');
     this.formGroup = this.formBuilder.group({
@@ -63,7 +68,7 @@ export class ModalRegisterComponent implements OnInit {
       servicio: ['Seleccione un servicio...', [Validators.required]],
       hora: ['Seleccione una hora...', [Validators.required, Validators.minLength(2)]],
       telefono: [''],
-      correo:['']
+      correo: ['']
     })
   }
 
@@ -103,11 +108,11 @@ export class ModalRegisterComponent implements OnInit {
     return numberServicio;
   }
 
-  handleModal(){
+  handleModal() {
     const year = moment().year();
     this.mes = moment([year, this.dia.month]).format('MMMM');
     this.showModal = true;
-    const { servicio} = this.formGroup.value;
+    const { servicio } = this.formGroup.value;
     this.serviceSelection = servicio;
   }
 
@@ -115,37 +120,37 @@ export class ModalRegisterComponent implements OnInit {
     this.formGroup.controls['nombre'].enable();
     this.formGroup.controls['telefono'].enable();
     this.formGroup.controls['correo'].enable();
-    const { nombre, servicio, telefono , correo} = this.formGroup.value;
+    const { nombre, servicio, telefono, correo } = this.formGroup.value;
     const dia = Number(this.dia.day);
     const mes = Number(this.dia.month);
     const hora = Number(this.horaSelecciona);
-    const  horaServicio  = this.lista.filter(e => e.nombre === servicio)[0].numberServicio;
-    this.traerData(Number(hora), nombre, servicio, dia, horaServicio, telefono, mes, correo )
+    const horaServicio = this.lista.filter(e => e.nombre === servicio)[0].numberServicio;
+    this.traerData(Number(hora), nombre, servicio, dia, horaServicio, telefono, mes, correo)
   }
 
-  async traerData(horaNueva: number, nombre: string, servicio: string, dia: number, horaServicio: number, telefono: any, mes: number, correo:any) {
+  async traerData(horaNueva: number, nombre: string, servicio: string, dia: number, horaServicio: number, telefono: any, mes: number, correo: any) {
     this.agendaService.getDatosDay(this.dia).subscribe({
       next: (data: any) => {
-        if(Array.isArray(data)){
+        if (Array.isArray(data)) {
           const tramos = data.map((element: any) => {
             return { horaInicio: element.hora, horaFin: element.tramo, dia: Number(element.dia), mes: element.mes }
           })
           for (let horasDB of tramos) {
-  
-           /*  const tiempoServicio = horasDB.horaFin - horasDB.horaInicio; */
-              if(dia === horasDB.dia && mes === horasDB.mes && horaNueva === horasDB.horaInicio ||
-                 dia === horasDB.dia && mes === horasDB.mes && horaNueva > horasDB.horaInicio && horaNueva+horaServicio < horasDB.horaFin ||
-                 dia === horasDB.dia && mes === horasDB.mes && horaNueva < horasDB.horaInicio && horaNueva+horaServicio > horasDB.horaInicio){
-                  this.showModal = false;
-              const formatearHoraServicio = (String(horaServicio).length > 1 ) ? String(horaServicio).split('.')[0]+':30' : horaServicio;
+
+            /*  const tiempoServicio = horasDB.horaFin - horasDB.horaInicio; */
+            if (dia === horasDB.dia && mes === horasDB.mes && horaNueva === horasDB.horaInicio ||
+              dia === horasDB.dia && mes === horasDB.mes && horaNueva > horasDB.horaInicio && horaNueva + horaServicio < horasDB.horaFin ||
+              dia === horasDB.dia && mes === horasDB.mes && horaNueva < horasDB.horaInicio && horaNueva + horaServicio > horasDB.horaInicio) {
+              this.showModal = false;
+              const formatearHoraServicio = (String(horaServicio).length > 1) ? String(horaServicio).split('.')[0] + ':30' : horaServicio;
               this.horaDisponible = `Servicio ${servicio} demora ${formatearHoraServicio}hrs esta chocando con otra hora revisa la agenda e intenta de nuevo.`;
               this.success = false;
-              }
+            }
           }
         }
-        if ( this.horaDisponible === '') {
+        if (this.horaDisponible === '') {
           this.agendarHora(nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, this.idUser, correo);
-          this.cerrarDetalle.emit(false); 
+          this.cerrarDetalle.emit(false);
         }
 
       }, error: (error: any) => {
@@ -185,7 +190,7 @@ export class ModalRegisterComponent implements OnInit {
 
   SeleccionHora(event: any) {
     this.hourSelection = event.innerText;
-     this.horaDisponible = ''; 
+    this.horaDisponible = '';
     const evento = event.innerText.split(':');
     this.formGroup.controls['hora'].setValue(
       (evento[1].includes('3')) ? evento[0] + ':30' :
@@ -208,7 +213,7 @@ export class ModalRegisterComponent implements OnInit {
     this.modalServicios = false;
   }
 
-  agendarHora(nombre: string, horaNueva: any, servicio: string, dia: number, horaServicio: any, telefono: any, mes: number, id: string, correo:any) {
+  agendarHora(nombre: string, horaNueva: any, servicio: string, dia: number, horaServicio: any, telefono: any, mes: number, id: string, correo: any) {
     /* if (!this.lista.includes(servicio)) {
       this.horaDisponible = 'El servicio es obligatorio';
       this.success = false;
@@ -219,7 +224,7 @@ export class ModalRegisterComponent implements OnInit {
     const token = this.token;
     const estado = true;
     // const estado = (this.rol === 'admin') ? true : false;
-    this.agendaService.recibirDatos({ nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, id, nuevo , token , estado, correo}).subscribe({
+    this.agendaService.recibirDatos({ nombre, horaNueva, servicio, dia, horaServicio, telefono, mes, id, nuevo, token, estado, correo }).subscribe({
       next: (msg: string) => {
         this.formGroup.controls['nombre'].setValue('');
         this.formGroup.controls['hora'].setValue('');
@@ -247,13 +252,13 @@ export class ModalRegisterComponent implements OnInit {
 
   setDataCliente() {
     this.sharedService.getRolUser().subscribe(data => {
-      if(data){
+      if (data) {
         this.idUser = data.id;
         this.rol = data.rol;
         if (data?.nombre && data?.rol !== 'admin') {
           this.formGroup.controls['nombre'].disable();
           this.formGroup.controls['nombre'].setValue(data.nombre);
-          if(data?.correo){
+          if (data?.correo) {
             this.formGroup.controls['correo'].disable();
             this.formGroup.controls['correo'].setValue(data.correo);
           }
@@ -267,27 +272,68 @@ export class ModalRegisterComponent implements OnInit {
   }
 
 
-  async pagar(){
+  async pagar() {
     const dia = this.dia.day;
     const mes = this.dia.month;
     const hora = String(this.horaSelecciona);
     const correo = this.formGroup.controls['correo'].getRawValue();
     const tokenUsuario = localStorage.getItem('token') as string;
-    this.pagoService.generarPago(correo,tokenUsuario,mes,dia,hora).subscribe({next : (data:any) => {
-      this.token = data.token;
-      this.enviarDatos();
-      if(this.horaDisponible.length === 0){
+    this.pagoService.generarPago(correo, tokenUsuario, mes, dia, hora).subscribe({
+      next: (data: any) => {
+        this.token = data.token;
+        this.enviarDatos();
+        if (this.horaDisponible.length === 0) {
           setTimeout(() => {
             open(data.urlRedirect);
-          },500)
+          }, 500)
         }
 
-    },error : (error) => {
-    }})
+      }, error: (error) => {
+      }
+    })
   }
 
 
-  closeModal(){
+  closeModal() {
     this.showModal = false;
+  }
+
+  find(event: KeyboardEvent): any {
+
+    const key = event.keyCode || event.charCode;
+    if (key === 8 || key === 46) {
+      this.formGroup.controls['correo'].setValue('');
+      this.formGroup.controls['telefono'].setValue('');
+      this.formGroup.controls['nombre'].setValue('');
+      this.listEmail = [];
+      this.findUsuario = '';
+      return false;
+    }
+    this.findUsuario = `${this.findUsuario}${event.key}`;
+    this.usuariosService.findUsuarioExpress(this.findUsuario).subscribe({
+      next: (value: any) => {
+        if (value === typeof toString()) {
+          this.formGroup.controls['correo'].setValue('');
+          this.formGroup.controls['telefono'].setValue('');
+          this.formGroup.controls['nombre'].setValue('');
+          this.listEmail = [];
+          this.findUsuario = '';
+        } else {
+          this.listEmail = value.usuarios;
+        }
+      },
+      error(err) {
+
+      },
+    })
+
+  }
+
+  selectEmail(email: any, nombre: any, telefono: any) {
+    console.log(this.captur)
+    this.formGroup.controls['correo'].setValue(email);
+    this.formGroup.controls['nombre'].setValue(nombre);
+    this.formGroup.controls['telefono'].setValue(telefono);
+
   }
 }

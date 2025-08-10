@@ -5,7 +5,16 @@
 
 }
 
+.emailStyles{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    color: gray;
+    text-align: center;
 
+}
 .modal{
     position: absolute;
     top: 3%;
