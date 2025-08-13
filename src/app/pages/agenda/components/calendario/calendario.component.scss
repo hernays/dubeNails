@@ -52,7 +52,7 @@
 
     .contentTitulo{
         display: flex;
-        width: 60%;
+        width: 40%;
         justify-content: end;
         align-items: center;
     }
@@ -136,5 +136,25 @@ app-registrar-usuario {
        font-weight: bold;
        cursor: pointer;
     }
+}
+
+.contentUsers{
+    position: fixed;
+    left: 10%;
+    top: 13%;
+    background: white;
+    color: black;
+    width: 18%;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.buscador{
+    width: 20%;
+
+}
+
+.filter{
+    border: 3px solid rgb(0, 112, 0);
 }
 

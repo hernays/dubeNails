@@ -1,6 +1,15 @@
 
 
         <div class="boxTitulo">
+            <input class="buscador" type="text" (keyup)="searchUser($event)" [value]="findUsuario">
+            <div class="contentUsers">
+                <p
+                *ngFor="let users of usersFilter"
+                (click)="selectUser(users.dia)"
+                >
+                   {{users.nombre}} 
+                </p>
+            </div>
             <div class="contentTitulo">
                 <button *ngIf="mesNumber !== mesAgenda" class="buttonNextPrev" (click)="dateNext(0)" ><</button>    
                  <h3 class="mes">{{this.mes.toUpperCase()}}</h3> 
@@ -8,14 +17,13 @@
             </div>
             <h4 *ngIf="rolUsuario === 'admin'" class="montoTotal"> Total ${{sumaValorMes | number}}</h4>
         </div>
-
 <div class="calendario">
     <div class="contenidoAgenda" *ngFor="let diaAgenda of dias">
         <div class="dias"
+        [class.filter]="colorFilterDia.includes(diaAgenda.dia.toString())"
         [class.ocupado]="diaAgenda.dia < day && mesNumber === mesAgenda
         || diaAgenda.diaName === 'domingo'  || diaAgenda.dia  < day +1 && rolUsuario !== 'admin' && mesNumber === mesAgenda" 
         (click)="modalAgenda(diaAgenda.dia , mesAgenda , diaAgenda.diaName,  day, mesNumber, mesAgenda)">
-                
                 <div class="diaSemana">{{diaAgenda.diaName}}</div>
                 <p>{{diaAgenda.dia}}</p>
         </div>

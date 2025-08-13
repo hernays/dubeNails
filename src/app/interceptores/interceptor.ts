@@ -12,7 +12,12 @@ export class SpinnerInterceptor implements HttpInterceptor {
     ){}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.spinnerService.show();
+        console.log('interceptor', req.url.includes('usuarios-express'))
+        if(req.url.includes('usuarios-express')){
+
+        }else{
+            this.spinnerService.show();
+        }
 
         return next.handle(req).pipe(
             finalize(() => this.spinnerService.hide())

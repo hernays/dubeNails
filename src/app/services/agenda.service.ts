@@ -145,6 +145,25 @@ export class AgendaService {
 
   }
 
+  getUsersMes(mes: number) {
+    const token = localStorage.getItem('token')
+    console.log('urll', `${this.url}/users/${mes}`)
+    return this.http.post<any>(`${this.url}/users/${mes}`,{},{headers:{
+      authorization: token ? token : ''
+    }
+  }
+).pipe(
+      map((data) => {
+        return data.agendas
+
+      })
+      , catchError((error: any) => {
+        return throwError(() => { return error; })
+      })
+    )
+
+  } 
+
 
   actualizarEstado(data: any): any {
     const token = localStorage.getItem('token')

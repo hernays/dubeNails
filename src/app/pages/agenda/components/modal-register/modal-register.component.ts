@@ -6,10 +6,48 @@ import { SharedService } from 'src/app/services/shared.service';
 import { PagoService } from 'src/app/services/pago.service';
 import * as moment from 'moment';
 import { UsuariosService } from 'src/app/services/usuarios.service';
+import { animate, animation, keyframes, state, style, transition, trigger, ɵBrowserAnimationBuilder } from '@angular/animations';
 
 @Component({
   selector: 'app-modal-register',
   templateUrl: './modal-register.component.html',
+  animations: [
+
+    // ejemplo de animacion con keyframes
+
+    // trigger('w', [
+    //   transition('false => true', [
+    //     animate('0.75s', keyframes([
+    //       style({
+    //         'display': 'flex',
+    //         'transition': '500ms'
+    //       })
+    //     ]))
+    //   ]),
+    //   state('false', style( { background : 'red'}))
+    // ]),
+
+    // ejemplo de animacion por estados 
+
+    // trigger('event', [
+    //   state('start', style({
+    //     background: 'red'
+    //   })),
+    //   state('end', style({
+    //     background: 'blue'
+    //   })),
+    //   transition('start => end', animate('10s') )
+    // ]),
+
+    // animacion por objectos que se insentar o remueven con condicionales ( for , if )
+    trigger('MyInsertRemoveTrigger', [
+      transition(':enter', [
+        style({opacity: 0}),
+        animate('300ms', style({opacity: 1}))
+      ]),
+
+    ])
+  ],
   styleUrls: ['./modal-register.component.scss']
 })
 export class ModalRegisterComponent implements OnInit {
@@ -25,6 +63,7 @@ export class ModalRegisterComponent implements OnInit {
   mes: any;
   findUsuario: string = ''
   public listEmail: any[] = [];
+  public typeConsult: string = '';
   captur: ElementRef<HTMLInputElement> = '' as any;
 
   public formGroup: FormGroup<any>;
@@ -52,6 +91,7 @@ export class ModalRegisterComponent implements OnInit {
   public idUser: string = '';
   public rol: string = '';
   public token: string = '';
+  public anima : boolean = false;
 
 
   constructor(
@@ -298,7 +338,7 @@ export class ModalRegisterComponent implements OnInit {
     this.showModal = false;
   }
 
-  find(event: KeyboardEvent): any {
+  find(event: KeyboardEvent, type: string): any {
 
     const key = event.keyCode || event.charCode;
     if (key === 8 || key === 46) {
@@ -309,8 +349,9 @@ export class ModalRegisterComponent implements OnInit {
       this.findUsuario = '';
       return false;
     }
+    this.typeConsult = type;
     this.findUsuario = `${this.findUsuario}${event.key}`;
-    this.usuariosService.findUsuarioExpress(this.findUsuario).subscribe({
+    this.usuariosService.findUsuarioExpress(this.findUsuario, type).subscribe({
       next: (value: any) => {
         if (value === typeof toString()) {
           this.formGroup.controls['correo'].setValue('');
@@ -329,11 +370,18 @@ export class ModalRegisterComponent implements OnInit {
 
   }
 
-  selectEmail(email: any, nombre: any, telefono: any) {
+  selectData(email: any, nombre: any, telefono: any) {
     console.log(this.captur)
     this.formGroup.controls['correo'].setValue(email);
     this.formGroup.controls['nombre'].setValue(nombre);
     this.formGroup.controls['telefono'].setValue(telefono);
+    this.typeConsult = '';
 
+  }
+
+  OnWobbleStart(){
+    console.log('entrandooo')
+    console.log(this.anima)
+    this.anima = true;
   }
 }

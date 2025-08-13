@@ -143,9 +143,9 @@ send() {
     return this.http.post('/api/newsletter', null);
 }
 
- findUsuarioExpress(letra:any){
+ findUsuarioExpress(letra:any, type:string){
   const body = {
-    letra
+    letra, type
   }
     return this.http.post<any>(`${this.url}usuarios-express`, body)
     .pipe(map((data) => {

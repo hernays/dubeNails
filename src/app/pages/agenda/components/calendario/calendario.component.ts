@@ -54,6 +54,8 @@ export class CalendarioComponent implements OnInit {
     this.eventsService.setValorMontoTotal.subscribe(valor => {
       if(valor){
        this.totalMes(this.mesCalculo);
+       console.log('este es el mes',this.mesCalculo)
+       this.totalUsers(this.mesCalculo)
       }
     })
     moment.locale('es');
@@ -105,6 +107,9 @@ export class CalendarioComponent implements OnInit {
   }
 
   dateNext(valor: number) {
+    this.findUsuario = '';
+    this.usersFilter = []
+    this.colorFilterDia = []
     this.dias = [];
     let month = this.mesNumber;
     const year = moment().year();
@@ -124,6 +129,7 @@ export class CalendarioComponent implements OnInit {
     this.mesAgenda = month;
 
     this.totalMes(this.mesAgenda)
+    this.totalUsers(this.mesAgenda) 
   }
 
   detalleComponents(event: any) {
@@ -149,6 +155,22 @@ export class CalendarioComponent implements OnInit {
       this.agendaService.getTotalValorMes(mes).subscribe({
         next: (valor: number) => {
           this.sumaValorMes = valor;
+          this.totalUsers(mes)
+        },
+        error: (error: any) => { }
+      })
+    }
+  }
+
+  public usuarios : any;
+  totalUsers(mes: number) {
+    this.mesCalculo = mes;
+    console.log('mes calculo', this.mesCalculo)
+    if (this.rolUsuario === 'admin') {
+      this.agendaService.getUsersMes(mes).subscribe({
+        next: (data) => {
+            this.usuarios = data
+          console.log(this.usuarios)
         },
         error: (error: any) => { }
       })
@@ -162,5 +184,48 @@ export class CalendarioComponent implements OnInit {
 
   navigateInicio(){
     this.router.navigateByUrl('home')
+  }
+
+
+  findUsuario: string = '';
+  usersFilter: any = [];
+  colorFilterDia: any = [];
+
+  searchUser(event: KeyboardEvent): any{
+    const key = event.keyCode || event.charCode;
+    if (key === 8 || key === 46) {
+      this.findUsuario = '';
+      this.usersFilter = [];
+      this.findUsuario = '';
+    this.usersFilter = []
+    this.colorFilterDia = []
+      return false;
+    }
+    if(key === 16 || key === 17 || key === 18 || key === 20){
+      return false;
+    }
+    this.findUsuario = `${this.findUsuario}${event.key}`;
+    console.log('aqllll',this.findUsuario)
+    let user = []
+    let dias = [''];
+    this.usuarios.forEach( (users:any) => {
+      if(users.nombre.indexOf(this.findUsuario) === 0){
+        user.push(users)
+        if(!dias.includes(users.dia)){
+          dias.push(users.dia)
+          console.log('diasss', dias)
+        }
+        this.usersFilter = user;
+        this.colorFilterDia = dias;
+        console.log(this.usersFilter)
+      }
+    })
+
+  }
+
+  selectUser(dia:any){
+    this.usersFilter = []
+    this.colorFilterDia = [dia]
+
   }
 }

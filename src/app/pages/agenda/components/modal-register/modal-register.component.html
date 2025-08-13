@@ -6,11 +6,28 @@
   <form [formGroup]="formGroup">
     <label name="nombre">Nombre</label>
     <br>
-    <input class="inputs" type="text" placeholder="nombre..." formControlName="nombre">
+    <input 
+    (keyup)="find($event,'nombre')" 
+    class="inputs" 
+    type="text" 
+    placeholder="nombre..." 
+    formControlName="nombre">
+
+    <div @MyInsertRemoveTrigger
+      *ngFor="let usuariosR of listEmail">
+      <p 
+      *ngIf="typeConsult === 'nombre'"
+      (click)="selectData(usuariosR.correo, usuariosR.nombre, usuariosR.telefono)" >
+        <strong class="emailStyles">
+          {{usuariosR.nombre}}
+        </strong>
+      </p>
+    </div>
+
     <br>
     <label name="hora">Hora</label>
     <br>
-    <input class="inputs" formControlName="hora" type="button" (click)="mostrarHoras()" >
+    <input class="inputs" formControlName="hora" type="button" (click)="mostrarHoras()">
     <br>
 
     <div class="modalGeneric modalHora" *ngIf="modalHoras">
@@ -45,32 +62,22 @@
 
     <label name="telefono">Telefono</label>
     <br>
-    <input 
-    class="inputs"
-    type="text" 
-    placeholder="telefono..." 
-    onkeypress="return (event.charCode >= 48 && event.charCode <= 57)"
-    formControlName="telefono" >
+    <input class="inputs" type="text" placeholder="telefono..."
+      onkeypress="return (event.charCode >= 48 && event.charCode <= 57)" formControlName="telefono">
     <br>
 
-    <label   name="correo">Correo</label>
-    <br >
-    <input 
-    (keyup)="find($event)"
-    class="inputs" 
-    type="text" 
-    placeholder="correo..." 
-    formControlName="correo"
-    >
+    <label name="correo">Correo</label>
+    <br>
+    <input (keyup)="find($event,'correo')" class="inputs" type="text" placeholder="correo..." formControlName="correo">
 
-    <div 
-    class="emailStyles"
-    *ngFor="let usuariosR of listEmail "
-    >
-      <span 
-      (click)="selectEmail(usuariosR.correo, usuariosR.nombre, usuariosR.telefono)"
-      (value)="usuariosR.correo"
-      >{{usuariosR.correo}}</span>
+    <div
+    @MyInsertRemoveTrigger
+    *ngFor="let usuariosR of listEmail ">
+      <p 
+      *ngIf="typeConsult === 'correo'"
+      class="emailStyles"
+      (click)="selectData(usuariosR.correo, usuariosR.nombre, usuariosR.telefono)" (value)="usuariosR.correo">
+        {{usuariosR.correo}}</p>
     </div>
     <br>
     <button class="submit" (click)="handleModal()">Registrar Hora</button>
@@ -91,15 +98,16 @@
 <div *ngIf="showModal" class="modalNotifica">
   <div>
     <h3>Confirma tu Hora</h3>
-  
-    <p class="messageModal">Este servicio solo puede ser cancelado 24 horas antes de su cita. debe contactarse con nosotros para poder cancelar. <span class="textConfirmar" >Confirme si desea agendar.</span></p>
+
+    <p class="messageModal">Este servicio solo puede ser cancelado 24 horas antes de su cita. debe contactarse con
+      nosotros para poder cancelar. <span class="textConfirmar">Confirme si desea agendar.</span></p>
 
     <div class="messageServices">
       <p>Servicio: {{serviceSelection}}</p>
       <p>Fecha: {{dia.day}} de {{mes}}</p>
       <p>Hora: {{hourSelection}}</p>
     </div>
-  
+
     <div>
       <button class="btn" (click)="closeModal()">No</button>
       <button class="btn" (click)="enviarDatos()">Si</button>
