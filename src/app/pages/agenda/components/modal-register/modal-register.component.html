@@ -6,12 +6,14 @@
   <form [formGroup]="formGroup">
     <label name="nombre">Nombre</label>
     <br>
-    <input 
-    (keyup)="find($event,'nombre')" 
+    <input
     class="inputs" 
     type="text" 
     placeholder="nombre..." 
-    formControlName="nombre">
+    formControlName="nombre"
+    (input)="find($event,'nombre')" 
+    
+    >
 
     <div @MyInsertRemoveTrigger
       *ngFor="let usuariosR of listEmail">
@@ -68,7 +70,7 @@
 
     <label name="correo">Correo</label>
     <br>
-    <input (keyup)="find($event,'correo')" class="inputs" type="text" placeholder="correo..." formControlName="correo">
+    <input (input)="find($event,'correo')" class="inputs" type="text" placeholder="correo..." formControlName="correo">
 
     <div
     @MyInsertRemoveTrigger

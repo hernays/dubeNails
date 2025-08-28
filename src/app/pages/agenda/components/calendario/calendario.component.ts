@@ -54,7 +54,6 @@ export class CalendarioComponent implements OnInit {
     this.eventsService.setValorMontoTotal.subscribe(valor => {
       if(valor){
        this.totalMes(this.mesCalculo);
-       console.log('este es el mes',this.mesCalculo)
        this.totalUsers(this.mesCalculo)
       }
     })
@@ -165,12 +164,10 @@ export class CalendarioComponent implements OnInit {
   public usuarios : any;
   totalUsers(mes: number) {
     this.mesCalculo = mes;
-    console.log('mes calculo', this.mesCalculo)
     if (this.rolUsuario === 'admin') {
       this.agendaService.getUsersMes(mes).subscribe({
         next: (data) => {
             this.usuarios = data
-          console.log(this.usuarios)
         },
         error: (error: any) => { }
       })
@@ -191,21 +188,32 @@ export class CalendarioComponent implements OnInit {
   usersFilter: any = [];
   colorFilterDia: any = [];
 
-  searchUser(event: KeyboardEvent): any{
-    const key = event.keyCode || event.charCode;
-    if (key === 8 || key === 46) {
-      this.findUsuario = '';
-      this.usersFilter = [];
-      this.findUsuario = '';
-    this.usersFilter = []
-    this.colorFilterDia = []
+  searchUser(event:  any): any{
+    const key = event.data;
+    const rex = /[a-zA-Z0-9.@_]/i;
+    if (key === undefined || key === null) {
+      this.findUsuario = this.findUsuario.slice(0, this.findUsuario.length -1);
+      if(!this.findUsuario.length){
+ 
+          this.findUsuario = '';
+          this.usersFilter = [];
+          this.findUsuario = '';
+        this.usersFilter = []
+        this.colorFilterDia = []
+        return false;
+      }
+
+     this.filter('');
       return false;
     }
-    if(key === 16 || key === 17 || key === 18 || key === 20){
+    if(!rex.test(key)){
       return false;
     }
-    this.findUsuario = `${this.findUsuario}${event.key}`;
-    console.log('aqllll',this.findUsuario)
+    this.filter(key)
+  }
+
+  filter(key:any){
+    this.findUsuario = `${this.findUsuario}${key}`;
     let user = []
     let dias = [''];
     this.usuarios.forEach( (users:any) => {
@@ -213,14 +221,11 @@ export class CalendarioComponent implements OnInit {
         user.push(users)
         if(!dias.includes(users.dia)){
           dias.push(users.dia)
-          console.log('diasss', dias)
         }
         this.usersFilter = user;
         this.colorFilterDia = dias;
-        console.log(this.usersFilter)
       }
     })
-
   }
 
   selectUser(dia:any){

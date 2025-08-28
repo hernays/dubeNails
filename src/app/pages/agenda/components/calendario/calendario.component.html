@@ -1,7 +1,7 @@
 
 
         <div class="boxTitulo">
-            <input class="buscador" type="text" (keyup)="searchUser($event)" [value]="findUsuario">
+            <input class="buscador" type="text" (input)="searchUser($event)" [value]="findUsuario">
             <div class="contentUsers">
                 <p
                 *ngFor="let users of usersFilter"

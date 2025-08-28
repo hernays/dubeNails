@@ -61,7 +61,8 @@ export class ModalRegisterComponent implements OnInit {
   serviceSelection: string = '';
   hourSelection: string = '';
   mes: any;
-  findUsuario: string = ''
+  findUsuario: string = '';
+  findEmail: string = '';
   public listEmail: any[] = [];
   public typeConsult: string = '';
   captur: ElementRef<HTMLInputElement> = '' as any;
@@ -338,20 +339,53 @@ export class ModalRegisterComponent implements OnInit {
     this.showModal = false;
   }
 
-  find(event: KeyboardEvent, type: string): any {
+  find(event: any, type: string): any {
+    const character = event.data;
+    const rex = /[a-zA-Z0-9.@_]/i;
 
-    const key = event.keyCode || event.charCode;
-    if (key === 8 || key === 46) {
-      this.formGroup.controls['correo'].setValue('');
+    if (!rex.test(event.data) || character === undefined || character === null) {
+      this.typeConsult = type;
+      const text = (type === 'correo') ?  this.findEmail.slice(0, this.findEmail.length -1) : this.findUsuario.slice(0, this.findUsuario.length -1);
+      
+      if(type === 'correo'){
+        // valida campo correo
+        this.findEmail = text;
+        this.formGroup.controls['correo'].setValue(text);
+        if(!this.findEmail.length){
+          this.formGroup.controls['correo'].setValue('');
+          this.listEmail = [];
+          return false;
+        }
+        this.findUsers(text, type);
+        
+      }else{
+        // valida campo nombre
+        this.findUsuario = text;
+        this.formGroup.controls['nombre'].setValue(text);
+        if(!this.findUsuario.length){
+          this.formGroup.controls['nombre'].setValue('');
+          this.listEmail = [];
+          return false;
+        }
+        this.findUsers(text, type);
+      }
       this.formGroup.controls['telefono'].setValue('');
-      this.formGroup.controls['nombre'].setValue('');
-      this.listEmail = [];
-      this.findUsuario = '';
       return false;
     }
     this.typeConsult = type;
-    this.findUsuario = `${this.findUsuario}${event.key}`;
-    this.usuariosService.findUsuarioExpress(this.findUsuario, type).subscribe({
+    if(type === 'correo'){
+      this.findEmail = `${this.findEmail}${character}`;
+    }else{
+      this.findUsuario = `${this.findUsuario}${character}`;
+    }
+    const search = ( type === 'correo') ? this.findEmail : this.findUsuario;
+      this.findUsers(search, type);
+
+  }
+
+
+  findUsers(search: any, type: string){
+    this.usuariosService.findUsuarioExpress(search, type).subscribe({
       next: (value: any) => {
         if (value === typeof toString()) {
           this.formGroup.controls['correo'].setValue('');
@@ -371,17 +405,17 @@ export class ModalRegisterComponent implements OnInit {
   }
 
   selectData(email: any, nombre: any, telefono: any) {
-    console.log(this.captur)
     this.formGroup.controls['correo'].setValue(email);
     this.formGroup.controls['nombre'].setValue(nombre);
     this.formGroup.controls['telefono'].setValue(telefono);
+    this.findUsuario = nombre;
+    this.findEmail = email;
     this.typeConsult = '';
+    this.listEmail = []
 
   }
 
   OnWobbleStart(){
-    console.log('entrandooo')
-    console.log(this.anima)
     this.anima = true;
   }
 }
