@@ -36,6 +36,9 @@ export class CalendarioComponent implements OnInit {
   public diaHabilitado: boolean = true;
   mesCalculo: any;
   desabilitarDia: boolean = false;
+  public formGroup: FormGroup<any>;
+  usersFilter: any = [];
+  colorFilterDia: any = [];
 
   constructor(
     private agendaService: AgendaService,
@@ -48,6 +51,10 @@ export class CalendarioComponent implements OnInit {
     this.form = this.formBuilder.group({
       clienteDia: ['']
     })
+
+    this.formGroup = this.formBuilder.group({
+          usuario: [''],
+        })
   }
 
   ngOnInit(): void {
@@ -106,7 +113,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   dateNext(valor: number) {
-    this.findUsuario = '';
+    this.formGroup.controls['usuario'].setValue('');
     this.usersFilter = []
     this.colorFilterDia = []
     this.dias = [];
@@ -183,41 +190,24 @@ export class CalendarioComponent implements OnInit {
     this.router.navigateByUrl('home')
   }
 
-
-  findUsuario: string = '';
-  usersFilter: any = [];
-  colorFilterDia: any = [];
-
   searchUser(event:  any): any{
-    const key = event.data;
-    const rex = /[a-zA-Z0-9.@_]/i;
-    if (key === undefined || key === null) {
-      this.findUsuario = this.findUsuario.slice(0, this.findUsuario.length -1);
-      if(!this.findUsuario.length){
- 
-          this.findUsuario = '';
-          this.usersFilter = [];
-          this.findUsuario = '';
+    const { usuario } = this.formGroup.value;
+    console.log('.....', usuario)
+   if(!usuario.trim().length){
+        this.usersFilter = [];
         this.usersFilter = []
         this.colorFilterDia = []
         return false;
       }
 
-     this.filter('');
-      return false;
-    }
-    if(!rex.test(key)){
-      return false;
-    }
-    this.filter(key)
+    this.filter(usuario)
   }
 
-  filter(key:any){
-    this.findUsuario = `${this.findUsuario}${key}`;
+  filter(usuario:string){
     let user = []
     let dias = [''];
     this.usuarios.forEach( (users:any) => {
-      if(users.nombre.indexOf(this.findUsuario) === 0){
+      if(users.nombre.indexOf(usuario) === 0){
         user.push(users)
         if(!dias.includes(users.dia)){
           dias.push(users.dia)
@@ -228,7 +218,8 @@ export class CalendarioComponent implements OnInit {
     })
   }
 
-  selectUser(dia:any){
+  selectUser(dia:any,usuario:any){
+    this.formGroup.controls['usuario'].setValue(usuario)
     this.usersFilter = []
     this.colorFilterDia = [dia]
 
